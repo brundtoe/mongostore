@@ -20,6 +20,7 @@ Content-Type: application/json
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 201, "Response status is not 201")
+  client.assert(response.body.email == "jens@mail.com", "Response email should be 'jens@email.com'")
      })
   %}
 
@@ -40,3 +41,21 @@ Content-Type: application/json
   client.assert(response.body.details[0].message === message, "Response is not  as expected")
      })
   %}
+
+###
+PUT http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "_id": "5ef5fe157022575df4042249",
+  "username": "abc",
+  "birth_year": 1994,
+  "email": "jens@mail.com"
+}
+
+> {% client.test("Request failed missing repeat_password", function () {
+     client.assert(response.status === 201, "Response status is not 201")
+     client.assert(response.body.email == "jens@mail.com", "Response email should be 'jens@email.com'")
+     })
+  %}
+
