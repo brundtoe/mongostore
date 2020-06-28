@@ -36,8 +36,8 @@ Content-Type: application/json
 
 > {% client.test("Request failed missing repeat_password", function () {
   client.assert(response.status === 400, "Response status is not 400")
-  const message = '"password" missing required peer "repeat_password"'
+  var message = '"password" missing required peer "repeat_password"'
   //client.log(response.body.message)
-  client.assert(response.body.message === message, `Response is not ${message}`)
+  client.assert(response.body.message === message, "Response is not  as expected")
      })
   %}
