@@ -1,13 +1,16 @@
 const createError = require('http-errors')
 const userSchema = require('../lib/userSchema')
+const Joi = require('@hapi/joi')
 
 module.exports = {
   post: (req, res, next) => {
-      const valRes = userSchema.validate(req.body)
-      if (valRes.error !== undefined) {
-        next(createError(400,valRes.error.message))
-      }
+
+    try {
+      Joi.assert(req.body,userSchema)
       next()
+    } catch (err) {
+      next(createError(400,err))
+    }
   }
 }
 
