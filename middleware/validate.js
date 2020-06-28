@@ -7,7 +7,7 @@ module.exports = {
 
     try {
       const schema = userSchema
-        .with('username', 'birth_year')
+        .with('username', ['birth_year','email'])
         .xor('password', 'access_token')
         .with('password', 'repeat_password')
       Joi.assert(req.body, schema)
@@ -19,7 +19,10 @@ module.exports = {
   put: (req, res, next) => {
 
     try {
-      Joi.assert(req.body, userSchema)
+      const schema = userSchema
+        .with('username',['birth_year','_id','email'])
+        .without('username',['password','repeat_password','access_token'])
+      Joi.assert(req.body,schema )
       next()
     } catch (err) {
       next(createError(400, err))
