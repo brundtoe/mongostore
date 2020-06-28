@@ -1,0 +1,43 @@
+GET http://localhost:3000/users
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200")
+  client.assert(response.body === "respond with a resource","Response text i not respone with a resource")
+     })
+  %}
+
+###
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "username": "abc",
+  "birth_year": 1994,
+  "password": "secret",
+  "repeat_password": "secret",
+  "email": "jens@mail.com"
+}
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 201, "Response status is not 201")
+     })
+  %}
+
+###
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "username": "abc",
+  "birth_year": 1994,
+  "password": "secret",
+  "email": "jens@mail.com"
+}
+
+> {% client.test("Request failed missing repeat_password", function() {
+  client.assert(response.status === 400, "Response status is not 400")
+  var message = '"password" missing required peer "repeat_password"'
+  client.log(response.body.message)
+  client.assert(response.body.message == message)
+     })
+  %}
