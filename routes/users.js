@@ -10,10 +10,11 @@ router.route('/')
   .get((req, res) => {
     res.send('respond with a resource')
   })
-  .post(validate.post, save)
-
-function save(req,res) {
+  .post(validate.post, (req, res) => {
     res.status(201).json(req.body)
-}
+  })
+  .put(validate.put, (req, res) => {
+    res.status(201).json(req.body)
+  })
 
 module.exports = router
