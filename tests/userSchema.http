@@ -34,10 +34,10 @@ Content-Type: application/json
   "email": "jens@mail.com"
 }
 
-> {% client.test("Request failed missing repeat_password", function() {
+> {% client.test("Request failed missing repeat_password", function () {
   client.assert(response.status === 400, "Response status is not 400")
-  var message = '"password" missing required peer "repeat_password"'
-  client.log(response.body.message)
-  client.assert(response.body.message == message)
+  const message = '"password" missing required peer "repeat_password"'
+  //client.log(response.body.message)
+  client.assert(response.body.message === message, `Response is not ${message}`)
      })
   %}
