@@ -13,6 +13,10 @@ function establishConnection () {
     .then(client => {
       db = client.db(dbName)
       dbClient = client
+      process.on('SIGINT', () => {
+        dbClient.close();
+        process.exit();
+      })
     })
     .catch(error => console.error(error))
 }
