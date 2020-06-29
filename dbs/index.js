@@ -18,12 +18,6 @@ function establishConnection () {
 }
 
 function getConnection () {
-
-   if (db !== null) {
-    return db
-  }
-   establishConnection()
-
   return db
 }
 
