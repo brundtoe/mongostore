@@ -5,8 +5,6 @@ const dbName =  process.env.DB_NAME
 //const dbName = 'mystore'
 const options = { useNewUrlParser: true, useUnifiedTopology: true }
 
-const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true })
-
 let db
 let dbClient
 
