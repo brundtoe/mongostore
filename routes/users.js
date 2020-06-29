@@ -1,13 +1,14 @@
 const express = require('express')
 const router = express.Router()
 const validate = require('../middleware/validate')
-const conn = require('../dbs/mystore')
+const mongoCon = require('../dbs')
 const assert = require('assert')
 
 router.route('/')
   .get(async (req, res, next) => {
+
     try {
-      const db = await conn()
+      let db = mongoCon.getConnection()
       let r = await db.collection('testing').insertOne(
         {
           firstname: 'Katrine',
@@ -18,7 +19,7 @@ router.route('/')
         }
       )
       assert(1, r.insertedCount)
-      res.send('respond with a resource')
+      res.send('startpage');
     } catch (err) {
       next(err)
     }
