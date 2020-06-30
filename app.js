@@ -8,6 +8,7 @@ require('dotenv').config()
 const errorHandler = require('./middleware/handlers')
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const booksRouter = require('./routes/books');
 const app = express();
 
 const db = require('./dbs')
@@ -21,6 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/books', booksRouter);
 
 // the route is not found
 app.use(errorHandler.notFound)
