@@ -3,7 +3,7 @@ const url = process.env.DB_URL
 //const url = 'mongodb://localhost:27017'
 const dbName =  process.env.DB_NAME
 //const dbName = 'mystore'
-const options = { useNewUrlParser: true, useUnifiedTopology: true }
+const options = { useNewUrlParser: true, useUnifiedTopology: true, poolSize: 10 }
 
 let db
 let dbClient
