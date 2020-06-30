@@ -8,4 +8,7 @@ router.route('/')
   .post(validate.post, usersController.save)
   .put(validate.put, usersController.update)
 
+router.route('/:id')
+  .delete(usersController.delete)
+
 module.exports = router

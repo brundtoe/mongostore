@@ -35,5 +35,9 @@ module.exports = {
   },
   async update (req, res, next) {
     res.status(201).json(req.body)
+  },
+  async delete (req, res, next) {
+    res.status(200).json({success: 'users delete function'})
   }
+
 }
