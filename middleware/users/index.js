@@ -25,7 +25,7 @@ module.exports = {
       }
       let col = db.collection(userCollection)
       let cursor = await col.find(query, options).project(fields).toArray()
-      res.status(200).json(cursor)
+      res.status(200).json({data: cursor})
     } catch (err) {
       next(err)
     }
