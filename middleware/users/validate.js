@@ -1,5 +1,5 @@
 const createError = require('http-errors')
-const userSchema = require('../lib/userSchema')
+const userSchema = require('../../lib/userSchema')
 const Joi = require('@hapi/joi')
 
 module.exports = {

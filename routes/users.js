@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const validate = require('../middleware/validate')
 const usersController = require('../middleware/users')
+const validate = require('../middleware/users/validate')
 
 router.route('/')
   .get(usersController.index)
