@@ -1,4 +1,4 @@
-const mongoCon = require('../dbs')
+const mongoCon = require('../../dbs')
 const assert = require('assert')
 const userCollection = 'books'
 
