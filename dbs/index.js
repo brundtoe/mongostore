@@ -1,7 +1,8 @@
 const MongoClient = require('mongodb').MongoClient
-const url = process.env.DB_URL
+const config = require('../config')
+const url = config.dbUrl
 //const url = 'mongodb://localhost:27017'
-const dbName =  process.env.DB_NAME
+const dbName =  config.dbName
 //const dbName = 'mystore'
 const options = { useNewUrlParser: true, useUnifiedTopology: true, poolSize: 10 }
 
