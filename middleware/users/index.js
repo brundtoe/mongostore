@@ -31,10 +31,10 @@ module.exports = {
     }
   },
   async save (req, res, next) {
-    res.status(201).json(req.body)
+    res.status(201).json({data: req.body })
   },
   async update (req, res, next) {
-    res.status(201).json(req.body)
+    res.status(201).json({data: req.body })
   },
   async delete (req, res, next) {
     res.status(200).json({success: 'users delete function'})

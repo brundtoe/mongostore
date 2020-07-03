@@ -6,57 +6,57 @@ GET http://localhost:3000/users
      })
   %}
 
-###
+### alle felter er udfyldt
 POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-  "username": "abc",
-  "birth_year": 1994,
-  "password": "secret",
-  "repeat_password": "secret",
-  "email": "jens@mail.com"
+  "name": "Kristian Hansen",
+  "city": "Horsens",
+  "state": "Østjylland",
+  "country": "DK",
+  "mail": "kristian@example.com"
 }
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 201, "Response status is not 201")
-  client.assert(response.body.email == "jens@mail.com", "Response email should be 'jens@email.com'")
+  client.assert(response.body.data.mail == "kristian@example.com", "Response email should be 'kristian@example.com'")
      })
   %}
 
-###
+### Kun de krævede felter
 POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-  "username": "abc",
-  "birth_year": 1994,
-  "password": "secret",
-  "email": "jens@mail.com"
+  "name": "Kristian Hansen",
+  "city": "Horsens",
+  "mail": "kristian@example.com"
 }
 
 > {% client.test("Should fail due to missing field repeat_password", function () {
-  client.assert(response.status === 400, "Response status is not 400")
-  var message = '"password" missing required peer "repeat_password"'
-  client.assert(response.body.details[0].message === message, "Response is not  as expected")
+  client.assert(response.status === 201, "Response status is not 201")
+  client.assert(response.body.data.mail == "kristian@example.com", "Response email should be 'kristian@example.com'")
      })
   %}
 
-###
+### med illegalt felt
 POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-  "username": "abc",
-  "birth_year": 1994,
-  "password": "secret",
-  "email": "jens@mail.com",
-  "dummyField": "illegal field"
+  "name": "Kristian Hansen",
+  "city": "Horsens",
+  "state": "Østjylland",
+  "country": "DK",
+  "mail": "kristian@example.com",
+  "dummy": "Illegal field"
+
 }
 
 > {% client.test("Should fail due to field not allowed", function () {
   client.assert(response.status === 400, "Response status is not 400")
-  var message = '"dummyField" is not allowed'
+  var message = '"dummy" is not allowed'
   client.assert(response.body.details[0].message === message, "Response is not  as expected")
      })
   %}
@@ -66,15 +66,19 @@ PUT http://localhost:3000/users
 Content-Type: application/json
 
 {
-  "_id": "5ef5fe157022575df4042249",
-  "username": "abc",
-  "birth_year": 1994,
-  "email": "jens@mail.com"
+  "_id": "5eef84a264ee594e266c8e2c",
+  "id": 29,
+  "name": "christina masterson",
+  "city": "petersbourgh",
+  "state": "pensylvania",
+  "country": "USA",
+  "mail": "christina@masterson.nu"
+
 }
 
 > {% client.test("Request failed missing repeat_password", function () {
      client.assert(response.status === 201, "Response status is not 201")
-     client.assert(response.body.email == "jens@mail.com", "Response email should be 'jens@email.com'")
+     client.assert(response.body.data.mail == "christina@masterson.nu", "Response email should be 'christina@masterson.nu'")
      })
   %}
 
@@ -83,14 +87,20 @@ PUT http://localhost:3000/users
 Content-Type: application/json
 
 {
-  "_id": "5ef5fe157022575df4042249",
-  "username": "abc",
-  "birth_year": 1994
+  "_id": "5eef84a264ee594e266c8e2c",
+  "id": 29,
+  "city": "petersbourgh",
+  "state": "pensylvania",
+  "country": "USA",
+  "mail": "christina@masterson.nu"
+
+
+
 }
 
 > {% client.test("Should fail due to missing email", function () {
      client.assert(response.status === 400, "Response status is not 400")
-     var message = '"username" missing required peer "email"'
+     var message = '"name" is required'
      client.assert(response.body.details[0].message === message, "Response is not  as expected")
      })
   %}
