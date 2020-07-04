@@ -1,6 +1,6 @@
 const mongoCon = require('../../dbs')
 const assert = require('assert')
-const userCollection = 'authors'
+const authorCollection = 'authors'
 
 module.exports = {
   async index (req, res, next) {
@@ -29,13 +29,24 @@ module.exports = {
         sort: { id: 1 },
         limit: 4
       }
-      let col = db.collection(userCollection)
+      let col = db.collection(authorCollection)
       let cursor = await col.aggregate([
         { '$match': query},
         {'$lookup': join },
         {'$project': fields}
       ], options).toArray()
       res.status(200).json({data: cursor})
+    } catch (err) {
+      next(err)
+    }
+  },
+
+  async show (req,res,next) {
+    try{
+      const id = parseInt(req.params.id)
+      let db = mongoCon.getConnection()
+      const author = await db.collection(authorCollection).findOne({id:id})
+      res.status(200).json({data: author})
     } catch (err) {
       next(err)
     }

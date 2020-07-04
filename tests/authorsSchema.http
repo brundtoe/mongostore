@@ -2,9 +2,29 @@ GET http://localhost:3000/authors
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
-  client.assert(response.body.data.length === 4,"Response should have returned 4 users")
+  client.assert(response.body.data.length === 4,"Response should have returned 4 authors")
      })
   %}
+
+###
+
+GET http://localhost:3000/authors/12
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200")
+  client.assert(response.body.data.mail === 'Gross@mail.com',"Response should have returned Gross@mail.com")
+     })
+  %}
+
+###
+GET http://localhost:3000/authors/jensen
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200")
+  client.assert(response.body.data === null,"Response should have returned empty")
+     })
+  %}
+
 
 ###
 POST http://localhost:3000/authors
