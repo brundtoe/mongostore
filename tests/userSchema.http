@@ -104,3 +104,12 @@ Content-Type: application/json
      client.assert(response.body.details[0].message === message, "Response is not  as expected")
      })
   %}
+
+###
+DELETE http://localhost:3000/users/29
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200")
+  client.assert(response.body.success === "users delete function","Response should have returned 'users delete function'")
+     })
+  %}
