@@ -25,7 +25,7 @@ GET http://localhost:3000/users/jensen
      })
   %}
 
-### alle felter er udfyldt
+###
 POST http://localhost:3000/users
 Content-Type: application/json
 
@@ -39,7 +39,18 @@ Content-Type: application/json
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 201, "Response status is not 201")
-  client.assert(response.body.data.mail == "kristian@example.com", "Response email should be 'kristian@example.com'")
+  client.assert(response.body.data.insertedCount === 1, "Response email should insert One document")
+  client.global.set('kristian_id',response.body.data.user.id)
+     })
+  %}
+
+### delete again
+DELETE http://localhost:3000/users/{{kristian_id}}
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200")
+  var user_id = client.global.get('kristian_id')
+  client.assert(response.body.data.value.id == user_id,"Response should have been deleted")
      })
   %}
 
@@ -48,16 +59,28 @@ POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-  "name": "Kristian Hansen",
-  "city": "Horsens",
-  "mail": "kristian@example.com"
+  "name": "Maria Jensen",
+  "city": "Svendborg",
+  "mail": "maria@example.com"
 }
 
-> {% client.test("Should succces with only required fields", function () {
+> {% client.test("Request executed successfully", function() {
   client.assert(response.status === 201, "Response status is not 201")
-  client.assert(response.body.data.mail == "kristian@example.com", "Response email should be 'kristian@example.com'")
+  client.assert(response.body.data.insertedCount === 1, "Response email should insert One document")
+  client.global.set('maria_id',response.body.data.user.id)
      })
   %}
+
+###
+DELETE http://localhost:3000/users/{{maria_id}}
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200")
+  var user_id = client.global.get('maria_id')
+  client.assert(response.body.data.value.id == user_id,"Response should have been deleted")
+     })
+  %}
+
 
 ### med illegalt felt
 POST http://localhost:3000/users
@@ -125,18 +148,9 @@ Content-Type: application/json
   %}
 
 ###
-DELETE http://localhost:3000/users/29
-
-> {% client.test("Request executed successfully", function() {
-  client.assert(response.status === 200, "Response status is not 200")
-  client.assert(response.body.success === "users delete function","Response should have returned 'users delete function'")
-     })
-  %}
-
-###
 DELETE http://localhost:3000/users/jensen
 
-> {% client.test("Request executed successfully", function() {
+> {% client.test("Request fails jensn is not numeric", function() {
   client.assert(response.status === 400, "Response status is not 400")
   var message = '"value" must be a number'
   client.assert(response.body.details[0].message === message ,"Response should have returned 'value must be a number")

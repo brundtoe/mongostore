@@ -3,6 +3,11 @@ const assert = require('assert')
 const createError = require('http-errors')
 const userCollection = 'users'
 
+async function getNextUserId () {
+  let db = mongoCon.getConnection()
+  return db.collection('counters').findOneAndUpdate({ _id: 'user_id' }, { $inc: { next_value: 1 } }, { returnOriginal: true })
+}
+
 module.exports = {
 
   async index (req, res, next) {
@@ -26,7 +31,7 @@ module.exports = {
       }
       let col = db.collection(userCollection)
       let cursor = await col.find(query, options).project(fields).toArray()
-      res.status(200).json({data: cursor})
+      res.status(200).json({ data: cursor })
     } catch (err) {
       next(err)
     }
@@ -35,21 +40,44 @@ module.exports = {
     let db = mongoCon.getConnection()
     const id = parseInt(req.params.id)
     try {
-      const user = await db.collection(userCollection).findOne({id:id})
-      res.status(200).json({data: user})
-    } catch (err){
+      const user = await db.collection(userCollection).findOne({ id: id })
+      res.status(200).json({ data: user })
+    } catch (err) {
       next(err)
     }
   },
 
   async save (req, res, next) {
-    res.status(201).json({data: req.body })
+    try {
+      const user_id = await getNextUserId()
+      const db = mongoCon.getConnection()
+      req.body.id = user_id.value.next_value
+      const result = await db.collection(userCollection).insertOne(req.body)
+      res.status(201).json({
+        data: {
+          insertedCount: result.insertedCount,
+          insertedId: result.insertedId,
+          user: result.ops[0]
+        }
+      })
+    } catch (err) {
+      next(createError(400, err.message))
+    }
+
   },
   async update (req, res, next) {
-    res.status(201).json({data: req.body })
+    res.status(201).json({ data: req.body })
   },
   async delete (req, res, next) {
-    res.status(200).json({success: 'users delete function'})
+    const user_id = parseInt(req.params.id)
+    try{
+      const db = mongoCon.getConnection()
+      const result = await db.collection(userCollection).findOneAndDelete({id: user_id})
+      res.status(200).json({ data: result })
+    } catch (err) {
+      next(err)
+    }
+
   }
 
 }
