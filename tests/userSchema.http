@@ -6,6 +6,25 @@ GET http://localhost:3000/users
      })
   %}
 
+###
+GET http://localhost:3000/users/21
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200")
+  client.assert(response.body.data.mail === "pwjones@anymail.com" ,"Response should have returned ''6 users")
+     })
+  %}
+
+###
+GET http://localhost:3000/users/jensen
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 400, "Response status is not 400")
+  var message = '"value" must be a number'
+  client.assert(response.body.details[0].message === message ,"Response should have returned 'value must be a number")
+     })
+  %}
+
 ### alle felter er udfyldt
 POST http://localhost:3000/users
 Content-Type: application/json
@@ -111,5 +130,15 @@ DELETE http://localhost:3000/users/29
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
   client.assert(response.body.success === "users delete function","Response should have returned 'users delete function'")
+     })
+  %}
+
+###
+DELETE http://localhost:3000/users/jensen
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 400, "Response status is not 400")
+  var message = '"value" must be a number'
+  client.assert(response.body.details[0].message === message ,"Response should have returned 'value must be a number")
      })
   %}

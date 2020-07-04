@@ -1,5 +1,6 @@
 const mongoCon = require('../../dbs')
 const assert = require('assert')
+const createError = require('http-errors')
 const userCollection = 'users'
 
 module.exports = {
@@ -30,6 +31,18 @@ module.exports = {
       next(err)
     }
   },
+  async show (req, res, next) {
+    let db = mongoCon.getConnection()
+    const id = parseInt(req.params.id)
+    try {
+      const user = await db.collection(userCollection).findOne({id:id})
+      res.status(200).json({data: user})
+    } catch (err){
+      next(err)
+    }
+    res.status(201).json({data: req.body })
+  },
+
   async save (req, res, next) {
     res.status(201).json({data: req.body })
   },
