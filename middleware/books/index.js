@@ -1,6 +1,6 @@
 const mongoCon = require('../../dbs')
 const assert = require('assert')
-const userCollection = 'books'
+const booksCollection = 'books'
 
 module.exports = {
   async index (req, res, next) {
@@ -37,6 +37,17 @@ module.exports = {
         {'$project': fields}
       ]).toArray()
       res.status(200).json({data: cursor})
+    } catch (err) {
+      next(err)
+    }
+  },
+
+  async show (req,res,next)  {
+    try {
+      const id = parseInt(req.params.id)
+      let db = mongoCon.getConnection()
+      const book = await db.collection(booksCollection).findOne({id:id})
+      res.status(200).json(book)
     } catch (err) {
       next(err)
     }

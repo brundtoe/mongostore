@@ -9,6 +9,7 @@ router.route('/')
   .put(booksController.update)
 
 router.route('/:id')
+  .get(booksController.show)
   .delete(booksController.delete)
 
 module.exports = router
