@@ -53,7 +53,7 @@ Content-Type: application/json
   "mail": "kristian@example.com"
 }
 
-> {% client.test("Should fail due to missing field repeat_password", function () {
+> {% client.test("Should succces with only required fields", function () {
   client.assert(response.status === 201, "Response status is not 201")
   client.assert(response.body.data.mail == "kristian@example.com", "Response email should be 'kristian@example.com'")
      })
@@ -117,7 +117,7 @@ Content-Type: application/json
 
 }
 
-> {% client.test("Should fail due to missing email", function () {
+> {% client.test("Should fail due to missing field name", function () {
      client.assert(response.status === 400, "Response status is not 400")
      var message = '"name" is required'
      client.assert(response.body.details[0].message === message, "Response is not  as expected")

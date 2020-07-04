@@ -20,11 +20,11 @@ GET http://localhost:3000/authors/12
 GET http://localhost:3000/authors/jensen
 
 > {% client.test("Request executed successfully", function() {
-  client.assert(response.status === 200, "Response status is not 200")
-  client.assert(response.body.data === null,"Response should have returned empty")
+  client.assert(response.status === 400, "Response status is not 400")
+  var message = '"value" must be a number'
+  client.assert(response.body.details[0].message === message,"Response should have returned empty")
      })
   %}
-
 
 ###
 POST http://localhost:3000/authors
@@ -41,6 +41,42 @@ Content-Type: application/json
   client.assert(response.body.data.mail === "karin@example.com","Response should have returned 'karin@example.com")
      })
   %}
+
+###
+POST http://localhost:3000/authors
+Content-Type: application/json
+
+{
+  "firstname": "Karin",
+  "lastname": "Andersen"
+}
+
+> {% client.test("Request should fail du to missing field mail", function() {
+  client.assert(response.status === 400, "Response status is not 400")
+  var message = '"firstname" missing required peer "mail"'
+  client.assert(response.body.details[0].message === message,"Response should have returned 'field required'")
+     })
+
+  %}
+
+###
+POST http://localhost:3000/authors
+Content-Type: application/json
+
+{
+  "firstname": "Karin",
+  "lastname": "Andersen",
+  "mail": "karin@example.com",
+  "dummy": "Illegal field"
+}
+
+> {% client.test("Should fail due to field not allowed", function () {
+  client.assert(response.status === 400, "Response status is not 400")
+  var message = '"dummy" is not allowed'
+  client.assert(response.body.details[0].message === message, "Response is not  as expected")
+     })
+  %}
+
 
 ###
 PUT http://localhost:3000/authors
@@ -61,6 +97,24 @@ Content-Type: application/json
   %}
 
 ###
+PUT http://localhost:3000/authors
+Content-Type: application/json
+
+{
+  "_id": "5eef84a264ee594e266c8dd3",
+  "id": 29,
+  "firstname": "Jesse",
+  "lastname": "Liberty"
+}
+
+> {% client.test("Should fail due to missing field mail", function () {
+     client.assert(response.status === 400, "Response status is not 400")
+     var message = "\"_id\" missing required peer \"mail\""
+     client.assert(response.body.details[0].message === message, "Response is not  as expected")
+     })
+  %}
+
+###
 DELETE http://localhost:3000/authors/29
 
 > {% client.test("Request executed successfully", function() {
@@ -69,3 +123,12 @@ DELETE http://localhost:3000/authors/29
      })
   %}
 
+###
+DELETE http://localhost:3000/authors/jensen
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 400, "Response status is not 400")
+  var message = '"value" must be a number'
+  client.assert(response.body.details[0].message === message,"Response should have returned empty")
+     })
+  %}
