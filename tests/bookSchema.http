@@ -1,0 +1,76 @@
+GET http://localhost:3000/books
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200")
+  client.assert(response.body.data.length === 3,"Response should have returned 3 books")
+     })
+  %}
+
+###
+GET http://localhost:3000/books/15
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200")
+  var title = "Professional Java Xml Programming With Servlets An"
+  client.assert(response.body.data.title === title,"Response should have returned correct title")
+     })
+  %}
+
+###
+GET http://localhost:3000/books/jensen
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200")
+  client.assert(response.body.data === null,"Response should have returned correct title")
+     })
+  %}
+
+###
+POST http://localhost:3000/books
+Content-Type: application/json
+
+{
+  "author_id": 29,
+  "title": "MongoDB Ultimate Guide",
+  "published": "2020-06-24",
+  "bookprice": 34.75,
+  "isbn": "8797435",
+  "onhand": 2
+}
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 201, "Response status is not 201")
+  client.assert(response.body.data.title === "MongoDB Ultimate Guide","Response should have returned correct title")
+     })
+  %}
+
+###
+PUT http://localhost:3000/books
+Content-Type: application/json
+
+{
+  "_id": "5eef84a264ee594e266c8df0",
+  "id": 18,
+  "author_id": 11,
+  "title": "Beginning Active Server Pages 3.0",
+  "published": "1999-11-30T23:00:00.000Z",
+  "bookprice": 28.99,
+  "isbn": "1861003382",
+  "onhand": 54
+}
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 201, "Response status is not 201")
+  var title = "Beginning Active Server Pages 3.0"
+  client.assert(response.body.data.title === title,"Response should have returned correct title")
+     })
+  %}
+
+###
+DELETE http://localhost:3000/books/15
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200")
+  client.assert(response.body.success === 'Books delete function',"Response should have returned correct title")
+     })
+  %}

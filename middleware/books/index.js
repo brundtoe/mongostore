@@ -29,7 +29,7 @@ module.exports = {
       options = {
         sort: { id: 1 },
       }
-      let col = db.collection(userCollection)
+      let col = db.collection(booksCollection)
       let cursor = await col.aggregate([
         { '$match': query},
         {'$lookup': join },
@@ -47,16 +47,16 @@ module.exports = {
       const id = parseInt(req.params.id)
       let db = mongoCon.getConnection()
       const book = await db.collection(booksCollection).findOne({id:id})
-      res.status(200).json(book)
+      res.status(200).json({data: book })
     } catch (err) {
       next(err)
     }
   },
   async save (req, res, next) {
-    res.status(200).json({success: 'Books save function'})
+    res.status(201).json({data: req.body})
   },
   async update (req, res, next) {
-    res.status(200).json({success: 'Books update function'})
+    res.status(201).json({data: req.body})
   },
   async delete (req, res, next) {
     res.status(200).json({success: 'Books delete function'})
