@@ -40,7 +40,6 @@ module.exports = {
     } catch (err){
       next(err)
     }
-    res.status(201).json({data: req.body })
   },
 
   async save (req, res, next) {
