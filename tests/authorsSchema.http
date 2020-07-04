@@ -1,0 +1,51 @@
+GET http://localhost:3000/authors
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200")
+  client.assert(response.body.data.length === 4,"Response should have returned 4 users")
+     })
+  %}
+
+###
+POST http://localhost:3000/authors
+Content-Type: application/json
+
+{
+  "firstname": "Karin",
+  "lastname": "Andersen",
+  "mail": "karin@example.com"
+}
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 201, "Response status is not 201")
+  client.assert(response.body.data.mail === "karin@example.com","Response should have returned 'karin@example.com")
+     })
+  %}
+
+###
+PUT http://localhost:3000/authors
+Content-Type: application/json
+
+{
+  "_id": "5eef84a264ee594e266c8dd3",
+  "id": 29,
+  "firstname": "Jesse",
+  "lastname": "Liberty",
+  "mail": "Liberty@example.com"
+}
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 201, "Response status is not 201")
+  client.assert(response.body.data.mail === "Liberty@example.com","Response should have returned 'Liberty@example.com'")
+     })
+  %}
+
+###
+DELETE http://localhost:3000/authors/29
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200")
+  client.assert(response.body.success === "Authors delete function","Response should have returned 'Authors delete function'")
+     })
+  %}
+

@@ -41,10 +41,10 @@ module.exports = {
     }
   },
   async save (req, res, next) {
-    res.status(200).json({success: 'Authors save function'})
+    res.status(201).json({data: req.body})
   },
   async update (req, res, next) {
-    res.status(200).json({success: 'Authors update function'})
+    res.status(201).json({data: req.body})
   },
   async delete (req, res, next) {
     res.status(200).json({success: 'Authors delete function'})
