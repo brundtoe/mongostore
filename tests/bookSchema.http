@@ -62,6 +62,25 @@ DELETE http://localhost:3000/books/{{title_id}}
      })
   %}
 
+### author does not exist
+POST http://localhost:3000/books
+Content-Type: application/json
+
+{
+  "author_id": 291,
+  "title": "MongoDB Ultimate Guide",
+  "published": "2020-06-24T12:00:00Z",
+  "bookprice": 34.75,
+  "isbn": "8797435321",
+  "onhand": 2
+}
+
+> {% client.test("Request fails autho does not exist", function() {
+    client.assert(response.status === 400, "Response status is not 400")
+    client.assert(response.body.message === "author does not exist", "response should be author does not exist")
+     })
+  %}
+
 ###
 POST http://localhost:3000/books
 Content-Type: application/json
@@ -153,6 +172,27 @@ Content-Type: application/json
   client.assert(response.body.value.bookprice === 28.99, "Response should have returned bookprice 28.99 ")
   client.assert(response.body.value.isbn === "1861003382", "Response should have returned isbn 8797435321 ")
   client.assert(response.body.value.onhand === 54, "Response should have returned onhand 54")
+     })
+  %}
+
+###
+PUT http://localhost:3000/books
+Content-Type: application/json
+
+{
+  "_id": "5eef84a264ee594e266c8df0",
+  "author_id": 818,
+  "id": 18,
+  "title": "Beginning Active Server Pages 3.0",
+  "published": "1999-11-30T23:00:00.000Z",
+  "bookprice": 28.99,
+  "isbn": "1861003382",
+  "onhand": 54
+}
+
+> {% client.test("Request fails autho does not exist", function() {
+    client.assert(response.status === 400, "Response status is not 400")
+    client.assert(response.body.message === "author does not exist", "response should be author does not exist")
      })
   %}
 

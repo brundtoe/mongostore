@@ -17,6 +17,16 @@ GET http://localhost:3000/authors/12
   %}
 
 ###
+GET http://localhost:3000/authors/121
+
+> {% client.test("Request should fail no author with number 121", function() {
+  client.assert(response.status === 200, "Response status is not 200")
+  client.assert(response.body.data === null,"Response should have returned null")
+     })
+  %}
+
+
+###
 GET http://localhost:3000/authors/jensen
 
 > {% client.test("Request executed successfully", function() {
