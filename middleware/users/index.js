@@ -66,13 +66,28 @@ module.exports = {
 
   },
   async update (req, res, next) {
-    res.status(201).json({ data: req.body })
+    const user_id = parseInt(req.body.id)
+    try {
+      const db = mongoCon.getConnection()
+      const result = await db.collection(userCollection).findOneAndReplace({ id: user_id },
+        {
+          id: req.body.id,
+          name: req.body.name,
+          city: req.body.city,
+          state: req.body.state,
+          country: req.body.country,
+          mail: req.body.mail
+        },{returnOriginal:false})
+      res.status(201).json(result)
+    } catch (err) {
+      next(createError(400, err.message))
+    }
   },
   async delete (req, res, next) {
     const user_id = parseInt(req.params.id)
-    try{
+    try {
       const db = mongoCon.getConnection()
-      const result = await db.collection(userCollection).findOneAndDelete({id: user_id})
+      const result = await db.collection(userCollection).findOneAndDelete({ id: user_id })
       res.status(200).json({ data: result })
     } catch (err) {
       next(err)

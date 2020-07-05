@@ -21,8 +21,8 @@ module.exports = {
     try {
       const schema = userSchema
         .with('_id',['id','name','mail','city'])
-        .or('name','country')
-        .or('name','state')
+//        .or('name','country')
+//        .or('name','state')
       Joi.assert(req.body,schema )
       next()
     } catch (err) {

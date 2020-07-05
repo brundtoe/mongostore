@@ -20,12 +20,12 @@ const userSchema = Joi.object({
 
   state: Joi.string()
     .regex(/^[a-zA-Zæøå ÆØÅ]{3,30}$/)
-    .min(3)
+    .min(0)
     .max(30),
 
   country: Joi.string()
     .alphanum()
-    .min(2)
+    .min(0)
     .max(30),
 
   mail: Joi.string()

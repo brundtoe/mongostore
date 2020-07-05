@@ -110,17 +110,44 @@ Content-Type: application/json
 {
   "_id": "5eef84a264ee594e266c8e2c",
   "id": 29,
+  "name": "Christian Johnson",
+  "city": "Swindon",
+  "country": "UK",
+  "mail": "christian@johnson.nu"
+
+}
+
+> {% client.test("Request failed missing repeat_password", function () {
+     client.assert(response.status === 201, "Response status is not 201")
+     client.assert(response.body.value.name === "Christian Johnson", "Response name should be Christian Johnson")
+     client.assert(response.body.value.city === "Swindon", "Response city should be Swindon")
+     client.assert(response.body.value.state === null, "Response state should be null")
+     client.assert(response.body.value.country === "UK", "Response country should be UK")
+     client.assert(response.body.value.mail === "christian@johnson.nu", "Response mail should be christian@johnson.nu")
+     })
+  %}
+
+###
+PUT http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "_id": "5eef84a264ee594e266c8e2c",
+  "id": 29,
   "name": "christina masterson",
   "city": "petersbourgh",
   "state": "pensylvania",
-  "country": "USA",
   "mail": "christina@masterson.nu"
 
 }
 
 > {% client.test("Request failed missing repeat_password", function () {
      client.assert(response.status === 201, "Response status is not 201")
-     client.assert(response.body.data.mail == "christina@masterson.nu", "Response email should be 'christina@masterson.nu'")
+          client.assert(response.body.value.name === "christina masterson", "Response name should be Christian Johnson")
+     client.assert(response.body.value.city === "peterborourgh", "Response city should be Swindon")
+     client.assert(response.body.value.state === "pensylvania", "Response state should be null")
+     client.assert(response.body.value.country === null, "Response country should be UK")
+     client.assert(response.body.value.mail == "christina@masterson.nu", "Response email should be 'christina@masterson.nu'")
      })
   %}
 
@@ -135,8 +162,6 @@ Content-Type: application/json
   "state": "pensylvania",
   "country": "USA",
   "mail": "christina@masterson.nu"
-
-
 
 }
 
