@@ -143,10 +143,10 @@ Content-Type: application/json
 
 > {% client.test("Request failed missing repeat_password", function () {
      client.assert(response.status === 201, "Response status is not 201")
-          client.assert(response.body.value.name === "christina masterson", "Response name should be Christian Johnson")
-     client.assert(response.body.value.city === "peterborourgh", "Response city should be Swindon")
-     client.assert(response.body.value.state === "pensylvania", "Response state should be null")
-     client.assert(response.body.value.country === null, "Response country should be UK")
+          client.assert(response.body.value.name === "christina masterson", "Response name should be christina  masterson")
+     client.assert(response.body.value.city === "petersbourgh", "Response city should be peterborough")
+     client.assert(response.body.value.state === "pensylvania", "Response state should be pensylvania")
+     client.assert(response.body.value.country === null, "Response country should be null")
      client.assert(response.body.value.mail == "christina@masterson.nu", "Response email should be 'christina@masterson.nu'")
      })
   %}
@@ -181,3 +181,4 @@ DELETE http://localhost:3000/users/jensen
   client.assert(response.body.details[0].message === message ,"Response should have returned 'value must be a number")
      })
   %}
+
