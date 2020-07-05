@@ -1,5 +1,6 @@
 const mongoCon = require('../../dbs')
-const assert = require('assert')
+const createError = require('http-errors')
+const {getNextId} = require('../../lib/getNextId')
 const booksCollection = 'books'
 
 module.exports = {
@@ -38,7 +39,7 @@ module.exports = {
       ]).toArray()
       res.status(200).json({data: cursor})
     } catch (err) {
-      next(err)
+      next(createError(400, err.message))
     }
   },
 
@@ -49,17 +50,54 @@ module.exports = {
       const book = await db.collection(booksCollection).findOne({id:id})
       res.status(200).json({data: book })
     } catch (err) {
-      next(err)
+      next(createError(400, err.message))
     }
   },
   async save (req, res, next) {
-    res.status(201).json({data: req.body})
+    try {
+      const book = await getNextId('book_id')
+      const db = mongoCon.getConnection()
+      req.body.id = book.value.next_value
+      const result = await db.collection(booksCollection).insertOne(req.body)
+      res.status(201).json({
+        data: {
+          insertedCount: result.insertedCount,
+          insertedId: result.insertedId,
+          book: result.ops[0]
+        }
+      })
+    } catch (err) {
+      next(createError(400, err.message))
+    }
   },
   async update (req, res, next) {
-    res.status(201).json({data: req.body})
+    const book_id = parseInt(req.body.id)
+    try {
+      const db = mongoCon.getConnection()
+      const result = await db.collection(booksCollection).findOneAndReplace({ id: book_id },
+        {
+          id: book_id,
+          author_id: req.body.author_id,
+          title: req.body.title,
+          published: req.body.published,
+          bookprice: req.body.bookprice,
+          isbn: req.body.isbn,
+          onhand: req.body.onhand
+        },{returnOriginal:false})
+      res.status(201).json(result)
+    } catch (err) {
+      next(createError(400, err.message))
+    }
   },
   async delete (req, res, next) {
-    res.status(200).json({success: 'Books delete function'})
+    const book_id = parseInt(req.params.id)
+    try {
+      const db = mongoCon.getConnection()
+      const result = await db.collection(booksCollection).findOneAndDelete({ id: book_id })
+      res.status(200).json({ data: result })
+    } catch (err) {
+      next(createError(400, err.message))
+    }
   }
 
 }

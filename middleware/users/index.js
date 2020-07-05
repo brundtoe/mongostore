@@ -85,7 +85,7 @@ module.exports = {
       const result = await db.collection(userCollection).findOneAndDelete({ id: user_id })
       res.status(200).json({ data: result })
     } catch (err) {
-      next(err)
+      next(createError(400, err.message))
     }
 
   }
