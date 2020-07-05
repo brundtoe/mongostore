@@ -38,7 +38,21 @@ Content-Type: application/json
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 201, "Response status is not 201")
-  client.assert(response.body.data.mail === "karin@example.com","Response should have returned 'karin@example.com")
+  client.assert(response.body.data.insertedCount === 1,"Response should be one document inserted")
+  client.assert(response.body.data.author.firstname === "Karin", "Response should have returned Karin")
+  client.assert(response.body.data.author.lastname === "Andersen", "Response should have returned Karin")
+  client.assert(response.body.data.author.mail === "karin@example.com","Response should have returned 'karin@example.com")
+  client.global.set('karin_id',response.body.data.author.id)
+     })
+  %}
+
+###
+DELETE http://localhost:3000/authors/{{karin_id}}
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200")
+  var author_id = client.global.get('karin_id')
+  client.assert(response.body.data.value.id == author_id,"Response should have been deleted")
      })
   %}
 
@@ -77,8 +91,27 @@ Content-Type: application/json
      })
   %}
 
-
 ###
+PUT http://localhost:3000/authors
+Content-Type: application/json
+
+{
+  "_id": "5eef84a264ee594e266c8dd3",
+  "id": 29,
+  "firstname": "Jens",
+  "lastname": "Olsen",
+  "mail": "jens@example.com"
+}
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 201, "Response status is not 201")
+  client.assert(response.body.value.firstname === "Jens","Response should have firstname Jens")
+  client.assert(response.body.value.lastname === "Olsen","Response should have last name Olsen")
+  client.assert(response.body.value.mail === "jens@example.com","Response should have mail jens@example.com")
+     })
+  %}
+
+### reset values i database
 PUT http://localhost:3000/authors
 Content-Type: application/json
 
@@ -92,7 +125,9 @@ Content-Type: application/json
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 201, "Response status is not 201")
-  client.assert(response.body.data.mail === "Liberty@example.com","Response should have returned 'Liberty@example.com'")
+  client.assert(response.body.value.firstname === "Jesse","Response should have firstname Jesse")
+  client.assert(response.body.value.lastname === "Liberty","Response should have last name Liberty")
+  client.assert(response.body.value.mail === "Liberty@example.com","Response should have mail Liberty@example.com")
      })
   %}
 
@@ -114,14 +149,6 @@ Content-Type: application/json
      })
   %}
 
-###
-DELETE http://localhost:3000/authors/29
-
-> {% client.test("Request executed successfully", function() {
-  client.assert(response.status === 200, "Response status is not 200")
-  client.assert(response.body.success === "Authors delete function","Response should have returned 'Authors delete function'")
-     })
-  %}
 
 ###
 DELETE http://localhost:3000/authors/jensen

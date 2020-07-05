@@ -135,7 +135,7 @@ Content-Type: application/json
   "_id": "5eef84a264ee594e266c8e2c",
   "id": 29,
   "name": "christina masterson",
-  "city": "petersbourgh",
+  "city": "petersburgh",
   "state": "pensylvania",
   "mail": "christina@masterson.nu"
 
@@ -144,7 +144,7 @@ Content-Type: application/json
 > {% client.test("Request failed missing repeat_password", function () {
      client.assert(response.status === 201, "Response status is not 201")
           client.assert(response.body.value.name === "christina masterson", "Response name should be christina  masterson")
-     client.assert(response.body.value.city === "petersbourgh", "Response city should be peterborough")
+     client.assert(response.body.value.city === "petersburgh", "Response city should be peterburgh")
      client.assert(response.body.value.state === "pensylvania", "Response state should be pensylvania")
      client.assert(response.body.value.country === null, "Response country should be null")
      client.assert(response.body.value.mail == "christina@masterson.nu", "Response email should be 'christina@masterson.nu'")

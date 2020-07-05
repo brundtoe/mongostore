@@ -2,6 +2,11 @@ const mongoCon = require('../../dbs')
 const assert = require('assert')
 const authorCollection = 'authors'
 
+async function getNextAuthorId () {
+  let db = mongoCon.getConnection()
+  return db.collection('counters').findOneAndUpdate({ _id: 'author_id' }, { $inc: { next_value: 1 } }, { returnOriginal: true })
+}
+
 module.exports = {
   async index (req, res, next) {
 
@@ -52,13 +57,48 @@ module.exports = {
     }
   },
   async save (req, res, next) {
-    res.status(201).json({data: req.body})
+    try {
+      const author_id = await getNextAuthorId()
+      const db = mongoCon.getConnection()
+      req.body.id = author_id.value.next_value
+      const result = await db.collection(authorCollection).insertOne(req.body)
+      res.status(201).json({
+        data: {
+          insertedCount: result.insertedCount,
+          insertedId: result.insertedId,
+          author: result.ops[0]
+        }
+      })
+    } catch (err) {
+      next(createError(400, err.message))
+    }
+
   },
   async update (req, res, next) {
-    res.status(201).json({data: req.body})
+    const author_id = parseInt(req.body.id)
+    try {
+      const db = mongoCon.getConnection()
+      const result = await db.collection(authorCollection).findOneAndReplace({ id: author_id },
+        {
+          id: author_id,
+          firstname: req.body.firstname,
+          lastname: req.body.lastname,
+          mail: req.body.mail
+        },{returnOriginal:false})
+      res.status(201).json(result)
+    } catch (err) {
+      next(createError(400, err.message))
+    }
   },
   async delete (req, res, next) {
-    res.status(200).json({success: 'Authors delete function'})
+    const author_id = parseInt(req.params.id)
+    try {
+      const db = mongoCon.getConnection()
+      const result = await db.collection(authorCollection).findOneAndDelete({ id: author_id })
+      res.status(200).json({ data: result })
+    } catch (err) {
+      next(err)
+    }
   }
 
 }

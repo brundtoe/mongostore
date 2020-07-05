@@ -71,7 +71,7 @@ module.exports = {
       const db = mongoCon.getConnection()
       const result = await db.collection(userCollection).findOneAndReplace({ id: user_id },
         {
-          id: req.body.id,
+          id: user_id,
           name: req.body.name,
           city: req.body.city,
           state: req.body.state,
