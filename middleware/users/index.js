@@ -1,12 +1,7 @@
 const mongoCon = require('../../dbs')
-const assert = require('assert')
 const createError = require('http-errors')
+const {getNextId} = require('../../lib/getNextId')
 const userCollection = 'users'
-
-async function getNextUserId () {
-  let db = mongoCon.getConnection()
-  return db.collection('counters').findOneAndUpdate({ _id: 'user_id' }, { $inc: { next_value: 1 } }, { returnOriginal: true })
-}
 
 module.exports = {
 
@@ -49,7 +44,7 @@ module.exports = {
 
   async save (req, res, next) {
     try {
-      const user_id = await getNextUserId()
+      const user_id = await getNextId('user_id')
       const db = mongoCon.getConnection()
       req.body.id = user_id.value.next_value
       const result = await db.collection(userCollection).insertOne(req.body)

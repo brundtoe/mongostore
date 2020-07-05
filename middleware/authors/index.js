@@ -1,11 +1,7 @@
 const mongoCon = require('../../dbs')
-const assert = require('assert')
 const authorCollection = 'authors'
-
-async function getNextAuthorId () {
-  let db = mongoCon.getConnection()
-  return db.collection('counters').findOneAndUpdate({ _id: 'author_id' }, { $inc: { next_value: 1 } }, { returnOriginal: true })
-}
+const { getNextId } = require('../../lib/getNextId')
+const createError = require('http-errors')
 
 module.exports = {
   async index (req, res, next) {
@@ -42,7 +38,7 @@ module.exports = {
       ], options).toArray()
       res.status(200).json({data: cursor})
     } catch (err) {
-      next(err)
+      next(createError(400, err.message))
     }
   },
 
@@ -53,12 +49,12 @@ module.exports = {
       const author = await db.collection(authorCollection).findOne({id:id})
       res.status(200).json({data: author})
     } catch (err) {
-      next(err)
+      next(createError(400, err.message))
     }
   },
   async save (req, res, next) {
     try {
-      const author_id = await getNextAuthorId()
+      const author_id = await getNextId('author_id')
       const db = mongoCon.getConnection()
       req.body.id = author_id.value.next_value
       const result = await db.collection(authorCollection).insertOne(req.body)
@@ -97,7 +93,7 @@ module.exports = {
       const result = await db.collection(authorCollection).findOneAndDelete({ id: author_id })
       res.status(200).json({ data: result })
     } catch (err) {
-      next(err)
+      next(createError(400, err.message))
     }
   }
 
