@@ -6,6 +6,9 @@ module.exports = {
 
   post: async (req, res, next) => {
     try {
+      const schema = ordersSchema
+        .with('orderdate',['user_id'])
+      Joi.assert(req.body,schema )
       next()
     } catch (err) {
       next(createError(400, err))
