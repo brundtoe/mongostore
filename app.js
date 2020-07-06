@@ -8,8 +8,10 @@ const logger = require('morgan');
 const errorHandler = require('./middleware/handlers')
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const booksRouter = require('./routes/books');
 const authorsRouter = require('./routes/authors');
+const booksRouter = require('./routes/books');
+const ordersRouter = require('./routes/orders');
+
 const app = express();
 
 const db = require('./dbs')
@@ -23,8 +25,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/books', booksRouter);
 app.use('/authors',authorsRouter)
+app.use('/books', booksRouter);
+app.use('/orders',ordersRouter);
 
 // the route is not found
 app.use(errorHandler.notFound)
