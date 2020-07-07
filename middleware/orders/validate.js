@@ -17,6 +17,9 @@ module.exports = {
   put: async (req, res, next) => {
 
     try {
+      const schema = ordersSchema
+        .with('orderdate',['_id','id','user_id','paymethod','shipby','lines'])
+      Joi.assert(req.body,schema )
       next()
     } catch (err) {
       next(createError(400, err))

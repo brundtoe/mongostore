@@ -1,5 +1,4 @@
 const validate = require('../validate')
-const createError = require('http-errors')
 const Joi = require('@hapi/joi')
 
 describe('validering af orders', () => {
@@ -58,7 +57,7 @@ describe('validering af orders', () => {
     const next = jest.fn()
     validate.delete(req, res, next)
     expect(next.mock.calls.length).toBe(1)
-    expect(next.mock.calls[0][0]).toBeUndefined
+    expect(next.mock.calls[0][0]).toBeUndefined()
   })
 
   test('should throw error on delete with double', () => {
