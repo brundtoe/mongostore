@@ -17,17 +17,18 @@ const ordersSchema = Joi.object({
     .greater('01-01-2012')
     .required(),
 
-  shipdate: Joi.date()
-    .iso()
-    .greater('01-01-2012'),
+  shipdate: Joi.alternatives()
+    .try(Joi.date().greater(Joi.ref('orderdate')),Joi.ref('orderdate')),
 
-  invoicedate: Joi.date()
-    .iso()
-    .greater('01-01-2012'),
+  shipby: Joi.string()
+    .regex(/DHL|FedEx|Bring|PostNord|UPS|GLS/)
+    .required(),
 
-  paydate: Joi.date()
-    .iso()
-    .greater('01-01-2012'),
+  invoicedate: Joi.alternatives()
+    .try(Joi.date().greater(Joi.ref('orderdate')),Joi.ref('orderdate')),
+
+  paydate: Joi.alternatives()
+    .try(Joi.date().greater(Joi.ref('orderdate')),Joi.ref('orderdate')),
 
   invoice: Joi.number()
     .integer()
