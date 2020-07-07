@@ -128,7 +128,7 @@ describe('Validation of orders save action', () => {
     }
     const res = jest.fn()
     const next = jest.fn()
-    const expected = /\"message\":\"\\\"shipdate\\\" must be greater than \\\"ref:orderdate\\\"\"/
+    const expected = /"message":"\\"shipdate\\" must be greater than \\"ref:orderdate\\""/
     validate.post(req, res, next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBeInstanceOf(Joi.ValidationError)
@@ -152,7 +152,7 @@ describe('Validation of orders save action', () => {
     }
     const res = jest.fn()
     const next = jest.fn()
-    const expected = /\"message\":\"\\\"paydate\\\" must be greater than \\\"ref:orderdate\\\"\"/
+    const expected = /"message":"\\"paydate\\" must be greater than \\"ref:orderdate\\""/
     validate.post(req, res, next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBeInstanceOf(Joi.ValidationError)
@@ -175,7 +175,7 @@ describe('Validation of orders save action', () => {
     }
     const res = jest.fn()
     const next = jest.fn()
-    const expected = /\"message\":\"\\\"invoicedate\\\" must be greater than \\\"ref:orderdate\\\"\"/
+    const expected = /"message":"\\"invoicedate\\" must be greater than \\"ref:orderdate\\""/
     validate.post(req, res, next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBeInstanceOf(Joi.ValidationError)
