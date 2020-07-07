@@ -7,10 +7,13 @@ const dbName =  config.dbName
 const options = { useNewUrlParser: true, useUnifiedTopology: true, poolSize: 10 }
 
 let db
-let dbClient
+//let dbClient
 
+/**
 function establishConnection () {
-  MongoClient.connect(url, options)
+  const client = new MongoClient(url, options)
+
+  client.connect()
     .then(client => {
       db = client.db(dbName)
       dbClient = client
@@ -21,8 +24,26 @@ function establishConnection () {
     })
     .catch(error => console.error(error))
 }
+*/
+async function establishConnection() {
+  const client = new MongoClient(url, options)
+  try {
+    await client.connect()
+    db = client.db(dbName)
+  } catch (err) {
+    console.log(err)
+  }
+}
 
-function getConnection () {
+
+async function getConnection () {
+  if (!db) {
+    try {
+      await establishConnection()
+    } catch (err) {
+      console.log(err)
+    }
+  }
   return db
 }
 

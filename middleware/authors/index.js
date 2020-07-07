@@ -7,17 +7,17 @@ module.exports = {
   async index (req, res, next) {
 
     try {
-      let db = mongoCon.getConnection()
-      query = {}
+      let db = await mongoCon.getConnection()
+      const query = {}
 
-      join = {
+      const join = {
         from: "books",
         localField: "id",
         foreignField: "author_id",
         as: "bookswritten"
       }
 
-      fields = {
+      const fields = {
         _id: 0,
         id: 1,
         name: { $concat: ['$firstname', ' ', '$lastname']},
@@ -26,7 +26,7 @@ module.exports = {
         'bookswritten.published': 1
       }
 
-      options = {
+      const options = {
         sort: { id: 1 },
         limit: 4
       }
@@ -45,7 +45,7 @@ module.exports = {
   async show (req,res,next) {
     try{
       const id = parseInt(req.params.id)
-      let db = mongoCon.getConnection()
+      let db = await mongoCon.getConnection()
       const author = await db.collection(authorCollection).findOne({id:id})
       res.status(200).json({data: author})
     } catch (err) {
@@ -55,7 +55,7 @@ module.exports = {
   async save (req, res, next) {
     try {
       const author_id = await getNextId('author_id')
-      const db = mongoCon.getConnection()
+      let db = await mongoCon.getConnection()
       req.body.id = author_id.value.next_value
       const result = await db.collection(authorCollection).insertOne(req.body)
       res.status(201).json({
@@ -73,7 +73,7 @@ module.exports = {
   async update (req, res, next) {
     const author_id = parseInt(req.body.id)
     try {
-      const db = mongoCon.getConnection()
+      let db = await mongoCon.getConnection()
       const result = await db.collection(authorCollection).findOneAndReplace({ id: author_id },
         {
           id: author_id,
@@ -89,7 +89,7 @@ module.exports = {
   async delete (req, res, next) {
     const author_id = parseInt(req.params.id)
     try {
-      const db = mongoCon.getConnection()
+      let db = await mongoCon.getConnection()
       const result = await db.collection(authorCollection).findOneAndDelete({ id: author_id })
       res.status(200).json({ data: result })
     } catch (err) {

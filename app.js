@@ -14,8 +14,8 @@ const ordersRouter = require('./routes/orders');
 
 const app = express();
 
-const db = require('./dbs')
-db.establishConnection()
+//const db = require('./dbs')
+//db.establishConnection()
 
 app.use(logger('dev'));
 app.use(express.json());

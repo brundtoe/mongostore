@@ -8,11 +8,11 @@ module.exports = {
   async index (req, res, next) {
 
     try {
-      let db = mongoCon.getConnection()
-      query = {
+      let db = await mongoCon.getConnection()
+      const query = {
         state: { $in: ['Indiana', 'California'] }
       }
-      fields = {
+      const fields = {
         id: 1,
         name: 1,
         city: 1,
@@ -20,7 +20,7 @@ module.exports = {
         mail: 1,
         _id: 0
       }
-      options = {
+      const options = {
         sort: { id: -1 },
         limit: 6
       }
@@ -32,7 +32,7 @@ module.exports = {
     }
   },
   async show (req, res, next) {
-    let db = mongoCon.getConnection()
+    let db = await mongoCon.getConnection()
     const id = parseInt(req.params.id)
     try {
       const user = await db.collection(userCollection).findOne({ id: id })
@@ -45,7 +45,7 @@ module.exports = {
   async save (req, res, next) {
     try {
       const user_id = await getNextId('user_id')
-      const db = mongoCon.getConnection()
+      const db = await mongoCon.getConnection()
       req.body.id = user_id.value.next_value
       const result = await db.collection(userCollection).insertOne(req.body)
       res.status(201).json({
@@ -63,7 +63,7 @@ module.exports = {
   async update (req, res, next) {
     const user_id = parseInt(req.body.id)
     try {
-      const db = mongoCon.getConnection()
+      const db = await mongoCon.getConnection()
       const result = await db.collection(userCollection).findOneAndReplace({ id: user_id },
         {
           id: user_id,
@@ -81,7 +81,7 @@ module.exports = {
   async delete (req, res, next) {
     const user_id = parseInt(req.params.id)
     try {
-      const db = mongoCon.getConnection()
+      const db = await mongoCon.getConnection()
       const result = await db.collection(userCollection).findOneAndDelete({ id: user_id })
       res.status(200).json({ data: result })
     } catch (err) {
