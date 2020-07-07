@@ -41,21 +41,26 @@ const ordersSchema = Joi.object({
     lines: Joi.array()
     .items({
       book_id: Joi.number()
-        .integer(),
+        .integer()
+        .required(),
+
 
       title: Joi.string()
         .min(2)
-        .max(35),
+        .max(35)
+        .required(),
 
       salesprice: Joi.number()
         .precision(2)
         .min(1.00)
-        .max(99.99),
+        .max(99.99)
+        .required(),
 
       numbooks: Joi.number()
         .integer()
         .min(0)
         .max(99)
+        .required()
     })
       .min(1)
       .required()
