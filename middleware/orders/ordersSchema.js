@@ -35,7 +35,7 @@ const ordersSchema = Joi.object({
     .min(1),
 
   paymethod: Joi.string()
-    .regex(/AMEX|Visa|MasterCard|PayPal/)
+    .regex(/AMEX|Visa|Mastercard|PayPal/)
     .required(),
 
     lines: Joi.array()
