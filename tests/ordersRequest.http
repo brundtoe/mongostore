@@ -1,0 +1,17 @@
+GET http://localhost:3000/orders
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200")
+  client.assert(response.body.data.length === 11,"Response should have returned 11 orders")
+     })
+  %}
+
+###
+GET http://localhost:3000/orders/3
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200")
+  client.assert(response.body.data.paymethod === "Mastercard","Response should have returned Mastercard")
+  client.assert(response.body.data.lines.length === 5,"Response should have returned 5 orderlines")
+     })
+  %}
