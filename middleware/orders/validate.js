@@ -7,7 +7,7 @@ module.exports = {
   post: async (req, res, next) => {
     try {
       const schema = ordersSchema
-        .with('orderdate',['user_id'])
+        .with('orderdate',['user_id','paymethod','shipby','lines'])
       Joi.assert(req.body,schema )
       next()
     } catch (err) {

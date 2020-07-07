@@ -36,7 +36,29 @@ const ordersSchema = Joi.object({
 
   paymethod: Joi.string()
     .regex(/AMEX|Visa|MasterCard|PayPal/)
-    .required()
+    .required(),
+
+    lines: Joi.array()
+    .items({
+      book_id: Joi.number()
+        .integer(),
+
+      title: Joi.string()
+        .min(2)
+        .max(35),
+
+      salesprice: Joi.number()
+        .precision(2)
+        .min(1.00)
+        .max(99.99),
+
+      numbooks: Joi.number()
+        .integer()
+        .min(0)
+        .max(99)
+    })
+      .min(1)
+      .required()
 
 })
 

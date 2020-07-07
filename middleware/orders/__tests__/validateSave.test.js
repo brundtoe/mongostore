@@ -1,8 +1,22 @@
 const validate = require('../validate')
-const createError = require('http-errors')
 const Joi = require('@hapi/joi')
 
 describe('Validation of orders save action', () => {
+
+  const books = [
+    {
+      book_id: 123,
+      title: 'MongodDB The ultimate Guide',
+      salesprice: 23.75,
+      numbooks: 1
+    },
+    {
+      book_id: 456,
+      title: 'Node.js The ultimate Guide',
+      salesprice: 38.99,
+      numbooks: 2
+    }
+  ]
 
   test('should validate minimum orderinfo', () => {
     const req = {
@@ -10,7 +24,8 @@ describe('Validation of orders save action', () => {
         orderdate: new Date(),
         user_id: 3,
         paymethod: 'AMEX',
-        shipby: 'UPS'
+        shipby: 'UPS',
+        lines: books
       }
     }
     const res = jest.fn()
@@ -30,7 +45,8 @@ describe('Validation of orders save action', () => {
         shipdate: new Date('2020-06-12'),
         invoicedate: new Date('2020-06-12'),
         paydate: new Date('2020-06-21'),
-        invoice: 3
+        invoice: 3,
+        lines: books
       }
     }
     const res = jest.fn()
@@ -50,7 +66,8 @@ describe('Validation of orders save action', () => {
         shipdate: new Date('2020-06-03'),
         invoicedate: new Date('2020-06-03'),
         paydate: new Date('2020-06-03'),
-        invoice: 3
+        invoice: 3,
+        lines: books
       }
     }
     const res = jest.fn()
@@ -70,7 +87,25 @@ describe('Validation of orders save action', () => {
         shipdate: new Date('2020-06-04'),
         invoicedate: new Date('2020-06-05'),
         paydate: new Date('2020-06-06'),
-        invoice: 3
+        invoice: 3,
+        lines: books
+      }
+    }
+    const res = jest.fn()
+    const next = jest.fn()
+    validate.post(req, res, next)
+    expect(next.mock.calls.length).toBe(1)
+    expect(next.mock.calls[0][0]).toBe(undefined)
+  })
+
+  test('should validate order line', () => {
+    const req = {
+      body: {
+        user_id: 3,
+        orderdate: new Date('2020-06-03'),
+        paymethod: 'AMEX',
+        shipby: 'UPS',
+        lines: books
       }
     }
     const res = jest.fn()
@@ -88,6 +123,7 @@ describe('Validation of orders save action', () => {
         paymethod: 'AMEX',
         shipby: 'UPS',
         shipdate: new Date('2020-06-01'),
+        lines: books
       }
     }
     const res = jest.fn()
@@ -111,6 +147,7 @@ describe('Validation of orders save action', () => {
         paymethod: 'AMEX',
         shipby: 'UPS',
         paydate: new Date('2020-06-01'),
+        lines: books
       }
     }
     const res = jest.fn()
@@ -133,6 +170,7 @@ describe('Validation of orders save action', () => {
         paymethod: 'AMEX',
         shipby: 'UPS',
         invoicedate: new Date('2020-06-01'),
+        lines: books
       }
     }
     const res = jest.fn()
