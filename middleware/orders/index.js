@@ -17,7 +17,7 @@ module.exports = {
         }
       })
       res.status(200)
-        res.json({ data: result })
+      res.json({ data: result })
     } catch (err) {
       next(createError(400, err.message))
     }
@@ -33,19 +33,30 @@ module.exports = {
       next(createError(400, err.message))
     }
   },
+
   async save (req, res, next) {
     try {
-      let db = await mongoCon.getConnection()
-      res.status(200).json({ data: { success: 'bookorders save' } })
+      const order = await getNextId('bookorder_id')
+      const db = await mongoCon.getConnection()
+      req.body.id = order.value.next_value
+      const result = await db.collection(ordersCollection).insertOne(req.body)
+      res.status(201).json({
+        data: {
+          insertedCount: result.insertedCount,
+          insertedId: result.insertedId,
+          order: result.ops[0]
+        }
+      })
     } catch (err) {
       next(createError(400, err.message))
     }
   },
+
   async update (req, res, next) {
     const order_id = parseInt(req.body.id)
     try {
       let db = await mongoCon.getConnection()
-      const order = await db.collection(ordersCollection).findOneAndUpdate({id:order_id},
+      const order = await db.collection(ordersCollection).findOneAndUpdate({ id: order_id },
         {
           $set: {
             shipdate: req.body.shipdate || null,
@@ -54,18 +65,21 @@ module.exports = {
             invoice: req.body.invoice || null,
             paymethod: req.body.paymethod || null,
             shipby: req.body.shipby || null
-          }},
-      {returnOriginal: false})
+          }
+        },
+        { returnOriginal: false })
       res.status(200).json({ data: order })
     } catch (err) {
       next(createError(400, err.message))
     }
   },
+
   async delete (req, res, next) {
     const order_id = parseInt(req.params.id)
     try {
-      let db = await mongoCon.getConnection()
-      res.status(200).json({ data: { success: 'bookorders delete' } })
+      const db = await mongoCon.getConnection()
+      const result = await db.collection(ordersCollection).findOneAndDelete({ id: order_id })
+      res.status(200).json({ data: result })
     } catch (err) {
       next(createError(400, err.message))
     }

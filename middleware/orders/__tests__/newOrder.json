@@ -1,0 +1,17 @@
+{
+  "orderdate" : "2020-07-01",
+  "shipdate" : null,
+  "invoice" : 301,
+  "shipby" : "PostNord",
+  "paydate" : null,
+  "paymethod" : "AMEX",
+  "invoicedate" : null,
+  "user_id" : 18,
+  "lines" : [
+    {
+      "book_id" : 45,
+      "title" : "Beginning Visual C++ 5 Programming",
+      "salesprice" : 39.95,
+      "numbooks" : 9
+    }]
+}

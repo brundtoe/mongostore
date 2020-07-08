@@ -1,7 +1,10 @@
 const mongoCon = require('../../../dbs')
 const orderController = require('../index')
 const orderData = require('./order.json')
+const newOrder = require('./newOrder.json')
 const ObjectID = require('mongodb').ObjectID
+const orderCollection = 'bookorders'
+
 describe('Order controller', () => {
 
   const res = {}
@@ -10,7 +13,7 @@ describe('Order controller', () => {
   async function resetOrderFive () {
     try {
       let db = await mongoCon.getConnection()
-      await db.collection('bookorders').findOneAndReplace({_id:orderData._id},orderData)
+      await db.collection(orderCollection).findOneAndReplace({ _id: orderData._id }, orderData)
     } catch (err) {
       console.log(`Reset order number FIVE failed`)
       console.log(err)
@@ -27,6 +30,10 @@ describe('Order controller', () => {
     res.status = jest.fn().mockReturnValue(res)
     res.status = jest.fn().mockReturnValue(res)
     res.json = jest.fn().mockReturnValue(res)
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
   })
 
   test('should return all orders', async () => {
@@ -77,7 +84,50 @@ describe('Order controller', () => {
     expect(actual.value.id).toBe(5)
     expect(actual.value).toMatchObject(req.body)
     resetOrderFive()
+  })
 
+  test('should save new order', async () => {
+
+    const req = {
+      body: newOrder
+    }
+
+    await orderController.save(req, res, next)
+    expect(next.mock.calls.length).toBe(0)
+    expect(res.status.mock.calls.length).toBe(1)
+    expect(res.status.mock.calls[0][0]).toBe(201)
+    const actual = res.json.mock.calls[0][0].data
+    expect(actual.insertedCount).toBe(1)
+    expect(actual.order).toMatchObject(newOrder)
+    try {
+      let db = await mongoCon.getConnection()
+      await db.collection(orderCollection).findOneAndDelete({ id: actual.order.id })
+    } catch (err) {
+      console.log('delete af new record failed')
+    }
+  })
+
+  test('should delete a order', async () => {
+
+    const req = {
+      body: newOrder
+    }
+    //First create new order
+    await orderController.save(req, res, next)
+    const actualNew = res.json.mock.calls[0][0].data
+    expect(actualNew.insertedCount).toBe(1)
+    expect(actualNew.order).toMatchObject(newOrder)
+    jest.clearAllMocks()
+    const reqDelete = {
+      params: { id: actualNew.order.id }
+    }
+    await orderController.delete(reqDelete, res, next)
+    expect(next.mock.calls.length).toBe(0)
+    expect(res.status.mock.calls.length).toBe(1)
+    expect(res.status.mock.calls[0][0]).toBe(200)
+    expect(res.json.mock.calls.length).toBe(1)
+    const actual = res.json.mock.calls[0][0]
+    expect(actual.data.value).toMatchObject(actualNew.order)
   })
 })
 
