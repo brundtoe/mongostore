@@ -18,7 +18,7 @@ describe('Validation of orders update action', () => {
   ]
   const orderObject = "5f0475918ea0355ffcca64a3"
 
-  test('should validate minimum orderinfo', () => {
+  test('should validate minimum orderinfo', async () => {
     const req = {
       body: {
         _id: orderObject,
@@ -32,12 +32,12 @@ describe('Validation of orders update action', () => {
     }
     const res = jest.fn()
     const next = jest.fn()
-    validate.put(req, res, next)
+    await validate.put(req, res, next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBe(undefined)
   })
 
-  test('should fail without _id', () => {
+  test('should fail without _id', async() => {
     const req = {
       body: {
         id: 3,
@@ -52,7 +52,7 @@ describe('Validation of orders update action', () => {
     const res = jest.fn()
     const next = jest.fn()
     const expected = /"message":"\\"orderdate\\" missing required peer \\"_id\\""/
-    validate.put(req, res, next)
+    await validate.put(req, res, next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBeInstanceOf(Joi.ValidationError)
     expect(next.mock.calls[0][0]).toMatchObject({ _original: req.body })
@@ -61,7 +61,7 @@ describe('Validation of orders update action', () => {
     const actual = JSON.stringify(next.mock.calls[0][0])
     expect(actual).toMatch(expected)
   })
-  test('should fail without order line', () => {
+  test('should fail without order line', async() => {
     const req = {
       body: {
         id: 3,
@@ -75,7 +75,7 @@ describe('Validation of orders update action', () => {
     const res = jest.fn()
     const next = jest.fn()
     const expected = /"message":"\\"lines\\" is required"/
-    validate.put(req, res, next)
+    await validate.put(req, res, next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBeInstanceOf(Joi.ValidationError)
     expect(next.mock.calls[0][0]).toMatchObject({ _original: req.body })
@@ -84,7 +84,7 @@ describe('Validation of orders update action', () => {
     const actual = JSON.stringify(next.mock.calls[0][0])
     expect(actual).toMatch(expected)
   })
-  test('should fail without title in order line', () => {
+  test('should fail without title in order line', async () => {
     const req = {
       body: {
         id: 3,
@@ -111,7 +111,7 @@ describe('Validation of orders update action', () => {
     const res = jest.fn()
     const next = jest.fn()
     const expected = /"message":"\\"lines\[\d\].title\\" is required"/
-    validate.put(req, res, next)
+    await validate.put(req, res, next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBeInstanceOf(Joi.ValidationError)
     expect(next.mock.calls[0][0]).toMatchObject({ _original: req.body })
