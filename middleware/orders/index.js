@@ -42,10 +42,21 @@ module.exports = {
     }
   },
   async update (req, res, next) {
-    const order_id = parseInt(req.params.id)
+    const order_id = parseInt(req.body.id)
     try {
       let db = await mongoCon.getConnection()
-      res.status(200).json({ data: { success: 'bookorders update' } })
+      const order = await db.collection(ordersCollection).findOneAndUpdate({id:order_id},
+        {
+          $set: {
+            shipdate: req.body.shipdate || null,
+            paydate: req.body.paydate || null,
+            invoicedate: req.body.invoicedate || null,
+            invoice: req.body.invoice || null,
+            paymethod: req.body.paymethod || null,
+            shipby: req.body.shipby || null
+          }},
+      {returnOriginal: false})
+      res.status(200).json({ data: order })
     } catch (err) {
       next(createError(400, err.message))
     }

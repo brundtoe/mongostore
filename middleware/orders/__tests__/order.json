@@ -4,9 +4,9 @@
   "orderdate": "2012-06-13T22:00:00.000Z",
   "shipdate": null,
   "invoice": 27,
-  "shipby": "",
+  "shipby": "FedEx",
   "paydate": null,
-  "paymethod": "Paypal",
+  "paymethod": "PayPal",
   "invoicedate": null,
   "user_id": 18,
   "lines": [
