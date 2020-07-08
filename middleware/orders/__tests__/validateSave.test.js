@@ -18,53 +18,7 @@ describe('Validation of orders save action', () => {
     }
   ]
 
-  test('should validate payment orderinfo', () => {
-    const req = {
-      body: {
-        orderdate: new Date(),
-        user_id: 3,
-        shipby: 'UPS',
-        lines: books
-      }
-    }
-    const payment = new Set()
-    payment.add('AMEX').add('Mastercard').add('Visa').add('PayPal')
-
-    const res = jest.fn()
-    const next = jest.fn()
-    payment.forEach((value) => {
-      req.body.paymethod = value
-      validate.post(req, res, next)
-      expect(next.mock.calls.length).toBe(1)
-      expect(next.mock.calls[0][0]).toBe(undefined)
-      next.mockClear()
-    })
-  })
-
-  test('should validate shiby orderinfo', () => {
-    const req = {
-      body: {
-        orderdate: new Date(),
-        user_id: 3,
-        paymethod: 'AMEX',
-        lines: books
-      }
-    }
-    const shipby = new Set()
-    shipby.add('UPS').add('DHL').add('Bring').add('FedEx').add('PostNord').add('GLS')
-
-    const res = jest.fn()
-    const next = jest.fn()
-    shipby.forEach((value) => {
-      req.body.shipby = value
-      validate.post(req, res, next)
-      expect(next.mock.calls.length).toBe(1)
-      expect(next.mock.calls[0][0]).toBe(undefined)
-      next.mockClear()
-    })
-  })
-
-  test('should validate alle fields in orderinfo', () => {
+  test('should validate alle fields in orderinfo', async () => {
     const req = {
       body: {
         user_id: 3,
@@ -80,12 +34,12 @@ describe('Validation of orders save action', () => {
     }
     const res = jest.fn()
     const next = jest.fn()
-    validate.post(req, res, next)
+    await validate.post(req, res, next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBe(undefined)
   })
 
-  test('should validate alle dates are equal', () => {
+  test('should validate alle dates are equal', async () => {
     const req = {
       body: {
         user_id: 3,
@@ -101,12 +55,12 @@ describe('Validation of orders save action', () => {
     }
     const res = jest.fn()
     const next = jest.fn()
-    validate.post(req, res, next)
+    await validate.post(req, res, next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBe(undefined)
   })
 
-  test('should validate alle dates are greatere than orderdate', () => {
+  test('should validate alle dates are greatere than orderdate', async () => {
     const req = {
       body: {
         user_id: 3,
@@ -122,12 +76,12 @@ describe('Validation of orders save action', () => {
     }
     const res = jest.fn()
     const next = jest.fn()
-    validate.post(req, res, next)
+    await validate.post(req, res, next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBe(undefined)
   })
 
-  test('should validate order line', () => {
+  test('should validate order line', async () => {
     const req = {
       body: {
         user_id: 3,
@@ -139,12 +93,12 @@ describe('Validation of orders save action', () => {
     }
     const res = jest.fn()
     const next = jest.fn()
-    validate.post(req, res, next)
+    await validate.post(req, res, next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBe(undefined)
   })
 
-  test('should fail shipdate less than orderdate', () => {
+  test('should fail shipdate less than orderdate', async () => {
     const req = {
       body: {
         user_id: 3,
@@ -158,7 +112,7 @@ describe('Validation of orders save action', () => {
     const res = jest.fn()
     const next = jest.fn()
     const expected = /"message":"\\"shipdate\\" must be greater than \\"ref:orderdate\\""/
-    validate.post(req, res, next)
+    await validate.post(req, res, next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBeInstanceOf(Joi.ValidationError)
     expect(next.mock.calls[0][0]).toMatchObject({ _original: req.body })
@@ -168,7 +122,7 @@ describe('Validation of orders save action', () => {
     expect(actual).toMatch(expected)
   })
 
-  test('should fail paydate less than orderdate', () => {
+  test('should fail paydate less than orderdate', async () => {
     const req = {
       body: {
         user_id: 3,
@@ -182,7 +136,7 @@ describe('Validation of orders save action', () => {
     const res = jest.fn()
     const next = jest.fn()
     const expected = /"message":"\\"paydate\\" must be greater than \\"ref:orderdate\\""/
-    validate.post(req, res, next)
+    await validate.post(req, res, next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBeInstanceOf(Joi.ValidationError)
     expect(next.mock.calls[0][0]).toMatchObject({ _original: req.body })
@@ -191,7 +145,7 @@ describe('Validation of orders save action', () => {
     const actual = JSON.stringify(next.mock.calls[0][0])
     expect(actual).toMatch(expected)
   })
-  test('should fail invoicedate less than orderdate', () => {
+  test('should fail invoicedate less than orderdate', async () => {
     const req = {
       body: {
         user_id: 3,
@@ -205,7 +159,7 @@ describe('Validation of orders save action', () => {
     const res = jest.fn()
     const next = jest.fn()
     const expected = /"message":"\\"invoicedate\\" must be greater than \\"ref:orderdate\\""/
-    validate.post(req, res, next)
+    await validate.post(req, res, next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBeInstanceOf(Joi.ValidationError)
     expect(next.mock.calls[0][0]).toMatchObject({ _original: req.body })
