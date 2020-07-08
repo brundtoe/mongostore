@@ -1,0 +1,38 @@
+{
+  "_id": "5eef84a264ee594e266c8dd8",
+  "id": 5,
+  "orderdate": "2012-06-13T22:00:00.000Z",
+  "shipdate": null,
+  "invoice": 27,
+  "shipby": "",
+  "paydate": null,
+  "paymethod": "Paypal",
+  "invoicedate": null,
+  "user_id": 18,
+  "lines": [
+    {
+      "book_id": 18,
+      "title": "Beginning Active Server Pages 3.0",
+      "salesprice": 28.99,
+      "numbooks": 2
+    },
+    {
+      "book_id": 32,
+      "title": "Professional IE4 Programming",
+      "salesprice": 49.99,
+      "numbooks": 3
+    },
+    {
+      "book_id": 7,
+      "title": "Instant IE4 Dynamic Html Programmers Reference",
+      "salesprice": 22.99,
+      "numbooks": 4
+    },
+    {
+      "book_id": 39,
+      "title": "Beginners Guide To C",
+      "salesprice": 27.95,
+      "numbooks": 3
+    }
+  ]
+}
