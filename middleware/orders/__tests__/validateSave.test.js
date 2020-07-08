@@ -18,21 +18,50 @@ describe('Validation of orders save action', () => {
     }
   ]
 
-  test('should validate minimum orderinfo', () => {
+  test('should validate payment orderinfo', () => {
+    const req = {
+      body: {
+        orderdate: new Date(),
+        user_id: 3,
+        shipby: 'UPS',
+        lines: books
+      }
+    }
+    const payment = new Set()
+    payment.add('AMEX').add('Mastercard').add('Visa').add('PayPal')
+
+    const res = jest.fn()
+    const next = jest.fn()
+    payment.forEach((value) => {
+      req.body.paymethod = value
+      validate.post(req, res, next)
+      expect(next.mock.calls.length).toBe(1)
+      expect(next.mock.calls[0][0]).toBe(undefined)
+      next.mockClear()
+    })
+  })
+
+  test('should validate shiby orderinfo', () => {
     const req = {
       body: {
         orderdate: new Date(),
         user_id: 3,
         paymethod: 'AMEX',
-        shipby: 'UPS',
         lines: books
       }
     }
+    const shipby = new Set()
+    shipby.add('UPS').add('DHL').add('Bring').add('FedEx').add('PostNord').add('GLS')
+
     const res = jest.fn()
     const next = jest.fn()
-    validate.post(req, res, next)
-    expect(next.mock.calls.length).toBe(1)
-    expect(next.mock.calls[0][0]).toBe(undefined)
+    shipby.forEach((value) => {
+      req.body.shipby = value
+      validate.post(req, res, next)
+      expect(next.mock.calls.length).toBe(1)
+      expect(next.mock.calls[0][0]).toBe(undefined)
+      next.mockClear()
+    })
   })
 
   test('should validate alle fields in orderinfo', () => {
