@@ -11,11 +11,9 @@ const usersRouter = require('./routes/users');
 const authorsRouter = require('./routes/authors');
 const booksRouter = require('./routes/books');
 const ordersRouter = require('./routes/orders');
+const orderlinesRouter = require('./routes/orderlines')
 
 const app = express();
-
-//const db = require('./dbs')
-//db.establishConnection()
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -28,6 +26,7 @@ app.use('/users', usersRouter);
 app.use('/authors',authorsRouter)
 app.use('/books', booksRouter);
 app.use('/orders',ordersRouter);
+app.use('/orderlines',orderlinesRouter)
 
 // the route is not found
 app.use(errorHandler.notFound)
