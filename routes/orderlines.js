@@ -3,7 +3,7 @@ const router = express.Router()
 const validate = require('../middleware/orderlines/validate')
 const orderlinesController = require('../middleware/orderlines')
 
-router.route('/:order_id')
+router.route('/')
   .post(validate.post, orderlinesController.save)
   .put(validate.put, orderlinesController.update)
 
