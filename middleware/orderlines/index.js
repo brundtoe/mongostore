@@ -1,12 +1,26 @@
 const mongoCon = require('../../dbs')
 const createError = require('http-errors')
 const ordersCollection = 'bookorders'
-
+const booksCollection = 'books'
 module.exports = {
   save: async (req,res,next) => {
+    const {order_id, book_id, numbooks} = req.body
     try {
       const db = await mongoCon.getConnection()
-      res.status(201).json({ data: { success: 'orderlines save' } })
+      const book = await db.collection(booksCollection).findOne({id: parseInt(book_id)})
+      if (!book) {
+        throw new Error('Bogen findes ikke')
+      }
+      const orderline = {
+        book_id: parseInt(book.id),
+        title: book.title,
+        salesprice: book.bookprice,
+        numbooks: parseInt(numbooks)
+      }
+      const order = await db.collection(ordersCollection).findOneAndUpdate({id: parseInt(order_id)},{
+       $push: { lines: orderline }}, { returnOriginal: false}
+      )
+      res.status(201).json({ data: order })
     } catch (err) {
       next(createError(400,err))
     }
@@ -20,9 +34,15 @@ module.exports = {
     }
   },
   delete: async (req,res,next) => {
+    const order_id = parseInt(req.params.order_id)
+    const book_id = parseInt(req.params.book_id)
     try {
       const db = await mongoCon.getConnection()
-      res.status(201).json({ data: { success: 'orderlines delete' } })
+      const result = await db.collection(ordersCollection).findOneAndUpdate({id: order_id},
+      {
+        $pull: {"lines": {"book_id": book_id}}
+      }, { returnOriginal: false})
+      res.status(200).json({ data: result })
     } catch (err) {
       next(createError(400,err))
     }

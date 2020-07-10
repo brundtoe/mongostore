@@ -3,7 +3,7 @@ const orderController = require('../index')
 const orderData = require('./order.json')
 const newOrder = require('./newOrder.json')
 const ObjectID = require('mongodb').ObjectID
-const orderCollection = 'bookorders'
+const ordersCollection = 'bookorders'
 
 describe('Order controller', () => {
 
@@ -13,7 +13,7 @@ describe('Order controller', () => {
   async function resetOrderFive () {
     try {
       let db = await mongoCon.getConnection()
-      await db.collection(orderCollection).findOneAndReplace({ _id: orderData._id }, orderData)
+      await db.collection(ordersCollection).findOneAndReplace({ _id: orderData._id }, orderData)
     } catch (err) {
       console.log(`Reset order number FIVE failed`)
       console.log(err)
@@ -27,7 +27,6 @@ describe('Order controller', () => {
   })
 
   beforeEach(() => {
-    res.status = jest.fn().mockReturnValue(res)
     res.status = jest.fn().mockReturnValue(res)
     res.json = jest.fn().mockReturnValue(res)
   })
@@ -101,7 +100,7 @@ describe('Order controller', () => {
     expect(actual.order).toMatchObject(newOrder)
     try {
       let db = await mongoCon.getConnection()
-      await db.collection(orderCollection).findOneAndDelete({ id: actual.order.id })
+      await db.collection(ordersCollection).findOneAndDelete({ id: actual.order.id })
     } catch (err) {
       console.log('delete af new record failed')
     }
