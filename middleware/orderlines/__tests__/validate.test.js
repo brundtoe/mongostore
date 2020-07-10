@@ -33,9 +33,8 @@ describe('validering af update orderlines', () => {
     expect(next.mock.calls[0][0]).toMatchObject({ status: 400 })
     expect(next.mock.calls[0][0]).toMatchObject({ _original: req.body })
     expect(next.mock.calls[0][0]).toContainKey('details')
-    const expected = /"message":"\\"order_id\\" missing required peer \\"numbooks\\"/
-    const actual = JSON.stringify(next.mock.calls[0][0])
-    expect(actual).toMatch(expected)
+    const actual = next.mock.calls[0][0].details
+    expect(actual[0].message).toMatch("\"order_id\" missing required peer \"numbooks\"")
   })
 
   test('should accept update orderline', () => {
@@ -67,12 +66,12 @@ describe('validering af update orderlines', () => {
     expect(next.mock.calls[0][0]).toBeInstanceOf(Joi.ValidationError)
     expect(next.mock.calls[0][0]).toMatchObject({ status: 400 })
     expect(next.mock.calls[0][0]).toMatchObject({ _original: req.body })
+
     expect(next.mock.calls[0][0]).toContainKey('details')
-    const expected = /"message":"\\"order_id\\" missing required peer \\"numbooks\\"/
-    const actual = JSON.stringify(next.mock.calls[0][0])
-    expect(actual).toMatch(expected)
+    const actual = next.mock.calls[0][0].details
+    const expected = "\"order_id\" missing required peer \"numbooks\""
+    expect(actual[0].message).toMatch(expected)
+
   })
-
-
 
 })

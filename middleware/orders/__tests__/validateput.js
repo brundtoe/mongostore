@@ -51,15 +51,15 @@ describe('Validation of orders update action', () => {
     }
     const res = jest.fn()
     const next = jest.fn()
-    const expected = /"message":"\\"orderdate\\" missing required peer \\"_id\\""/
     await validate.put(req, res, next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBeInstanceOf(Joi.ValidationError)
     expect(next.mock.calls[0][0]).toMatchObject({ _original: req.body })
     expect(next.mock.calls[0][0]).toContainKey('details')
     expect(next.mock.calls[0][0]).toMatchObject({ status: 400 })
-    const actual = JSON.stringify(next.mock.calls[0][0])
-    expect(actual).toMatch(expected)
+    const actual = next.mock.calls[0][0].details
+    const expected = "\"orderdate\" missing required peer \"_id\""
+    expect(actual[0].message).toMatch(expected)
   })
   test('should fail without order line', async() => {
     const req = {
@@ -74,15 +74,15 @@ describe('Validation of orders update action', () => {
     }
     const res = jest.fn()
     const next = jest.fn()
-    const expected = /"message":"\\"lines\\" is required"/
     await validate.put(req, res, next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBeInstanceOf(Joi.ValidationError)
     expect(next.mock.calls[0][0]).toMatchObject({ _original: req.body })
     expect(next.mock.calls[0][0]).toContainKey('details')
     expect(next.mock.calls[0][0]).toMatchObject({ status: 400 })
-    const actual = JSON.stringify(next.mock.calls[0][0])
-    expect(actual).toMatch(expected)
+    const actual = next.mock.calls[0][0].details
+    const expected = "\"lines\" is required"
+    expect(actual[0].message).toMatch(expected)
   })
   test('should fail without title in order line', async () => {
     const req = {
@@ -110,14 +110,14 @@ describe('Validation of orders update action', () => {
     }
     const res = jest.fn()
     const next = jest.fn()
-    const expected = /"message":"\\"lines\[\d\].title\\" is required"/
     await validate.put(req, res, next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBeInstanceOf(Joi.ValidationError)
     expect(next.mock.calls[0][0]).toMatchObject({ _original: req.body })
     expect(next.mock.calls[0][0]).toContainKey('details')
     expect(next.mock.calls[0][0]).toMatchObject({ status: 400 })
-    const actual = JSON.stringify(next.mock.calls[0][0])
-    expect(actual).toMatch(expected)
+    const actual = next.mock.calls[0][0].details
+    const expected = '"lines[1].title" is required'
+    expect(actual[0].message).toMatch(expected)
   })
 })

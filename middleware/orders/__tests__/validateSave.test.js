@@ -111,15 +111,15 @@ describe('Validation of orders save action', () => {
     }
     const res = jest.fn()
     const next = jest.fn()
-    const expected = /"message":"\\"shipdate\\" must be greater than \\"ref:orderdate\\""/
     await validate.post(req, res, next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBeInstanceOf(Joi.ValidationError)
     expect(next.mock.calls[0][0]).toMatchObject({ _original: req.body })
-    expect(next.mock.calls[0][0]).toContainKey('details')
     expect(next.mock.calls[0][0]).toMatchObject({ status: 400 })
-    const actual = JSON.stringify(next.mock.calls[0][0])
-    expect(actual).toMatch(expected)
+    expect(next.mock.calls[0][0]).toContainKey('details')
+    const actual = next.mock.calls[0][0].details
+    const expected = '"shipdate" must be greater than "ref:orderdate"'
+    expect(actual[0].message).toMatch(expected)
   })
 
   test('should fail paydate less than orderdate', async () => {
@@ -135,15 +135,15 @@ describe('Validation of orders save action', () => {
     }
     const res = jest.fn()
     const next = jest.fn()
-    const expected = /"message":"\\"paydate\\" must be greater than \\"ref:orderdate\\""/
     await validate.post(req, res, next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBeInstanceOf(Joi.ValidationError)
     expect(next.mock.calls[0][0]).toMatchObject({ _original: req.body })
-    expect(next.mock.calls[0][0]).toContainKey('details')
     expect(next.mock.calls[0][0]).toMatchObject({ status: 400 })
-    const actual = JSON.stringify(next.mock.calls[0][0])
-    expect(actual).toMatch(expected)
+    expect(next.mock.calls[0][0]).toContainKey('details')
+    const actual = next.mock.calls[0][0].details
+    const expected = '"paydate" must be greater than "ref:orderdate"'
+    expect(actual[0].message).toMatch(expected)
   })
   test('should fail invoicedate less than orderdate', async () => {
     const req = {
@@ -158,15 +158,15 @@ describe('Validation of orders save action', () => {
     }
     const res = jest.fn()
     const next = jest.fn()
-    const expected = /"message":"\\"invoicedate\\" must be greater than \\"ref:orderdate\\""/
     await validate.post(req, res, next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBeInstanceOf(Joi.ValidationError)
     expect(next.mock.calls[0][0]).toMatchObject({ _original: req.body })
-    expect(next.mock.calls[0][0]).toContainKey('details')
     expect(next.mock.calls[0][0]).toMatchObject({ status: 400 })
-    const actual = JSON.stringify(next.mock.calls[0][0])
-    expect(actual).toMatch(expected)
+    expect(next.mock.calls[0][0]).toContainKey('details')
+    const actual = next.mock.calls[0][0].details
+    const expected = '"invoicedate" must be greater than "ref:orderdate"'
+    expect(actual[0].message).toMatch(expected)
   })
 
 })
