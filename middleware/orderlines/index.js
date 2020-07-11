@@ -10,9 +10,9 @@ module.exports = {
     try {
       const db = await mongoCon.getConnection()
       const book = await db.collection(booksCollection).findOne({id: parseInt(book_id)})
-      if (!book) {
-        throw new  Error(`Bogen med nummer ${book_id} findes ikke`)
-      }
+      if (!book) throw new  Error(`Bogen med nummer ${book_id} findes ikke`)
+      const line = await db.collection(ordersCollection).findOne({id: parseInt(order_id), "lines.book_id": parseInt(book_id)})
+      if (line) throw new Error(`Der findes allerede en ordrelinje for bog nummer ${book_id}`)
       const orderline = {
         book_id: parseInt(book.id),
         title: book.title,

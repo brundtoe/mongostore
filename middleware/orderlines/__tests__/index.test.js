@@ -54,6 +54,24 @@ describe('Updating orderlines on orders', () => {
     const found = lines.filter(line => cb(line, orderline))
     expect(found.length).toBeGreaterThanOrEqual(1)
   })
+
+  test('reject adding duplicate orderline', async () => {
+    const req = {
+      body: {
+        order_id: 11,
+        book_id: 44,
+        salesprice: 49.99,
+        numbooks: 1
+      }
+    }
+
+    await orderlinesController.save(req, res, next)
+    expect(next.mock.calls.length).toBe(1)
+    expect(next.mock.calls[0][0].status).toBe(400)
+    const expected = `Der findes allerede en ordrelinje for bog nummer ${req.body.book_id}`
+    expect(next.mock.calls[0][0].message).toBe(expected)
+  })
+
   /**
    * Depends on successfully adding an orderline
    */
@@ -77,6 +95,7 @@ describe('Updating orderlines on orders', () => {
     expect(found.length).toBe(0)
 
   })
+
 
   test('fails to remove non existing orderline', async () => {
     const req = {
