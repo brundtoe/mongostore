@@ -11,7 +11,7 @@ module.exports = {
       const schema = ordersSchema
         .with('orderdate',['user_id','paymethod','shipby','lines'])
       Joi.assert(req.body,schema )
-      const user = await userExists(req.body.user_id)
+      const user = await userExists(parseInt(req.body.user_id))
       if (!user) throw createError(400,'user does not exist')
       next()
     } catch (err) {
@@ -24,7 +24,7 @@ module.exports = {
       const schema = ordersSchema
         .with('orderdate',['_id','id','user_id','paymethod','shipby','lines'])
       Joi.assert(req.body,schema )
-      const user = await userExists(req.body.user_id)
+      const user = await userExists(parseInt(req.body.user_id))
       if (!user) throw createError(400,'user does not exist')
       next()
     } catch (err) {
@@ -43,7 +43,7 @@ module.exports = {
   delete: async (req,res, next) => {
     try {
       Joi.assert(req.params.id, Joi.number().integer().required().min(1))
-      const order = await orderExists(req.params.id)
+      const order = await orderExists(parseInt(req.params.id))
       if (!order) throw createError(400,'order does not exist')
       next()
     } catch (err) {
