@@ -94,6 +94,25 @@ describe('Validation of orders save action', () => {
     expect(next.mock.calls[0][0]).toBe(undefined)
   })
 
+  test('Should fail user eksister ikke', async () => {
+    const req = {
+      body: {
+        user_id: 999,
+        orderdate: new Date('2020-06-03'),
+        paymethod: 'AMEX',
+        shipby: 'UPS',
+        lines: books
+      }
+    }
+    const res = jest.fn()
+    const next = jest.fn()
+    await validate.post(req, res, next)
+    expect(next.mock.calls.length).toBe(1)
+    expect(next.mock.calls[0][0].message).toBe('user does not exist')
+    expect(next.mock.calls[0][0].status).toBe(400)
+  })
+
+
   test('should fail shipdate less than orderdate', async () => {
     const req = {
       body: {
