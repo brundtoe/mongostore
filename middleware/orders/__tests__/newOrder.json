@@ -10,8 +10,6 @@
   "lines" : [
     {
       "book_id" : 45,
-      "title" : "Beginning Visual C++ 5 Programming",
-      "salesprice" : 39.95,
       "numbooks" : 9
     }]
 }

@@ -1,6 +1,8 @@
 const mongoCon = require('../../dbs')
 const createError = require('http-errors')
 const { getNextId } = require('../../lib/getNextId')
+const { isOlineValid, buildOline } = require('../../lib/orderlines')
+
 const ordersCollection = 'bookorders'
 
 module.exports = {
@@ -36,6 +38,9 @@ module.exports = {
 
   async save (req, res, next) {
     try {
+      const isValid = isOlineValid(req.body.lines)
+      if (!isValid) throw new Error('Duplicate Books found in orderline')
+      req.body.lines = await buildOline(req.body.lines)
       const order = await getNextId('bookorder_id')
       const db = await mongoCon.getConnection()
       req.body.id = order.value.next_value
