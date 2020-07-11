@@ -11,7 +11,7 @@ module.exports = {
       const db = await mongoCon.getConnection()
       const book = await db.collection(booksCollection).findOne({id: parseInt(book_id)})
       if (!book) {
-        throw new Error('Bogen findes ikke')
+        throw new  Error(`Bogen med nummer ${book_id} findes ikke`)
       }
       const orderline = {
         book_id: parseInt(book.id),
@@ -28,9 +28,15 @@ module.exports = {
     }
   },
   update: async (req,res,next) => {
+    const {order_id, book_id, numbooks} = req.body
     try {
       const db = await mongoCon.getConnection()
-      res.status(201).json({ data: { success: 'orderlines update' } })
+      const book = await bookExists(parseInt(book_id))
+      if (!book) throw new  Error(`Bogen med nummer ${book_id} findes ikke`)
+      const order = await db.collection(ordersCollection).findOneAndUpdate({id: parseInt(order_id), "lines.book_id": parseInt(book_id)},
+        { $set: {"lines.$.numbooks": parseInt(numbooks)}},
+        { returnOriginal: false} )
+      res.status(201).json({ data: order })
     } catch (err) {
       next(createError(400,err))
     }

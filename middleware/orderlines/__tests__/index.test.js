@@ -9,12 +9,12 @@ describe('Updating orderlines on orders', () => {
   const res = {}
   const next = jest.fn()
 
-  function cb(line, oline){
+  function cb (line, oline) {
     if (line.book_id !== oline.book_id) return false
     if (line.title !== oline.title) return false
     if (line.salesprice !== oline.salesprice) return false
-    if (line.numbooks !== oline.numbooks) return false
-    return true
+    return line.numbooks === oline.numbooks
+
   }
 
   beforeEach(() => {
@@ -25,7 +25,6 @@ describe('Updating orderlines on orders', () => {
   afterEach(() => {
     jest.clearAllMocks()
   })
-
 
   test('Succesfully adding an orderline', async () => {
     const req = {
@@ -38,13 +37,13 @@ describe('Updating orderlines on orders', () => {
     }
 
     const orderline = {
-      "book_id": 44,
-      "title": "Beginning Java 2.0",
-      "salesprice": 49.99,
-      "numbooks": 1
+      'book_id': 44,
+      'title': 'Beginning Java 2.0',
+      'salesprice': 49.99,
+      'numbooks': 1
     }
 
-    await orderlinesController.save(req,res, next)
+    await orderlinesController.save(req, res, next)
     expect(next.mock.calls.length).toBe(0)
     expect(res.status.mock.calls.length).toBe(1)
     expect(res.status.mock.calls[0][0]).toBe(201)
@@ -52,7 +51,7 @@ describe('Updating orderlines on orders', () => {
     const actual = res.json.mock.calls[0][0].data
     expect(actual.value.id).toBe(req.body.order_id)
     const lines = actual.value.lines
-    const found = lines.filter(line => cb(line, orderline ))
+    const found = lines.filter(line => cb(line, orderline))
     expect(found.length).toBeGreaterThanOrEqual(1)
   })
   /**
@@ -66,7 +65,7 @@ describe('Updating orderlines on orders', () => {
       }
     }
 
-    await orderlinesController.delete(req,res, next)
+    await orderlinesController.delete(req, res, next)
     expect(next.mock.calls.length).toBe(0)
     expect(res.status.mock.calls.length).toBe(1)
     expect(res.status.mock.calls[0][0]).toBe(200)
@@ -87,24 +86,48 @@ describe('Updating orderlines on orders', () => {
       }
     }
 
-    await orderlinesController.delete(req,res, next)
+    await orderlinesController.delete(req, res, next)
     expect(next.mock.calls.length).toBe(1)
     expect(res.status.mock.calls.length).toBe(0)
     expect(res.json.mock.calls.length).toBe(0)
     const actual = next.mock.calls[0][0]
     expect(actual.status).toBe(400)
     expect(actual.message).toBe(`Bogen med nummer ${req.params.book_id} findes ikke`)
+  })
 
-    /**
-     * opdateringen foretages og det er ikke muligt at se at der ikke er sket noget
-     *
-     * kan rettes ved først at tjekke om book_id findes som en ordrelinje
-     * kan gøres i validate.js her kan også tjekkes om bogen eksisterer
-     *
-     * tilføj i orders.test.js en test af forsøg på at fjerne en ikke eksisterende ordre
-     * validate orders bør tjekke om book_id findes
-     * ved opdatering og sletning skal tjekkes om ordre_id findes
-     */
+  test('Opdater antal bøger på en ordrelinje', async () => {
+    const req = {
+      body: {
+        order_id: 11,
+        book_id: 14,
+        numbooks: 5
+      }
+    }
+
+    const orderline = {
+      'book_id': 14,
+      'title': 'Javascript Objects',
+      'salesprice': 59.99,
+      'numbooks': 5
+    }
+
+    await orderlinesController.update(req, res, next)
+    expect(next.mock.calls.length).toBe(0)
+    expect(res.status.mock.calls.length).toBe(1)
+    expect(res.status.mock.calls[0][0]).toBe(201)
+    expect(res.json.mock.calls.length).toBe(1)
+    const lines = res.json.mock.calls[0][0].data.value.lines
+    const found = lines.filter(line => cb(line, orderline))
+    expect(found.length).toBe(1)
+
+    const reset = {
+      body: {
+        order_id: 11,
+        book_id: 14,
+        numbooks: 4
+      }
+    }
+    await orderlinesController.update(reset, res, next)
 
   })
 })
