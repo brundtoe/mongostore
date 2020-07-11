@@ -88,11 +88,13 @@ describe('Updating orderlines on orders', () => {
     }
 
     await orderlinesController.delete(req,res, next)
-    expect(next.mock.calls.length).toBe(0)
-    expect(res.status.mock.calls.length).toBe(1)
-    expect(res.status.mock.calls[0][0]).toBe(200)
-    expect(res.json.mock.calls.length).toBe(1)
-    const actual = res.json.mock.calls[0][0]
+    expect(next.mock.calls.length).toBe(1)
+    expect(res.status.mock.calls.length).toBe(0)
+    expect(res.json.mock.calls.length).toBe(0)
+    const actual = next.mock.calls[0][0]
+    expect(actual.status).toBe(400)
+    expect(actual.message).toBe(`Bogen med nummer ${req.params.book_id} findes ikke`)
+
     /**
      * opdateringen foretages og det er ikke muligt at se at der ikke er sket noget
      *

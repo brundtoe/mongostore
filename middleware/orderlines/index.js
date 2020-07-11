@@ -2,6 +2,8 @@ const mongoCon = require('../../dbs')
 const createError = require('http-errors')
 const ordersCollection = 'bookorders'
 const booksCollection = 'books'
+const {bookExists} = require('../../lib/bookExists')
+
 module.exports = {
   save: async (req,res,next) => {
     const {order_id, book_id, numbooks} = req.body
@@ -38,6 +40,8 @@ module.exports = {
     const book_id = parseInt(req.params.book_id)
     try {
       const db = await mongoCon.getConnection()
+      const book = await bookExists(book_id)
+      if (!book) throw new Error(`Bogen med nummer ${book_id} findes ikke`)
       const result = await db.collection(ordersCollection).findOneAndUpdate({id: order_id},
       {
         $pull: {"lines": {"book_id": book_id}}
