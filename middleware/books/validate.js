@@ -10,7 +10,7 @@ module.exports = {
         .with('title', ['author_id','bookprice','onhand'])
         .or('title','isbn','published')
       Joi.assert(req.body, schema)
-      const author = await authorExists(req.body.author_id)
+      const author = await authorExists(parseInt(req.body.author_id))
       if (!author) throw createError(400,'author does not exist')
       next()
     } catch (err) {
@@ -24,7 +24,7 @@ module.exports = {
         .with('title',['_id','id','author_id','bookprice','onhand'])
         .or('title','isbn', 'published')
       Joi.assert(req.body,schema )
-      const author = await authorExists(req.body.author_id)
+      const author = await authorExists(parseInt(req.body.author_id))
       if (!author) throw createError(400,'author does not exist')
       next()
     } catch (err) {
