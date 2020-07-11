@@ -4,15 +4,11 @@ describe('Validation of orders update action', () => {
 
   const books = [
     {
-      book_id: 123,
-      title: 'MongodDB The ultimate Guide',
-      salesprice: 23.75,
+      book_id: 13,
       numbooks: 1
     },
     {
-      book_id: 456,
-      title: 'Node.js The ultimate Guide',
-      salesprice: 38.99,
+      book_id: 46,
       numbooks: 2
     }
   ]
@@ -84,7 +80,7 @@ describe('Validation of orders update action', () => {
     const expected = "\"lines\" is required"
     expect(actual[0].message).toMatch(expected)
   })
-  test('should fail without title in order line', async () => {
+  test('should fail without numBooks in order line', async () => {
     const req = {
       body: {
         id: 3,
@@ -96,14 +92,9 @@ describe('Validation of orders update action', () => {
         lines: [
           {
             book_id: 123,
-            title: 'MongodDB The ultimate Guide',
-            salesprice: 23.75,
-            numbooks: 1
           },
     {
       book_id: 456,
-      salesprice: 38.99,
-      numbooks: 2
     }
   ]
       }
@@ -117,7 +108,7 @@ describe('Validation of orders update action', () => {
     expect(next.mock.calls[0][0]).toContainKey('details')
     expect(next.mock.calls[0][0]).toMatchObject({ status: 400 })
     const actual = next.mock.calls[0][0].details
-    const expected = '"lines[1].title" is required'
+    const expected = '"lines[0].numbooks" is required'
     expect(actual[0].message).toMatch(expected)
   })
 })

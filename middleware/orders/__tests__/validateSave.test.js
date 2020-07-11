@@ -6,14 +6,10 @@ describe('Validation of orders save action', () => {
   const books = [
     {
       book_id: 123,
-      title: 'MongodDB The ultimate Guide',
-      salesprice: 23.75,
       numbooks: 1
     },
     {
       book_id: 456,
-      title: 'Node.js The ultimate Guide',
-      salesprice: 38.99,
       numbooks: 2
     }
   ]
