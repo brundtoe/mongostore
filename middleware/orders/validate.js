@@ -2,6 +2,8 @@ const createError = require('http-errors')
 const ordersSchema = require('./ordersSchema')
 const Joi = require('@hapi/joi')
 const { userExists } = require('../../lib/userExists')
+const { orderExists} = require('../../lib/orderExists')
+
 module.exports = {
 
   post: async (req, res, next) => {
@@ -38,9 +40,11 @@ module.exports = {
       next(createError(400, err))
     }
   },
-  delete: (req,res, next) => {
+  delete: async (req,res, next) => {
     try {
       Joi.assert(req.params.id, Joi.number().integer().required().min(1))
+      const order = await orderExists(req.params.id)
+      if (!order) throw createError(400,'order does not exist')
       next()
     } catch (err) {
       next(createError(400, err))
