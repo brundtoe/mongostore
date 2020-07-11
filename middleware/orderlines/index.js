@@ -24,7 +24,7 @@ module.exports = {
       )
       res.status(201).json({ data: order })
     } catch (err) {
-      next(createError(400,err))
+      next(createError(400,err.message))
     }
   },
   update: async (req,res,next) => {
@@ -38,7 +38,7 @@ module.exports = {
         { returnOriginal: false} )
       res.status(201).json({ data: order })
     } catch (err) {
-      next(createError(400,err))
+      next(createError(400,err.message))
     }
   },
   delete: async (req,res,next) => {

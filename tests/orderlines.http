@@ -1,0 +1,88 @@
+### denne post anvendes til testen
+POST http://localhost:3000/orders
+Content-Type: application/json
+
+{
+  "orderdate" : "2020-07-01",
+  "invoice" : 301,
+  "shipby" : "PostNord",
+  "paymethod" : "AMEX",
+  "user_id" : 18,
+  "lines" : [
+    {
+      "book_id" : 45,
+      "numbooks" : 9
+    }]
+}
+
+> {% client.test("Request executed successfully", function() {
+     client.assert(response.status === 201, "Response status is not 201")
+     client.global.set('order',response.body.data.order.id)
+     client.log('Den nye ordre...', response.body.data.order.id)
+  })
+  %}
+
+
+###
+POST http://localhost:3000/orderlines
+Content-Type: application/json
+
+{
+  "order_id": {{ order }},
+  "book_id": 46,
+  "numbooks": 3
+}
+
+> {% client.test("Request executed successfully", function() {
+     client.assert(response.status === 201, "Response status is not 201")
+     })
+  %}
+
+###
+POST http://localhost:3000/orderlines
+Content-Type: application/json
+
+{
+  "order_id": {{ order }},
+  "book_id": 46,
+  "numbooks": 3
+}
+
+> {% client.test("Request executed successfully", function() {
+  var message = "Der findes allerede en ordrelinje for bog nummer 46"
+     client.assert(response.status === 400, "Response status is not 400")
+     client.assert(response.body.message === message, 'Respponse er ikke at bogen allerede findes')
+     })
+  %}
+
+###
+PUT http://localhost:3000/orderlines
+Content-Type: application/json
+
+{
+  "order_id": {{order}},
+  "book_id": 45,
+  "numbooks": 4
+}
+
+> {% client.test("Request executed successfully", function() {
+     client.assert(response.status === 201, "Response status is not 201")
+     })
+  %}
+
+
+###
+DELETE http://localhost:3000/orderlines/{{ order }}/book/46
+
+> {% client.test("Request executed successfully", function() {
+     client.assert(response.status === 200, "Response status is not 200")
+     })
+  %}
+
+### efter testen slettes ordren igen
+DELETE http://localhost:3000/orders/{{ order }}
+
+> {% client.test("Request executed successfully", function() {
+     client.assert(response.status === 200, "Response status is not 200")
+  })
+  %}
