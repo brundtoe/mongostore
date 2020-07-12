@@ -17,16 +17,6 @@ GET http://localhost:3000/books/15
   %}
 
 ###
-GET http://localhost:3000/books/jensen
-
-> {% client.test("Request fails jensen should be a number", function() {
-  client.assert(response.status === 400, "Response status is not 200")
-  var message = "\"value\" must be a number"
-  client.assert(response.body.details[0].message === message,"Response should have returned correct messsage")
-     })
-  %}
-
-###
 POST http://localhost:3000/books
 Content-Type: application/json
 
@@ -59,65 +49,6 @@ DELETE http://localhost:3000/books/{{title_id}}
   client.assert(response.status === 200, "Response status is not 200")
   var title_id = client.global.get('title_id')
   client.assert(response.body.data.value.id == title_id,"Response should have been deleted book")
-     })
-  %}
-
-### author does not exist
-POST http://localhost:3000/books
-Content-Type: application/json
-
-{
-  "author_id": 291,
-  "title": "MongoDB Ultimate Guide",
-  "published": "2020-06-24T12:00:00Z",
-  "bookprice": 34.75,
-  "isbn": "8797435321",
-  "onhand": 2
-}
-
-> {% client.test("Request fails autho does not exist", function() {
-    client.assert(response.status === 400, "Response status is not 400")
-    client.assert(response.body.message === "author does not exist", "response should be author does not exist")
-     })
-  %}
-
-###
-POST http://localhost:3000/books
-Content-Type: application/json
-
-{
-  "author_id": 29,
-  "title": "MongoDB Ultimate Guide",
-  "published": "2020-06-24T12:00:00Z",
-  "isbn": "8797435321",
-  "onhand": 2
-}
-
-> {% client.test("Request fails dyue to missing field bookprice", function() {
-  client.assert(response.status === 400, "Response status is not 400")
-  var message = "\"title\" missing required peer \"bookprice\""
-  client.assert(response.body.details[0].message === message,"Response should have returned missing field bookprice")
-     })
-  %}
-
-###
-POST http://localhost:3000/books
-Content-Type: application/json
-
-{
-  "author_id": 29,
-  "title": "MongoDB Ultimate Guide",
-  "published": "2020-06-24T12:00:00Z",
-  "bookprice": 34.75,
-  "isbn": "8797435321",
-  "onhand": 2,
-  "dummy": "illegal field"
-}
-
-> {% client.test("Request fails due to illegal field dummy", function() {
-  client.assert(response.status === 400, "Response status is not 400")
-  var message = "\"dummy\" is not allowed"
-  client.assert(response.body.details[0].message === message,"Response should have returned missing field bookprice")
      })
   %}
 
@@ -175,55 +106,3 @@ Content-Type: application/json
      })
   %}
 
-###
-PUT http://localhost:3000/books
-Content-Type: application/json
-
-{
-  "_id": "5eef84a264ee594e266c8df0",
-  "author_id": 818,
-  "id": 18,
-  "title": "Beginning Active Server Pages 3.0",
-  "published": "1999-11-30T23:00:00.000Z",
-  "bookprice": 28.99,
-  "isbn": "1861003382",
-  "onhand": 54
-}
-
-> {% client.test("Request fails autho does not exist", function() {
-    client.assert(response.status === 400, "Response status is not 400")
-    client.assert(response.body.message === "author does not exist", "response should be author does not exist")
-     })
-  %}
-
-###
-PUT http://localhost:3000/books
-Content-Type: application/json
-
-{
-  "_id": "5eef84a264ee594e266c8df0",
-  "id": 18,
-  "title": "Beginning Active Server Pages 3.0",
-  "published": "1999-11-30T23:00:00.000Z",
-  "bookprice": 28.99,
-  "isbn": "1861003382",
-  "onhand": 54
-}
-
-> {% client.test("Request fails due to misisng field author_id", function() {
-  client.assert(response.status === 400, "Response status is not 400")
-  var message = "\"author_id\" is required"
-  client.assert(response.body.details[0].message === message,"Response should have correct error message")
-     })
-  %}
-
-
-###
-DELETE http://localhost:3000/books/jensen
-
-> {% client.test("Request should fail jensen should be a number", function() {
-  client.assert(response.status === 400, "Response status is not 400")
-  var message = '"value" must be a number'
-  client.assert(response.body.details[0].message === message,"Response should have returned empty")
-     })
-  %}
