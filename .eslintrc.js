@@ -1,10 +1,10 @@
 module.exports = {
   'env': {
     'browser': true,
-    'commonjs': true,
-    'es6': true,
+    'es2020': true,
     'node': true,
-    'jest/globals': true
+    'jest/globals': true,
+    'mongo': true
   },
   'plugins': ['jest'],
   'extends': ['eslint:recommended','plugin:jest/recommended'],
