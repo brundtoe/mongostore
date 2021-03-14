@@ -1,5 +1,5 @@
 const validate = require('../validate')
-const Joi = require('@hapi/joi')
+const Joi = require('joi')
 
 describe('validering af orders', () => {
 

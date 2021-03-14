@@ -1,4 +1,4 @@
-const Joi = require('@hapi/joi')
+const Joi = require('joi')
 
 const ordersSchema = Joi.object({
   _id: Joi.string().regex(/^[0-9a-fA-F]{24}$/, 'Invalid ObjectId'),

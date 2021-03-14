@@ -1,6 +1,6 @@
 const createError = require('http-errors')
 const orderlinesSchema = require('./orderlinesSchema')
-const Joi = require('@hapi/joi')
+const Joi = require('joi')
 const {orderExists} = require('../../lib/orderExists')
 module.exports = {
   post: async (req, res, next) => {

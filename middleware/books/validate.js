@@ -1,7 +1,7 @@
 const createError = require('http-errors')
 const booksSchema = require('./booksSchema')
 const {authorExists} = require('../../lib/authorExists')
-const Joi = require('@hapi/joi')
+const Joi = require('joi')
 
 module.exports = {
   post: async (req, res, next) => {

@@ -1,6 +1,6 @@
 const createError = require('http-errors')
 const ordersSchema = require('./ordersSchema')
-const Joi = require('@hapi/joi')
+const Joi = require('joi')
 const { userExists } = require('../../lib/userExists')
 const { orderExists} = require('../../lib/orderExists')
 

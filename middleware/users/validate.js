@@ -1,6 +1,6 @@
 const createError = require('http-errors')
 const userSchema = require('./userSchema')
-const Joi = require('@hapi/joi')
+const Joi = require('joi')
 
 module.exports = {
   post: (req, res, next) => {

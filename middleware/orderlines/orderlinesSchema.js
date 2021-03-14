@@ -1,4 +1,4 @@
-const Joi = require('@hapi/joi')
+const Joi = require('joi')
 
 const ordersSchema = Joi.object({
   book_id: Joi.number()

@@ -2,11 +2,9 @@
 
 Der anvendes MongoDB Native Node.js driver.
  
-Package **@hapi/joi** anvendes til JSON schema validering.
+Package **joi** anvendes til JSON schema validering. Den har afløst den oprindelige @hapi/joi.
 
-https://hapi.dev/ er et Node.js framework, som tilbyder samme funktionalitet som Express https://expressjs.com/
-
-Kombinationen af MongoDB og Hapi/joi anvendes i stedet for Mongoose. 
+Kombinationen af MongoDB og joi anvendes i stedet for Mongoose. 
 
 Kombinationen har den fordel, at MongoDB native Node.js implementering er tættere på MongoDB CLI herunder JavaScript implementeringen i CLI
 
