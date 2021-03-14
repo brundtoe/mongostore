@@ -16,7 +16,19 @@ Databasen kan være en lokal instans eller en MongoDB Atlas cloud instans.
 
 Der er implementeret et REST API til databasen **bookstore-mysql**
 
-## test
+## databasen 
+
+databasen kan restores med NoSQLBooster import mongorestore
+
+    /home/jackie/dumps/mongodb/bookstore-mysql-archive/archive
+
+## run appen
+
+    npm start
+
+Browser: http://localhost:3000
+
+## test med WebStorm http Requests
 
 valideringere og controllere for
 
@@ -24,13 +36,12 @@ valideringere og controllere for
 - authors
 - books
 
-er foretaget med WebStorm http Requests
+## test med Jest
 
-validering og controller for
+for controller
 
 - orders
 
-er foretaget med Jest
 
 
 
