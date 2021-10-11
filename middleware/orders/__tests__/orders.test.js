@@ -26,7 +26,7 @@ describe('Order controller', () => {
     orderData._id = ObjectID(orderData._id)
   })
 
-  beforeEach(() => {
+  beforeEach( () => {
     res.status = jest.fn().mockReturnValue(res)
     res.json = jest.fn().mockReturnValue(res)
   })
@@ -52,7 +52,7 @@ describe('Order controller', () => {
     const req = {
       params: { id: 5 }
     }
-
+    await resetOrderFive()
     await orderController.show(req, res, next)
     expect(next.mock.calls.length).toBe(0)
     expect(res.status.mock.calls.length).toBe(1)
@@ -66,9 +66,9 @@ describe('Order controller', () => {
     const req = {
       body: {
         id: 5,
-        shipdate: new Date('2012-06-15'),
-        paydate: new Date('2012-06-16'),
-        invoicedate: new Date('2012-06-17'),
+        shipdate: new Date('2021-06-15'),
+        paydate: new Date('2021-06-16'),
+        invoicedate: new Date('2021-06-17'),
         invoice: 3,
         paymethod: 'Visa',
         shipby: 'DHL'
@@ -81,8 +81,10 @@ describe('Order controller', () => {
     expect(res.status.mock.calls[0][0]).toBe(200)
     const actual = res.json.mock.calls[0][0].data
     expect(actual.value.id).toBe(5)
-    expect(actual.value).toMatchObject(req.body)
-    resetOrderFive()
+    expect(actual.value.invoice).toBe(3)
+    expect(actual.value.paymethod).toBe('Visa')
+    expect(actual.value.shipby).toBe('DHL')
+    await resetOrderFive()
   })
 
   test('should save new order', async () => {
@@ -96,7 +98,7 @@ describe('Order controller', () => {
     expect(res.status.mock.calls.length).toBe(1)
     expect(res.status.mock.calls[0][0]).toBe(201)
     const actual = res.json.mock.calls[0][0].data
-    expect(actual.insertedCount).toBe(1)
+    expect(actual.acknowledged).toBeTrue()
     expect(actual.order).toMatchObject(newOrder)
     try {
       let db = await mongoCon.getConnection()
@@ -114,7 +116,7 @@ describe('Order controller', () => {
     //First create new order
     await orderController.save(req, res, next)
     const actualNew = res.json.mock.calls[0][0].data
-    expect(actualNew.insertedCount).toBe(1)
+    expect(actualNew.acknowledged).toBeTrue()
     expect(actualNew.order).toMatchObject(newOrder)
     jest.clearAllMocks()
     const reqDelete = {
