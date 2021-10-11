@@ -4,12 +4,14 @@
 
 npm packages er opdateret.
 
-Den vigtigste er opdatering af mongodb native nodejs driver til version 4.1.3
+- Den vigtigste er opdatering af mongodb native nodejs driver til version 4.1.3
+- Der er som følge af denne opdatering foretaget justering af kald af insertOne, som har fået ny return value
+- i update actions er {returnOriginal: false} erstattet af {returnDocument: 'after'}
 
-Der er som følge af denne opdatering foretaget justering af kald af insertOne, som har fået ny return value
-
-{returnOriginal: false} er erstattet af {returnDocument: 'after'}
-
+- opdateret config.js så appen fungerer med docker og vagrant
+- tilføjet docker-compose
+- 
+## applikationen
 
 Der anvendes MongoDB Native Node.js driver.
  
@@ -20,8 +22,6 @@ Kombinationen af MongoDB og joi anvendes i stedet for Mongoose.
 Kombinationen har den fordel, at MongoDB native Node.js implementering er tættere på MongoDB CLI herunder JavaScript implementeringen i CLI
 
 Databasen kan være en lokal instans eller en MongoDB Atlas cloud instans. 
-
-## applikationen
 
 Der er implementeret et REST API til databasen **bookstore-mysql**
 
@@ -43,11 +43,27 @@ start værdien er sat til next value 50 for authors, books, bookorder, user men 
 
 
 ## run appen
+PÅ hosten udføres::
 
     npm start
 
-Browser: http://localhost:3000
+browser: http://localhost:3000
 
+docker::
+
+    docker-compose up
+
+browser: http://localhost:3000
+
+vagrant instanser (archer.test)
+
+- instansen bringes op
+- appen startes med
+    
+    cd /nfs/jinja-demo
+    sudo python3 jsd-menu.py
+
+browser: http://archer.test
 ## test med WebStorm http Requests
 
 valideringer og controllere for

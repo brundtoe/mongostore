@@ -1,0 +1,46 @@
+version: '3.6'
+
+services:
+
+  node:
+    image: node:bbr
+    command: ["npm","start"]
+    container_name: node
+    environment:
+      DOCKER: "true"
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "3000:3000"
+    networks:
+      - default
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:bbr
+    container_name: mongodb
+    volumes:
+      - mongodata:/data/db
+    networks:
+      - default
+
+  browser:
+    image: mongo-express:bbr
+    container_name: browser
+    ports:
+      - 8081:8081
+    depends_on:
+      - mongodb
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+
+
+networks:
+  default:
+    external:
+      name: humle_net
+
+volumes:
+  mongodata:
+    external: true
