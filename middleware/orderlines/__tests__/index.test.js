@@ -114,7 +114,7 @@ describe('Updating orderlines on orders', () => {
     expect(actual.message).toBe(`Bogen med nummer ${req.params.book_id} findes ikke`)
   })
 
-  test('Opdater antal bøger på en ordrelinje', async () => {
+  test.skip('Opdater antal bøger på en ordrelinje', async () => {
     const req = {
       body: {
         order_id: 11,

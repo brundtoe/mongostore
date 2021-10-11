@@ -81,7 +81,7 @@ module.exports = {
           bookprice: req.body.bookprice,
           isbn: req.body.isbn,
           onhand: req.body.onhand
-        },{returnOriginal:false})
+        },{returnDocument: 'after'})
       res.status(201).json(result)
     } catch (err) {
       next(createError(400, err.message))

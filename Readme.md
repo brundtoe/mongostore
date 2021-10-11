@@ -6,12 +6,10 @@ npm packages er opdateret.
 
 Den vigtigste er opdatering af mongodb native nodejs driver til version 4.1.3
 
-der er som følge af denne opdatering foretaget justering af kald af insertOne, som har fået ny return value
+Der er som følge af denne opdatering foretaget justering af kald af insertOne, som har fået ny return value
 
-**important**
-    Der er en fejl når testcaes udføres i en sekvens, så fejler findOnAndUpdate eller findOneAndReplace, idet cache eller lignende anvender de gamle data.
+{returnOriginal: false} er erstattet af {returnDocument: 'after'}
 
-    hvis testcase gentages manuelt en af gangen så fungerer det.
 
 Der anvendes MongoDB Native Node.js driver.
  

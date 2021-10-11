@@ -73,7 +73,7 @@ module.exports = {
             shipby: req.body.shipby || null
           }
         },
-        { returnOriginal: false })
+        {returnDocument: 'after'})
       res.status(200).json({ data: order })
     } catch (err) {
       next(createError(400, err.message))

@@ -73,7 +73,7 @@ module.exports = {
           state: req.body.state,
           country: req.body.country,
           mail: req.body.mail
-        },{returnOriginal:false})
+        },{returnDocument: 'after'})
       res.status(201).json(result)
     } catch (err) {
       next(createError(400, err.message))

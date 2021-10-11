@@ -20,7 +20,7 @@ module.exports = {
         numbooks: parseInt(numbooks)
       }
       const order = await db.collection(ordersCollection).findOneAndUpdate({id: parseInt(order_id)},{
-       $push: { lines: orderline }}, { returnOriginal: false}
+       $push: { lines: orderline }}, {returnDocument: 'after'}
       )
       res.status(201).json({ data: order })
     } catch (err) {
@@ -35,7 +35,7 @@ module.exports = {
       if (!book) throw new  Error(`Bogen med nummer ${book_id} findes ikke`)
       const order = await db.collection(ordersCollection).findOneAndUpdate({id: parseInt(order_id), "lines.book_id": parseInt(book_id)},
         { $set: {"lines.$.numbooks": parseInt(numbooks)}},
-        { returnOriginal: false} )
+        { returnDocument: false} )
       res.status(201).json({ data: order })
     } catch (err) {
       next(createError(400,err.message))
@@ -51,7 +51,7 @@ module.exports = {
       const result = await db.collection(ordersCollection).findOneAndUpdate({id: order_id},
       {
         $pull: {"lines": {"book_id": book_id}}
-      }, { returnOriginal: false})
+      }, { returnDocument: 'after'})
       res.status(200).json({ data: result })
     } catch (err) {
       next(createError(400,err))
