@@ -7,6 +7,33 @@ GET http://localhost:3000/books
   %}
 
 ###
+PUT http://localhost:3000/books
+Content-Type: application/json
+
+{
+  "_id": "5eef84a264ee594e266c8df0",
+  "id": 18,
+  "author_id": 6,
+  "title": "Beginning MEAN apps",
+  "published": "2019-11-30T23:00:00.000Z",
+  "bookprice": 15.49,
+  "isbn": "1861003254",
+  "onhand": 5
+}
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status == 201, "Response status is not 201")
+  var title = "Beginning MEAN apps"
+  client.assert(response.body.value.author_id == 6, "Response should have returned author_id = 6")
+  client.assert(response.body.value.title == title, "Response should have returned title=Beginning MEAN apps")
+  client.assert(response.body.value.published == "2019-11-30T23:00:00.000Z", "Response should have returned published = 2019-11-30T23:00:00.000Z")
+  client.assert(response.body.value.bookprice == 15.49, "Response should have returned bookprice 15.49 ")
+  client.assert(response.body.value.isbn == "1861003254", "Response should have returned isbn 1861003254 ")
+  client.assert(response.body.value.onhand == 5, "Response should have returned onhand 5")
+     })
+  %}
+
+###
 GET http://localhost:3000/books/15
 
 > {% client.test("Request executed successfully", function() {
@@ -31,7 +58,6 @@ Content-Type: application/json
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 201, "Response status is not 201")
-  client.assert(response.body.data.insertedCount === 1,"Response should be one document inserted")
   client.assert(response.body.data.book.author_id === 29, "Response should have returned author_id = 29")
   client.assert(response.body.data.book.title === "MongoDB Ultimate Guide", "Response should have returned title=MongoDB Ultimate Guide")
   client.assert(response.body.data.book.published === "2020-06-24T12:00:00Z", "Response should have returned published = 2020-06-24T12:00:00Z")
@@ -52,32 +78,7 @@ DELETE http://localhost:3000/books/{{title_id}}
      })
   %}
 
-###
-PUT http://localhost:3000/books
-Content-Type: application/json
 
-{
-  "_id": "5eef84a264ee594e266c8df0",
-  "id": 18,
-  "author_id": 6,
-  "title": "Beginning MEAN apps",
-  "published": "2019-11-30T23:00:00.000Z",
-  "bookprice": 15.49,
-  "isbn": "1861003254",
-  "onhand": 5
-}
-
-> {% client.test("Request executed successfully", function() {
-  client.assert(response.status === 201, "Response status is not 201")
-  var title = "Beginning MEAN apps"
-  client.assert(response.body.value.author_id === 6, "Response should have returned author_id = 6")
-  client.assert(response.body.value.title === title, "Response should have returned title=Beginning MEAN apps")
-  client.assert(response.body.value.published === "2019-11-30T23:00:00.000Z", "Response should have returned published = 2019-11-30T23:00:00.000Z")
-  client.assert(response.body.value.bookprice === 15.49, "Response should have returned bookprice 15.49 ")
-  client.assert(response.body.value.isbn === "1861003254", "Response should have returned isbn 1861003254 ")
-  client.assert(response.body.value.onhand === 5, "Response should have returned onhand 5")
-     })
-  %}
 
 ### restore original values
 PUT http://localhost:3000/books
@@ -97,12 +98,12 @@ Content-Type: application/json
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 201, "Response status is not 201")
   var title = "Beginning Active Server Pages 3.0"
-  client.assert(response.body.value.author_id === 17, "Response should have returned author_id = 17")
+  client.assert(response.body.value.author_id == 17, "Response should have returned author_id = 17")
   client.assert(response.body.value.title === title, "Response should have returned title=Beginning Active...")
   client.assert(response.body.value.published === "1999-11-30T23:00:00.000Z", "Response should have returned published = 1999-11-30T23:00:00.000Z")
-  client.assert(response.body.value.bookprice === 28.99, "Response should have returned bookprice 28.99 ")
+  client.assert(response.body.value.bookprice == 28.99, "Response should have returned bookprice 28.99 ")
   client.assert(response.body.value.isbn === "1861003382", "Response should have returned isbn 8797435321 ")
-  client.assert(response.body.value.onhand === 54, "Response should have returned onhand 54")
+  client.assert(response.body.value.onhand == 54, "Response should have returned onhand 54")
      })
   %}
 

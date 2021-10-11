@@ -52,15 +52,16 @@ module.exports = {
   },
   async save (req, res, next) {
     try {
-      const book = await getNextId('book_id')
+      const book_id = await getNextId('book_id')
       const db = await mongoCon.getConnection()
-      req.body.id = book.value.next_value
+      req.body.id = book_id.value.next_value
       const result = await db.collection(booksCollection).insertOne(req.body)
+      const book = await db.collection(booksCollection).findOne({id : req.body.id})
       res.status(201).json({
         data: {
-          insertedCount: result.insertedCount,
-          insertedId: result.insertedId,
-          book: result.ops[0]
+          acknowledged: result.acknowledged,
+          insertId: result.insertedId,
+          book: book
         }
       })
     } catch (err) {
