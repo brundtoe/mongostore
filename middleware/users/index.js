@@ -48,11 +48,12 @@ module.exports = {
       const db = await mongoCon.getConnection()
       req.body.id = user_id.value.next_value
       const result = await db.collection(userCollection).insertOne(req.body)
+      const user = await db.collection(userCollection).findOne({id : req.body.id})
       res.status(201).json({
         data: {
-          insertedCount: result.insertedCount,
-          insertedId: result.insertedId,
-          user: result.ops[0]
+          acknowledged: result.acknowledged,
+          insertId: result.insertedId,
+          user: user
         }
       })
     } catch (err) {

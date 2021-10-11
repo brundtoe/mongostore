@@ -29,7 +29,6 @@ Content-Type: application/json
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 201, "Response status is not 201")
-  client.assert(response.body.data.insertedCount === 1, "Response email should insert One document")
   client.global.set('kristian_id',response.body.data.user.id)
      })
   %}
@@ -56,7 +55,6 @@ Content-Type: application/json
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 201, "Response status is not 201")
-  client.assert(response.body.data.insertedCount === 1, "Response email should insert One document")
   client.global.set('maria_id',response.body.data.user.id)
      })
   %}
