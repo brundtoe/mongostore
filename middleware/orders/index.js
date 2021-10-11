@@ -41,15 +41,16 @@ module.exports = {
       const isValid = isOlineValid(req.body.lines)
       if (!isValid) throw new Error('Duplicate Books found in orderline')
       req.body.lines = await buildOline(req.body.lines)
-      const order = await getNextId('bookorder_id')
+      const order_id = await getNextId('bookorder_id')
       const db = await mongoCon.getConnection()
-      req.body.id = order.value.next_value
+      req.body.id = order_id.value.next_value
       const result = await db.collection(ordersCollection).insertOne(req.body)
+      const order = await db.collection(ordersCollection).findOne({id : req.body.id})
       res.status(201).json({
         data: {
-          insertedCount: result.insertedCount,
-          insertedId: result.insertedId,
-          order: result.ops[0]
+          acknowledged: result.acknowledged,
+          insertId: result.insertedId,
+          order: order
         }
       })
     } catch (err) {
