@@ -4,7 +4,7 @@ const url = config.dbUrl
 //const url = 'mongodb://localhost:27017'
 const dbName =  config.dbName
 //const dbName = 'mystore'
-const options = { useNewUrlParser: true, useUnifiedTopology: true, poolSize: 10 }
+const options = { useNewUrlParser: true, useUnifiedTopology: true }
 
 let db
 //let dbClient
