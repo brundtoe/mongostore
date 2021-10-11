@@ -4,8 +4,10 @@ const url = config.dbUrl
 //const url = 'mongodb://localhost:27017'
 const dbName =  config.dbName
 //const dbName = 'mystore'
-const options = { useNewUrlParser: true, useUnifiedTopology: true }
 
+// mongodb driver 4.x ignorerer  de to options parametre
+//const options = { useNewUrlParser: true, useUnifiedTopology: true }
+const options = {}
 let db
 //let dbClient
 
