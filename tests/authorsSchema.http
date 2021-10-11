@@ -2,7 +2,7 @@ GET http://localhost:3000/authors
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
-  client.assert(response.body.data.length == 29,"Response should have returned 4 authors")
+  client.assert(response.body.data.length == 4,"Response should have returned 4 authors")
      })
   %}
 

@@ -26,16 +26,13 @@ module.exports = {
         'bookswritten.published': 1
       }
 
-      const options = {
-        sort: { id: 1 },
-        limit: 4
-      }
       let col = db.collection(authorCollection)
       let cursor = await col.aggregate([
         { '$match': query},
         {'$lookup': join },
-        {'$project': fields}
-      ], options).toArray()
+        {'$project': fields},
+        {'$limit': 4}
+      ]).toArray()
       res.status(200).json({data: cursor})
     } catch (err) {
       next(createError(400, err.message))
