@@ -2,7 +2,7 @@ GET http://localhost:3000/authors
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
-  client.assert(response.body.data.length === 4,"Response should have returned 4 authors")
+  client.assert(response.body.data.length == 29,"Response should have returned 4 authors")
      })
   %}
 
@@ -38,7 +38,6 @@ Content-Type: application/json
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 201, "Response status is not 201")
-  client.assert(response.body.data.insertedCount === 1,"Response should be one document inserted")
   client.assert(response.body.data.author.firstname === "Karin", "Response should have returned Karin")
   client.assert(response.body.data.author.lastname === "Andersen", "Response should have returned Karin")
   client.assert(response.body.data.author.mail === "karin@example.com","Response should have returned 'karin@example.com")

@@ -58,11 +58,12 @@ module.exports = {
       let db = await mongoCon.getConnection()
       req.body.id = author_id.value.next_value
       const result = await db.collection(authorCollection).insertOne(req.body)
+      const author = await db.collection(authorCollection).findOne({id : req.body.id})
       res.status(201).json({
         data: {
-          insertedCount: result.insertedCount,
-          insertedId: result.insertedId,
-          author: result.ops[0]
+          acknowledged: result.acknowledged,
+          insertId: result.insertedId,
+          author: author
         }
       })
     } catch (err) {
