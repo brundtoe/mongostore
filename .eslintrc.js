@@ -1,7 +1,7 @@
 module.exports = {
   'env': {
     'browser': true,
-    'es2020': true,
+    'es2021': true,
     'node': true,
     'jest/globals': true,
     'mongo': true
@@ -16,7 +16,7 @@ module.exports = {
     'context': true,
   },
   'parserOptions': {
-    'ecmaVersion': 11
+    'ecmaVersion': 12
   },
   'rules': {
     'no-console': 'off',
