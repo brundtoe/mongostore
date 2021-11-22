@@ -5,17 +5,25 @@ const booksSchema = Joi.object({
 
   id: Joi.number()
     .integer()
-    .min(1),
+    .min(1).messages({
+      'number.base': 'Book Id skal være numerisk'
+    }),
 
   author_id: Joi.number()
     .integer()
     .min(1)
-    .required(),
+    .required().messages({
+      'number.base': 'Author Id skal være numerisk'
+    }),
 
   title: Joi.string()
     .min(2)
     .max(35)
-    .required(),
+    .required()
+    .messages({
+      'any.required': 'Feltet title mangler i input',
+      'string.pattern.base': 'Title skal være  på 2 - 35 tegn'
+    }),
 
   published: Joi.date()
     .iso()
@@ -27,14 +35,16 @@ const booksSchema = Joi.object({
     .max(99.99),
 
   isbn: Joi.string()
-    .regex(/^[0-9]{10}$/)
-    .length(10),
+    .min(1)
+    .max(10),
 
   onhand: Joi.number()
     .integer()
     .min(0)
     .max(99)
-
+    .messages(
+      {'number.base': 'On hand skal være numerisk'}
+    )
 })
 
 module.exports = booksSchema

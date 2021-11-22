@@ -43,13 +43,15 @@ DELETE http://localhost:3000/api/customers/{{kristian_id}}
      })
   %}
 
-### Kun de krævede felter
+###
 POST http://localhost:3000/api/customers
 Content-Type: application/json
 
 {
   "name": "Maria Jensen",
   "city": "Svendborg",
+  "country": "DK",
+  "state": "Fyn",
   "mail": "maria@example.com"
 }
 
@@ -78,6 +80,7 @@ Content-Type: application/json
   "id": 29,
   "name": "Christian Johnson",
   "city": "Swindon",
+  "state": "York",
   "country": "UK",
   "mail": "christian@johnson.nu"
 
@@ -87,7 +90,7 @@ Content-Type: application/json
      client.assert(response.status === 201, "Response status is not 201")
      client.assert(response.body.value.name === "Christian Johnson", "Response name should be Christian Johnson")
      client.assert(response.body.value.city === "Swindon", "Response city should be Swindon")
-     client.assert(response.body.value.state === null, "Response state should be null")
+     client.assert(response.body.value.state === "York", "Response state should be null")
      client.assert(response.body.value.country === "UK", "Response country should be UK")
      client.assert(response.body.value.mail === "christian@johnson.nu", "Response mail should be christian@johnson.nu")
      })
@@ -102,6 +105,7 @@ Content-Type: application/json
   "id": 29,
   "name": "christina masterson",
   "city": "petersburgh",
+  "country": "USA",
   "state": "pensylvania",
   "mail": "christina@masterson.nu"
 
@@ -112,7 +116,7 @@ Content-Type: application/json
           client.assert(response.body.value.name === "christina masterson", "Response name should be christina  masterson")
      client.assert(response.body.value.city === "petersburgh", "Response city should be peterburgh")
      client.assert(response.body.value.state === "pensylvania", "Response state should be pensylvania")
-     client.assert(response.body.value.country === null, "Response country should be null")
+     client.assert(response.body.value.country === "USA", "Response country should be null")
      client.assert(response.body.value.mail == "christina@masterson.nu", "Response email should be 'christina@masterson.nu'")
      })
   %}
