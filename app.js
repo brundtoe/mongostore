@@ -22,11 +22,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/customers', usersRouter);
-app.use('/authors',authorsRouter)
-app.use('/books', booksRouter);
-app.use('/orders',ordersRouter);
-app.use('/orderlines',orderlinesRouter)
+app.use('/api/customers', usersRouter);
+app.use('/api/authors',authorsRouter)
+app.use('/api/books', booksRouter);
+app.use('/api/orders',ordersRouter);
+app.use('/api/orderlines',orderlinesRouter)
 
 // the route is not found
 app.use(errorHandler.notFound)

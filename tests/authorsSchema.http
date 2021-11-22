@@ -1,6 +1,6 @@
-GET http://localhost:3000/authors
+GET http://localhost:3000/api/authors
 
-> {% client.test("Request executed successfully", function() {
+> {% client.test("Response should return 4 authors", function() {
   client.assert(response.status === 200, "Response status is not 200")
   client.assert(response.body.data.length == 4,"Response should have returned 4 authors")
      })
@@ -8,16 +8,16 @@ GET http://localhost:3000/authors
 
 ###
 
-GET http://localhost:3000/authors/12
+GET http://localhost:3000/api/authors/12
 
-> {% client.test("Request executed successfully", function() {
+> {% client.test("Response should return Gross@mail.com", function() {
   client.assert(response.status === 200, "Response status is not 200")
   client.assert(response.body.data.mail === 'Gross@mail.com',"Response should have returned Gross@mail.com")
      })
   %}
 
 ###
-GET http://localhost:3000/authors/121
+GET http://localhost:3000/api/authors/121
 
 > {% client.test("Request should fail no author with number 121", function() {
   client.assert(response.status === 200, "Response status is not 200")
@@ -27,7 +27,7 @@ GET http://localhost:3000/authors/121
 
 
 ###
-POST http://localhost:3000/authors
+POST http://localhost:3000/api/authors
 Content-Type: application/json
 
 {
@@ -46,7 +46,7 @@ Content-Type: application/json
   %}
 
 ###
-DELETE http://localhost:3000/authors/{{karin_id}}
+DELETE http://localhost:3000/api/authors/{{karin_id}}
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
@@ -56,7 +56,7 @@ DELETE http://localhost:3000/authors/{{karin_id}}
   %}
 
 ###
-PUT http://localhost:3000/authors
+PUT http://localhost:3000/api/authors
 Content-Type: application/json
 
 {
@@ -76,7 +76,7 @@ Content-Type: application/json
   %}
 
 ### reset values i database
-PUT http://localhost:3000/authors
+PUT http://localhost:3000/api/authors
 Content-Type: application/json
 
 {

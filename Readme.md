@@ -4,7 +4,7 @@
 
 Route users er ændret til customers, for at kunne anvende den som backend til slim4-frontend og vite-demo
 
-Appen anvender i øvrigt begrebet users uændret, da den er skabt med en udgave af bookstore som indheodler users collection, der er den samme udgave der avnendes af projekt user-registration
+Appen anvender i øvrigt begrebet users uændret, da denne ændring kræve omfattende refaktorering.
 
 
 ## status oktober 2021
@@ -36,11 +36,15 @@ Der er implementeret et REST API til databasen **bookstore-mysql**
 
 databasen kan restores med NoSQLBooster import mongorestore
 
-    /home/jackie/dumps/mongodb/bookstore-mysql-archive/archive
+    /home/projects/devops/data/mongodb/bookstore-mysql-archive/archive
+    
+Restore med på hosten
 
-Restore med 
+  mongorestore --archive=/home/projects/devops/data/mongodb/bookstore-mysql-archive --drop --dryRun
 
-    mongorestore --archive /devops/data/mongodb/booktore-mysql-archive/ --drop --dryRun
+Restore i virtual machine
+
+    mongorestore --archive=/devops/data/mongodb/bookstore-mysql-archive/ --drop --dryRun
 
 Fjern --dryRun for at eksekvere 
 
