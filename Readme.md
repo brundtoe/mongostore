@@ -1,5 +1,12 @@
 # MongoStore a MongoDB REST API
 
+## status november 2021
+
+Route users er ændret til customers, for at kunne anvende den som backend til slim4-frontend og vite-demo
+
+Appen anvender i øvrigt begrebet users uændret, da den er skabt med en udgave af bookstore som indheodler users collection, der er den samme udgave der avnendes af projekt user-registration
+
+
 ## status oktober 2021
 
 npm packages er opdateret.

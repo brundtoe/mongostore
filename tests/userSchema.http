@@ -1,4 +1,4 @@
-GET http://localhost:3000/users
+GET http://localhost:3000/customers
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
@@ -7,16 +7,16 @@ GET http://localhost:3000/users
   %}
 
 ###
-GET http://localhost:3000/users/21
+GET http://localhost:3000/customers/21
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
-  client.assert(response.body.data.mail === "pwjones@anymail.com" ,"Response should have returned ''6 users")
+  client.assert(response.body.data.mail === "pwjones@anymail.com" ,"Response should have returned ''6 customers")
      })
   %}
 
 ###
-POST http://localhost:3000/users
+POST http://localhost:3000/customers
 Content-Type: application/json
 
 {
@@ -34,7 +34,7 @@ Content-Type: application/json
   %}
 
 ### delete again
-DELETE http://localhost:3000/users/{{kristian_id}}
+DELETE http://localhost:3000/customers/{{kristian_id}}
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
@@ -44,7 +44,7 @@ DELETE http://localhost:3000/users/{{kristian_id}}
   %}
 
 ### Kun de krævede felter
-POST http://localhost:3000/users
+POST http://localhost:3000/customers
 Content-Type: application/json
 
 {
@@ -60,7 +60,7 @@ Content-Type: application/json
   %}
 
 ###
-DELETE http://localhost:3000/users/{{maria_id}}
+DELETE http://localhost:3000/customers/{{maria_id}}
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
@@ -70,7 +70,7 @@ DELETE http://localhost:3000/users/{{maria_id}}
   %}
 
 ###
-PUT http://localhost:3000/users
+PUT http://localhost:3000/customers
 Content-Type: application/json
 
 {
@@ -94,7 +94,7 @@ Content-Type: application/json
   %}
 
 ###
-PUT http://localhost:3000/users
+PUT http://localhost:3000/customers
 Content-Type: application/json
 
 {
