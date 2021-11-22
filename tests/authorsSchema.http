@@ -20,11 +20,10 @@ GET http://localhost:3000/api/authors/12
 GET http://localhost:3000/api/authors/121
 
 > {% client.test("Request should fail no author with number 121", function() {
-  client.assert(response.status === 200, "Response status is not 200")
-  client.assert(response.body.data === null,"Response should have returned null")
+  client.assert(response.status === 404, "Response status is not 404")
+  client.assert(response.body.error.type === "RESOURCE_NOT_FOUND","Response should have returned null")
      })
   %}
-
 
 ###
 POST http://localhost:3000/api/authors
@@ -51,7 +50,7 @@ DELETE http://localhost:3000/api/authors/{{karin_id}}
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
   var author_id = client.global.get('karin_id')
-  client.assert(response.body.data.value.id == author_id,"Response should have been deleted")
+  client.assert(response.body.data.author_id == author_id,"Response should have been deleted")
      })
   %}
 
@@ -68,10 +67,8 @@ Content-Type: application/json
 }
 
 > {% client.test("Request executed successfully", function() {
-  client.assert(response.status === 201, "Response status is not 201")
-  client.assert(response.body.value.firstname === "Jens","Response should have firstname Jens")
-  client.assert(response.body.value.lastname === "Olsen","Response should have last name Olsen")
-  client.assert(response.body.value.mail === "jens@example.com","Response should have mail jens@example.com")
+  client.assert(response.status === 200, "Response status is not 201")
+ client.assert(response.body.data.author_id == 29,"Response should have been deleted")
      })
   %}
 
@@ -88,10 +85,8 @@ Content-Type: application/json
 }
 
 > {% client.test("Request executed successfully", function() {
-  client.assert(response.status === 201, "Response status is not 201")
-  client.assert(response.body.value.firstname === "Jesse","Response should have firstname Jesse")
-  client.assert(response.body.value.lastname === "Liberty","Response should have last name Liberty")
-  client.assert(response.body.value.mail === "Liberty@example.com","Response should have mail Liberty@example.com")
+  client.assert(response.status === 200, "Response status is not 201")
+ client.assert(response.body.data.author_id == 29,"Response should have been deleted")
      })
   %}
 
