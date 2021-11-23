@@ -1,6 +1,6 @@
 const mongoCon = require('../dbs')
 const { getNextId } = require('../lib/getNextId')
-const authorCollection = 'authors'
+const authorsCollection = 'authors'
 
 module.exports = {
   async findAll () {
@@ -25,7 +25,7 @@ module.exports = {
         'bookswritten.published': 1
       }
 
-      let col = db.collection(authorCollection)
+      let col = db.collection(authorsCollection)
       let cursor = await col.aggregate([
         { '$match': query },
         { '$lookup': join },
@@ -46,7 +46,7 @@ module.exports = {
   async findById (author_id) {
     try {
       let db = await mongoCon.getConnection()
-      const author = await db.collection(authorCollection).findOne({ id: author_id })
+      const author = await db.collection(authorsCollection).findOne({ id: author_id })
       return author ? { data: author } : author_not_found(author_id)
     } catch (err) {
       return action_failed(err.message)
@@ -56,7 +56,7 @@ module.exports = {
   async deleteById (author_id) {
     try {
       let db = await mongoCon.getConnection()
-      const result = await db.collection(authorCollection).findOneAndDelete({ id: author_id })
+      const result = await db.collection(authorsCollection).findOneAndDelete({ id: author_id })
       return (result.ok === 1) ? author_slettet(author_id) : author_not_found(author_id)
 
     } catch (err) {
@@ -65,7 +65,7 @@ module.exports = {
   },
   async updateById (author) {
     let db = await mongoCon.getConnection()
-    const result = await db.collection(authorCollection).findOneAndReplace({ id: author.id }, author, { returnDocument: 'after' })
+    const result = await db.collection(authorsCollection).findOneAndReplace({ id: author.id }, author, { returnDocument: 'after' })
     return (result.ok === 1) ? author_opdateret(author.id) : author_not_found(author.id)
   },
 
@@ -74,8 +74,8 @@ module.exports = {
       const author_id = await getNextId('author_id')
       let db = await mongoCon.getConnection()
       author.id = author_id.value.next_value
-      const result = await db.collection(authorCollection).insertOne(author)
-      return (result.acknowledged) ? author_oprettet : action_failed('Author save')
+      const result = await db.collection(authorsCollection).insertOne(author)
+      return (result.acknowledged) ? author_oprettet(author.id) : action_failed('Author save')
 
     } catch (err) {
       return action_failed(err.message)

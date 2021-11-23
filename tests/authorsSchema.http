@@ -37,10 +37,7 @@ Content-Type: application/json
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 201, "Response status is not 201")
-  client.assert(response.body.data.author.firstname === "Karin", "Response should have returned Karin")
-  client.assert(response.body.data.author.lastname === "Andersen", "Response should have returned Karin")
-  client.assert(response.body.data.author.mail === "karin@example.com","Response should have returned 'karin@example.com")
-  client.global.set('karin_id',response.body.data.author.id)
+  client.global.set('karin_id',response.body.data.author_id)
      })
   %}
 

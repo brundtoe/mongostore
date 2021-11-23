@@ -23,6 +23,7 @@ module.exports = {
       next(err)
     }
   },
+
   async save (req, res, next) {
 
     const author = {
@@ -39,6 +40,7 @@ module.exports = {
       next(err)
     }
   },
+
   async update (req, res, next) {
     const author_id = parseInt(req.body.id)
 
@@ -58,6 +60,7 @@ module.exports = {
     }
 
   },
+
   async delete (req, res, next) {
     const author_id = parseInt(req.params.id)
     try {
