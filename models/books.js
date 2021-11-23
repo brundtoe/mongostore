@@ -1,6 +1,5 @@
 const mongoCon = require('../dbs')
 const { getNextId } = require('../lib/getNextId')
-const createError = require('http-errors')
 const booksCollection = 'books'
 
 module.exports = {

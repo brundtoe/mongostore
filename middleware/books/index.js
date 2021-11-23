@@ -1,9 +1,4 @@
-const mongoCon = require('../../dbs')
-const createError = require('http-errors')
-const { getNextId } = require('../../lib/getNextId')
 const books = require('../../models/books')
-const authors = require('../../models/authors')
-const booksCollection = 'books'
 
 module.exports = {
   async index (req, res, next) {
@@ -41,8 +36,8 @@ module.exports = {
     }
     try {
       const data = await books.save(book)
-      res.status(201).json(data)
-
+      const status = data['data'] ? 201 : 404
+      res.status(status).json(data)
     } catch (err) {
       next(err)
     }

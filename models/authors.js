@@ -38,7 +38,7 @@ module.exports = {
           description: 'Authors collection findes ikke',
         }
       }
-    } catch(err) {
+    } catch (err) {
       return action_failed(err.message)
     }
   },
@@ -64,9 +64,13 @@ module.exports = {
     }
   },
   async updateById (author) {
-    let db = await mongoCon.getConnection()
-    const result = await db.collection(authorsCollection).findOneAndReplace({ id: author.id }, author, { returnDocument: 'after' })
-    return (result.ok === 1) ? author_opdateret(author.id) : author_not_found(author.id)
+    try {
+      let db = await mongoCon.getConnection()
+      const result = await db.collection(authorsCollection).findOneAndReplace({ id: author.id }, author, { returnDocument: 'after' })
+      return (result.ok === 1) ? author_opdateret(author.id) : author_not_found(author.id)
+    } catch (err) {
+      return action_failed(err.message)
+    }
   },
 
   async save (author) {
@@ -104,7 +108,7 @@ function author_slettet (author_id) {
   }
 }
 
-function author_opdateret(author_id){
+function author_opdateret (author_id) {
   return {
     data: {
       message: `Opdateret author ${author_id}`,
@@ -113,7 +117,7 @@ function author_opdateret(author_id){
   }
 }
 
-function author_oprettet(author_id) {
+function author_oprettet (author_id) {
   return {
     data:
       {
@@ -123,7 +127,7 @@ function author_oprettet(author_id) {
   }
 }
 
-function action_failed(action) {
+function action_failed (action) {
   return {
     error: {
       type: 'RESOURCE_NOT_FOUND',
