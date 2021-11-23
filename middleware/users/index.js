@@ -1,92 +1,83 @@
-const mongoCon = require('../../dbs')
-const createError = require('http-errors')
-const {getNextId} = require('../../lib/getNextId')
-const userCollection = 'users'
+const users = require('../../models/users')
 
 module.exports = {
 
   async index (req, res, next) {
 
     try {
-      let db = await mongoCon.getConnection()
-      const query = {
-        state: { $in: ['Indiana', 'California'] }
-      }
-      const fields = {
-        id: 1,
-        name: 1,
-        city: 1,
-        state: 1,
-        mail: 1,
-        _id: 0
-      }
-      const options = {
-        sort: { id: -1 },
-        limit: 6
-      }
-      let col = db.collection(userCollection)
-      let cursor = await col.find(query, options).project(fields).toArray()
-      res.status(200).json({ data: cursor })
+      const data = await users.findAll()
+      const status = data['data'] ? 200 : 404
+      res.status(status).json(data)
     } catch (err) {
       next(err)
     }
   },
   async show (req, res, next) {
-    let db = await mongoCon.getConnection()
-    const id = parseInt(req.params.id)
+    const user_id = parseInt(req.params.id)
+
     try {
-      const user = await db.collection(userCollection).findOne({ id: id })
-      res.status(200).json({ data: user })
+      const data = await users.findById(user_id)
+      const status = data['data'] ? 200 : 404
+      res.status(status).json(data)
     } catch (err) {
       next(err)
     }
   },
 
   async save (req, res, next) {
-    try {
-      const user_id = await getNextId('user_id')
-      const db = await mongoCon.getConnection()
-      req.body.id = user_id.value.next_value
-      const result = await db.collection(userCollection).insertOne(req.body)
-      const user = await db.collection(userCollection).findOne({id : req.body.id})
-      res.status(201).json({
-        data: {
-          acknowledged: result.acknowledged,
-          insertId: result.insertedId,
-          user: user
-        }
-      })
+    const user = {
+      id: null,
+      name: req.body.name,
+      city: req.body.city,
+      state: req.body.state,
+      country: req.body.country,
+      mail: req.body.mail
+    }
+
+  try {
+    const data = await users.save(user)
+    res.status(201).json(data)
     } catch (err) {
-      next(createError(400, err.message))
+      next(err)
     }
 
   },
   async update (req, res, next) {
+
     const user_id = parseInt(req.body.id)
-    try {
-      const db = await mongoCon.getConnection()
-      const result = await db.collection(userCollection).findOneAndReplace({ id: user_id },
-        {
-          id: user_id,
-          name: req.body.name,
-          city: req.body.city,
-          state: req.body.state,
-          country: req.body.country,
-          mail: req.body.mail
-        },{returnDocument: 'after'})
-      res.status(201).json(result)
+
+    const user = {
+      id: user_id,
+      name: req.body.name,
+      city: req.body.city,
+      state: req.body.state,
+      country: req.body.country,
+      mail: req.body.mail
+    }
+
+  try {
+    const data = await users.updateById(user)
+    const status = data['data'] ? 200 : 404
+    res.status(status).json(data)
     } catch (err) {
-      next(createError(400, err.message))
+      next(err)
     }
   },
+
   async delete (req, res, next) {
     const user_id = parseInt(req.params.id)
     try {
-      const db = await mongoCon.getConnection()
-      const result = await db.collection(userCollection).findOneAndDelete({ id: user_id })
-      res.status(200).json({ data: result })
+      const data = await users.deleteById(user_id)
+      let status
+      if (data.data) {
+        status = 200
+      }
+      else {
+        status = data.error.type === 'NOT_ALLOWED' ? 403 : 404
+      }
+      res.status(status).json(data)
     } catch (err) {
-      next(createError(400, err.message))
+      next(err)
     }
 
   }

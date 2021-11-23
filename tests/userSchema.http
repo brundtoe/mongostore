@@ -29,7 +29,7 @@ Content-Type: application/json
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 201, "Response status is not 201")
-  client.global.set('kristian_id',response.body.data.user.id)
+  client.global.set('kristian_id',response.body.data.customer_id)
      })
   %}
 
@@ -39,7 +39,7 @@ DELETE http://localhost:3000/api/customers/{{kristian_id}}
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
   var user_id = client.global.get('kristian_id')
-  client.assert(response.body.data.value.id == user_id,"Response should have been deleted")
+  client.assert(response.body.data.customer_id == user_id,"Response should have been deleted")
      })
   %}
 
@@ -57,7 +57,7 @@ Content-Type: application/json
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 201, "Response status is not 201")
-  client.global.set('maria_id',response.body.data.user.id)
+  client.global.set('maria_id',response.body.data.customer_id)
      })
   %}
 
@@ -67,7 +67,7 @@ DELETE http://localhost:3000/api/customers/{{maria_id}}
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
   var user_id = client.global.get('maria_id')
-  client.assert(response.body.data.value.id == user_id,"Response should have been deleted")
+  client.assert(response.body.data.customer_id == user_id,"Response should have been deleted")
      })
   %}
 
@@ -87,12 +87,8 @@ Content-Type: application/json
 }
 
 > {% client.test("Request failed missing repeat_password", function () {
-     client.assert(response.status === 201, "Response status is not 201")
-     client.assert(response.body.value.name === "Christian Johnson", "Response name should be Christian Johnson")
-     client.assert(response.body.value.city === "Swindon", "Response city should be Swindon")
-     client.assert(response.body.value.state === "York", "Response state should be null")
-     client.assert(response.body.value.country === "UK", "Response country should be UK")
-     client.assert(response.body.value.mail === "christian@johnson.nu", "Response mail should be christian@johnson.nu")
+     client.assert(response.status === 200, "Response status is not 200")
+     client.assert(response.body.data.customer_id === 29, "Response should be customer 29")
      })
   %}
 
@@ -112,11 +108,7 @@ Content-Type: application/json
 }
 
 > {% client.test("Request failed missing repeat_password", function () {
-     client.assert(response.status === 201, "Response status is not 201")
-          client.assert(response.body.value.name === "christina masterson", "Response name should be christina  masterson")
-     client.assert(response.body.value.city === "petersburgh", "Response city should be peterburgh")
-     client.assert(response.body.value.state === "pensylvania", "Response state should be pensylvania")
-     client.assert(response.body.value.country === "USA", "Response country should be null")
-     client.assert(response.body.value.mail == "christina@masterson.nu", "Response email should be 'christina@masterson.nu'")
+     client.assert(response.status === 200, "Response status is not 200")
+     client.assert(response.body.data.customer_id === 29, "Response should be customer 29")
      })
   %}
