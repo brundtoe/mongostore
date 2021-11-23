@@ -1,5 +1,6 @@
 const createError = require('http-errors')
 const authorsSchema = require('./authorsSchema')
+const {buildErrorMessages} = require('../../lib/buildMessages')
 const Joi = require('joi')
 
 module.exports = {
@@ -7,39 +8,40 @@ module.exports = {
 
     try {
       const schema = authorsSchema
-        .with('firstname', ['lastname','mail'])
-      Joi.assert(req.body, schema)
+      Joi.assert(req.body, schema, {stripUnknown: true})
       next()
     } catch (err) {
-      next(createError(400, err))
+      next(createError(400, buildErrorMessages(err,'VALIDATION_ERROR')))
     }
   },
   put: (req, res, next) => {
 
     try {
       const schema = authorsSchema
-        .with('_id',['id','firstname','lastname','mail'])
-      Joi.assert(req.body,schema )
+        .with('id',['firstname','lastname','mail'])
+      Joi.assert(req.body,schema, {stripUnknown: true} )
       next()
     } catch (err) {
-      next(createError(400, err))
+      next(createError(400, buildErrorMessages(err,'VALIDATION_ERROR')))
     }
   },
   show: (req,res, next) => {
 
     try {
-      Joi.assert(req.params.id, Joi.number().integer().required().min(1))
+      Joi.assert(req.params.id, Joi.number().integer().required().min(1)
+        .messages({'number.base': 'Author Id skal være numerisk'}))
       next()
     } catch (err) {
-      next(createError(400, err))
+      next(createError(400, buildErrorMessages(err,'VALIDATION_ERROR')))
     }
   },
   delete: (req,res, next) => {
     try {
-      Joi.assert(req.params.id, Joi.number().integer().required().min(1))
+      Joi.assert(req.params.id, Joi.number().integer().required().min(1)
+        .messages({'number.base': 'Author Id skal være numerisk'}))
       next()
     } catch (err) {
-      next(createError(400, err))
+      next(createError(400, buildErrorMessages(err,'VALIDATION_ERROR')))
     }
   }
 

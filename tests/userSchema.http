@@ -2,7 +2,7 @@ GET http://localhost:3000/api/customers
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
-  client.assert(response.body.data.length === 6,"Response should have returned 6 users")
+  client.assert(response.body.data.length === 29,"Response should have returned 29 users")
      })
   %}
 

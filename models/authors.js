@@ -30,7 +30,7 @@ module.exports = {
         { '$match': query },
         { '$lookup': join },
         { '$project': fields },
-        { '$limit': 4 }
+        { '$limit': 29 }
       ]).toArray()
       return cursor ? { 'data': cursor } : {
         error: {
@@ -57,7 +57,7 @@ module.exports = {
     try {
       let db = await mongoCon.getConnection()
       const result = await db.collection(authorsCollection).findOneAndDelete({ id: author_id })
-      return (result.ok === 1) ? author_slettet(author_id) : author_not_found(author_id)
+      return (result.ok === 1 && result.value) ? author_slettet(author_id) : author_not_found(author_id)
 
     } catch (err) {
       return action_failed(err.message)
@@ -67,7 +67,7 @@ module.exports = {
     try {
       let db = await mongoCon.getConnection()
       const result = await db.collection(authorsCollection).findOneAndReplace({ id: author.id }, author, { returnDocument: 'after' })
-      return (result.ok === 1) ? author_opdateret(author.id) : author_not_found(author.id)
+      return (result.ok === 1 && result.value) ? author_opdateret(author.id) : author_not_found(author.id)
     } catch (err) {
       return action_failed(err.message)
     }

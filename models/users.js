@@ -7,9 +7,7 @@ module.exports = {
 
     try {
       let db = await mongoCon.getConnection()
-      const query = {
-        state: { $in: ['Indiana', 'California'] }
-      }
+      const query = {}
       const fields = {
         id: 1,
         name: 1,
@@ -20,7 +18,7 @@ module.exports = {
       }
       const options = {
         sort: { id: -1 },
-        limit: 6
+        limit: 29
       }
       let col = db.collection(usersCollection)
       let cursor = await col.find(query, options).project(fields).toArray()
@@ -51,7 +49,7 @@ module.exports = {
     try {
       const db = await mongoCon.getConnection()
       const result = await db.collection(usersCollection).findOneAndDelete({ id: user_id })
-      return (result.ok === 1) ? user_slettet(user_id) : user_not_found(user_id)
+      return (result.ok === 1  && result.value) ? user_slettet(user_id) : user_not_found(user_id)
     } catch (err) {
       return action_failed(err.message)
     }
@@ -62,7 +60,7 @@ module.exports = {
       const db = await mongoCon.getConnection()
       const result = await db.collection(usersCollection).findOneAndReplace({ id: user.id }, user
         , { returnDocument: 'after' })
-      return (result.ok === 1) ? user_opdateret(user.id) : user_not_found(user.id)
+      return (result.ok === 1 && result.value) ? user_opdateret(user.id) : user_not_found(user.id)
     } catch (err) {
       return action_failed(err.message)
     }
