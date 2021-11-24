@@ -46,7 +46,7 @@ DELETE http://localhost:3000/api/authors/{{karin_id}}
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
-  var author_id = client.global.get('karin_id')
+  const author_id = client.global.get('karin_id')
   client.assert(response.body.data.author_id == author_id,"Response should have been deleted")
      })
   %}

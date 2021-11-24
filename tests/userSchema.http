@@ -38,7 +38,7 @@ DELETE http://localhost:3000/api/customers/{{kristian_id}}
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
-  var user_id = client.global.get('kristian_id')
+  const user_id = client.global.get('kristian_id')
   client.assert(response.body.data.customer_id == user_id,"Response should have been deleted")
      })
   %}
@@ -66,7 +66,7 @@ DELETE http://localhost:3000/api/customers/{{maria_id}}
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
-  var user_id = client.global.get('maria_id')
+  const user_id = client.global.get('maria_id')
   client.assert(response.body.data.customer_id == user_id,"Response should have been deleted")
      })
   %}

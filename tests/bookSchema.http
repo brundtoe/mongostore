@@ -23,7 +23,7 @@ Content-Type: application/json
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status == 200, "Response status is not 200")
-  var title = "Beginning MEAN apps"
+  const title = "Beginning MEAN apps"
   client.assert(response.body.data.book_id == 18, "Response should have updatet book 18")
 
      })
@@ -34,7 +34,7 @@ GET http://localhost:3000/api/books/15
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
-  var title = "Professional Java Xml Programming With Servlets An"
+  const title = "Professional Java Xml Programming With Servlets An"
   client.assert(response.body.data.title === title,"Response should have returned correct title")
      })
   %}
@@ -63,7 +63,7 @@ DELETE http://localhost:3000/api/books/{{title_id}}
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
-  var title_id = client.global.get('title_id')
+  const title_id = client.global.get('title_id')
   client.assert(response.body.data.book_id == title_id,"Response should have been deleted book")
      })
   %}
