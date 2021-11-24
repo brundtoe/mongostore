@@ -1,139 +1,94 @@
 const mongoCon = require('../dbs')
 const { getNextId } = require('../lib/getNextId')
+const { authorExists } = require('../lib/authorExists')
+const {bookExists} = require('../lib/bookExists')
+const msg = require('../lib/messages')
 const booksCollection = 'books'
 
 module.exports = {
-  async findAll() {
+  async findAll () {
     try {
       let db = await mongoCon.getConnection()
-      const query = {
-        author_id: 5
-      }
+      const query = {}
       const fields = {
         _id: 0,
         id: 1,
         title: 1,
         published: 1,
         onhand: 1,
-        name: { $concat: ['$author.firstname', ' ', '$author.lastname']}
+        name: { $concat: ['$author.firstname', ' ', '$author.lastname'] }
       }
 
       const join = {
-        from: "authors",
-        localField: "author_id",
-        foreignField: "id",
-        as: "author"
+        from: 'authors',
+        localField: 'author_id',
+        foreignField: 'id',
+        as: 'author'
       }
 
       let col = db.collection(booksCollection)
       let cursor = await col.aggregate([
-        { '$match': query},
-        {'$lookup': join },
-        {'$unwind': '$author'},
-        {'$project': fields}
+        { '$match': query },
+        { '$lookup': join },
+        { '$unwind': '$author' },
+        { '$project': fields }
       ]).toArray()
-      return cursor ? { 'data': cursor } : {
-        error: {
-          type: 'RESOURCE_NOT_FOUND',
-          description: 'Books collection findes ikke',
-        }
-      }
+      return cursor ? { 'data': cursor } : msg.collection_not_found('Books')
     } catch (err) {
-      return action_failed(err.message)
+      return msg.action_failed(err.message)
     }
   },
 
-  async findById(book_id){
+  async findById (book_id) {
     try {
       let db = await mongoCon.getConnection()
-      const book = await db.collection(booksCollection).findOne({id:book_id})
-      return book ? { data: book } : book_not_found(book_id)
+      const book = await db.collection(booksCollection).findOne({ id: book_id })
+      return book ? { data: book } : msg.record_not_found(book_id, 'Book')
     } catch (err) {
-      return action_failed(err.message)
+      return msg.action_failed(err.message)
     }
   },
-  async deleteById(book_id){
+  async deleteById (book_id) {
 
     try {
+      const found = await(bookExists(book_id))
+      if (!found) return msg.record_not_found(book_id, 'Book')
       const db = await mongoCon.getConnection()
       const result = await db.collection(booksCollection).findOneAndDelete({ id: book_id })
-      return (result.ok === 1) ? book_slettet(book_id) : book_not_found(book_id)
+      return (result.ok === 1 && result.value) ? msg.record_deleted(book_id, 'Book') : msg.record_not_found(book_id, 'Book')
     } catch (err) {
-      return action_failed(err.message)
+      return msg.action_failed(err.message)
     }
   },
-  async updateById(book){
+  async updateById (book) {
     const book_id = parseInt(book.id)
     try {
+      const author = await authorExists(parseInt(book.author_id))
+      if (!author) return msg.record_not_found(book.author_id, 'Author')
+      const found = await(bookExists(book_id))
+      if (!found) return msg.record_not_found(book_id, 'Book')
       const db = await mongoCon.getConnection()
-      const result = await db.collection(booksCollection).findOneAndReplace({ id: book_id },book,{returnDocument: 'after'})
-      return (result.ok === 1) ? book_opdateret(book.id) : book_not_found(book.id)
+      const result = await db.collection(booksCollection).findOneAndReplace({ id: book_id }, book, { returnDocument: 'after' })
+      return (result.ok === 1 && result.value) ? msg.record_updated(book.id,'Book') : msg.record_not_found(book.id, 'Book')
 
     } catch (err) {
-      return action_failed(err.message)
+      return msg.action_failed(err.message)
     }
   },
-  async save(book){
+  async save (book) {
     try {
+      const author = await authorExists(parseInt(book.author_id))
+      if (!author) return msg.record_not_found(book.author_id, 'Author')
+
       const book_id = await getNextId('book_id')
       const db = await mongoCon.getConnection()
       book.id = book_id.value.next_value
       const result = await db.collection(booksCollection).insertOne(book)
-      return (result.acknowledged) ? book_oprettet : action_failed('Book save')
+      return (result.acknowledged) ? msg.record_created(book_id,'Book') : msg.action_failed('Book save')
 
     } catch (err) {
-      return action_failed(err.message)
+      return msg.action_failed(err.message)
     }
   }
 }
 
-
-
-/**
- * Functions to return messages
- */
-function book_not_found (book_id) {
-  return {
-    error: {
-      type: 'RESOURCE_NOT_FOUND',
-      description: `Book ${book_id} findes ikke`,
-    }
-  }
-}
-
-function book_slettet (book_id) {
-  return {
-    data: {
-      message: `Book ${book_id} er slettet`,
-      book_id: book_id
-    }
-  }
-}
-
-function book_opdateret(book_id){
-  return {
-    data: {
-      message: `Opdateret book ${book_id}`,
-      book_id: book_id
-    }
-  }
-}
-
-function book_oprettet(book_id) {
-  return {
-    data:
-      {
-        message: `Oprettet book ${book_id}`,
-        book_id: book_id
-      }
-  }
-}
-
-function action_failed(action) {
-  return {
-    error: {
-      type: 'RESOURCE_NOT_FOUND',
-      description: `Transaktionen ${action} fejlede`,
-    }
-  }
-}

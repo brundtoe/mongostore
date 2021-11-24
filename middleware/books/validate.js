@@ -1,49 +1,47 @@
 const createError = require('http-errors')
 const booksSchema = require('./booksSchema')
-const {authorExists} = require('../../lib/authorExists')
 const Joi = require('joi')
+const { buildErrorMessages } = require('../../lib/buildMessages')
 
 module.exports = {
   post: async (req, res, next) => {
     try {
       const schema = booksSchema
         .with('title', ['author_id','bookprice','onhand'])
-      Joi.assert(req.body, schema)
-      const author = await authorExists(parseInt(req.body.author_id))
-      if (!author) throw createError(400,'author does not exist')
+      Joi.assert(req.body, schema, {stripUnknown: true, abortEarly: false})
       next()
     } catch (err) {
-      next(createError(400, err))
+      next(createError(400, buildErrorMessages(err,'VALIDATION_ERROR')))
     }
   },
   put: async (req, res, next) => {
 
     try {
       const schema = booksSchema
-        .with('title',['_id','id','author_id','bookprice','onhand'])
-      Joi.assert(req.body,schema )
-      const author = await authorExists(parseInt(req.body.author_id))
-      if (!author) throw createError(400,'author does not exist')
+      //  .with('_id',['author_id','bookprice','onhand'])
+      Joi.assert(req.body,schema, {stripUnknown: true, abortEarly: false} )
       next()
     } catch (err) {
-      next(createError(400, err))
+      next(createError(400, buildErrorMessages(err,'VALIDATION_ERROR')))
     }
   },
   show: (req,res, next) => {
 
     try {
-      Joi.assert(req.params.id, Joi.number().integer().required().min(1))
+      Joi.assert(req.params.id, Joi.number().integer().required().min(1)
+        .messages({'number.base': 'Book Id skal være numerisk'}))
       next()
     } catch (err) {
-      next(createError(400, err))
+      next(createError(400, buildErrorMessages(err,'VALIDATION_ERROR')))
     }
   },
   delete: (req,res, next) => {
     try {
-      Joi.assert(req.params.id, Joi.number().integer().required().min(1))
+      Joi.assert(req.params.id, Joi.number().integer().required().min(1)
+        .messages({'number.base': 'Book Id skal være numerisk'}))
       next()
     } catch (err) {
-      next(createError(400, err))
+      next(createError(400, buildErrorMessages(err,'VALIDATION_ERROR')))
     }
   }
 
