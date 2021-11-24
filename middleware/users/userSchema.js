@@ -1,6 +1,7 @@
 const Joi = require('joi')
 
 const userSchema = Joi.object({
+
   _id: Joi.string().regex(/^[0-9a-fA-F]{24}$/,'Invalid ObjectId'),
 
   id: Joi.number()
@@ -11,8 +12,6 @@ const userSchema = Joi.object({
 
   name: Joi.string()
     .regex(/^[a-zA-Zæøå ÆØÅ]{3,30}$/)
-    .min(3)
-    .max(30)
     .required()
     .messages({
       'any.required': 'Feltet name mangler i input',
@@ -21,8 +20,6 @@ const userSchema = Joi.object({
 
   city: Joi.string()
     .regex(/^[a-zA-Zæøå ÆØÅ]{3,30}$/)
-    .min(3)
-    .max(30)
     .required()
     .messages({
       'any.required': 'Feltet city mangler i input',
@@ -31,8 +28,6 @@ const userSchema = Joi.object({
 
   state: Joi.string()
     .regex(/^[a-zA-Zæøå ÆØÅ]{3,30}$/)
-    .min(0)
-    .max(30)
     .required()
     .messages({
       'any.required': 'Feltet state mangler i input',
@@ -41,8 +36,6 @@ const userSchema = Joi.object({
 
   country: Joi.string()
     .regex(/^[a-zA-Zæøå ÆØÅ]{2,30}$/)
-    .min(0)
-    .max(30)
     .required()
     .messages({
       'any.required': 'Feltet country mangler i input',

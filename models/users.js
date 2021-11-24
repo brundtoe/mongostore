@@ -1,6 +1,8 @@
 const mongoCon = require('../dbs')
 const { getNextId } = require('../lib/getNextId')
 const usersCollection = 'users'
+const { userHasOrders } = require('../lib/userExists')
+const msg = require('../lib/messages')
 
 module.exports = {
   async findAll () {
@@ -22,14 +24,9 @@ module.exports = {
       }
       let col = db.collection(usersCollection)
       let cursor = await col.find(query, options).project(fields).toArray()
-      return cursor ? { 'data': cursor } : {
-        error: {
-          type: 'RESOURCE_NOT_FOUND',
-          description: 'Customers collection findes ikke',
-        }
-      }
+      return cursor ? { 'data': cursor } : msg.collection_not_found('Authors')
     } catch(err) {
-      return action_failed(err.message)
+      return msg.action_failed(err.message)
     }
   },
 
@@ -38,20 +35,23 @@ module.exports = {
     try {
       let db = await mongoCon.getConnection()
       const user = await db.collection(usersCollection).findOne({ id: user_id })
-      return user ? {data: user} : user_not_found(user_id)
+      return user ? {data: user} : msg.record_not_found(user_id, 'Customer')
 
     } catch (err) {
-      return action_failed(err.message)
+      return msg.action_failed(err.message)
     }
   },
 
   async deleteById (user_id) {
     try {
+      const orders = await userHasOrders(user_id)
+      if (orders) return msg.user_has_orders(user_id)
+
       const db = await mongoCon.getConnection()
       const result = await db.collection(usersCollection).findOneAndDelete({ id: user_id })
-      return (result.ok === 1  && result.value) ? user_slettet(user_id) : user_not_found(user_id)
+      return (result.ok === 1  && result.value) ? msg.record_deleted(user_id,'Customer') : msg.record_not_found(user_id, 'Customer')
     } catch (err) {
-      return action_failed(err.message)
+      return msg.action_failed(err.message)
     }
   },
   async updateById (user) {
@@ -60,9 +60,9 @@ module.exports = {
       const db = await mongoCon.getConnection()
       const result = await db.collection(usersCollection).findOneAndReplace({ id: user.id }, user
         , { returnDocument: 'after' })
-      return (result.ok === 1 && result.value) ? user_opdateret(user.id) : user_not_found(user.id)
+      return (result.ok === 1 && result.value) ? msg.record_updated(user.id, 'customer') : msg.record_not_found(user.id, 'Customer')
     } catch (err) {
-      return action_failed(err.message)
+      return msg.action_failed(err.message)
     }
   },
 
@@ -72,60 +72,11 @@ module.exports = {
         const db = await mongoCon.getConnection()
         user.id = user_id.value.next_value
         const result = await db.collection(usersCollection).insertOne(user)
-        return (result.acknowledged) ? user_oprettet(user.id) : action_failed('User save')
+        return (result.acknowledged) ? msg.record_created(user.id, 'customer') : msg.action_failed('Customer save')
 
     }
     catch (err) {
-      return action_failed(err.message)
-    }
-  }
-}
-
-/**
- * Functions to return messages
- */
-function user_not_found (user_id) {
-  return {
-    error: {
-      type: 'RESOURCE_NOT_FOUND',
-      description: `Customer ${user_id} findes ikke`,
-    }
-  }
-}
-
-function user_slettet (user_id) {
-  return {
-    data: {
-      message: `Customer ${user_id} er slettet`,
-      customer_id: user_id
-    }
-  }
-}
-
-function user_opdateret(user_id){
-  return {
-    data: {
-      message: `Opdateret customer ${user_id}`,
-      customer_id: user_id
-    }
-  }
-}
-
-function user_oprettet(user_id) {
-  return {
-    data:
-      {
-        message: `Oprettet customer ${user_id}`,
-        customer_id: user_id
-      }
-  }
-}
-
-function action_failed(action) {
-  return {
-    error: {
-      type: 'RESOURCE_NOT_FOUND',
-      description: `Transaktionen ${action} fejlede`,
+      return msg.action_failed(err.message)
     }
   }
 }
