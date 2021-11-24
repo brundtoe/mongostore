@@ -1,7 +1,7 @@
 const mongoCon = require('../dbs')
 const { getNextId } = require('../lib/getNextId')
 const { authorExists } = require('../lib/authorExists')
-const {bookExists} = require('../lib/bookExists')
+const { hasOrderlines } = require('../lib/bookExists')
 const msg = require('../lib/messages')
 const booksCollection = 'books'
 
@@ -51,8 +51,9 @@ module.exports = {
   async deleteById (book_id) {
 
     try {
-      const found = await(bookExists(book_id))
-      if (!found) return msg.record_not_found(book_id, 'Book')
+      const orderline = await hasOrderlines(book_id)
+      if (orderline) return msg.book_has_orderlines(book_id)
+
       const db = await mongoCon.getConnection()
       const result = await db.collection(booksCollection).findOneAndDelete({ id: book_id })
       return (result.ok === 1 && result.value) ? msg.record_deleted(book_id, 'Book') : msg.record_not_found(book_id, 'Book')
@@ -65,11 +66,10 @@ module.exports = {
     try {
       const author = await authorExists(parseInt(book.author_id))
       if (!author) return msg.record_not_found(book.author_id, 'Author')
-      const found = await(bookExists(book_id))
-      if (!found) return msg.record_not_found(book_id, 'Book')
+
       const db = await mongoCon.getConnection()
       const result = await db.collection(booksCollection).findOneAndReplace({ id: book_id }, book, { returnDocument: 'after' })
-      return (result.ok === 1 && result.value) ? msg.record_updated(book.id,'Book') : msg.record_not_found(book.id, 'Book')
+      return (result.ok === 1 && result.value) ? msg.record_updated(book.id, 'Book') : msg.record_not_found(book.id, 'Book')
 
     } catch (err) {
       return msg.action_failed(err.message)
@@ -84,7 +84,7 @@ module.exports = {
       const db = await mongoCon.getConnection()
       book.id = book_id.value.next_value
       const result = await db.collection(booksCollection).insertOne(book)
-      return (result.acknowledged) ? msg.record_created(book_id,'Book') : msg.action_failed('Book save')
+      return (result.acknowledged) ? msg.record_created(book_id, 'Book') : msg.action_failed('Book save')
 
     } catch (err) {
       return msg.action_failed(err.message)
