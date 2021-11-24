@@ -42,8 +42,37 @@ module.exports = {
   async findById (book_id) {
     try {
       let db = await mongoCon.getConnection()
-      const book = await db.collection(booksCollection).findOne({ id: book_id })
-      return book ? { data: book } : msg.record_not_found(book_id, 'Book')
+      const query = {id: book_id}
+      const fields = {
+        _id: 0,
+        id: 1,
+        author_id: 1,
+        firstname: '$author.firstname',
+        lastname: '$author.lastname',
+        title: 1,
+        published: 1,
+        onhand: 1,
+        isbn: 1
+      }
+
+      const join = {
+        from: 'authors',
+        localField: 'author_id',
+        foreignField: 'id',
+        as: 'author'
+      }
+
+      let col = db.collection(booksCollection)
+      let book = await col.aggregate([
+        { '$match': query },
+        { '$lookup': join },
+        { '$unwind': '$author' },
+        { '$project': fields }
+      ]).toArray()
+
+
+
+      return book[0] ? { data: book[0] } : msg.record_not_found(book_id, 'Book')
     } catch (err) {
       return msg.action_failed(err.message)
     }
