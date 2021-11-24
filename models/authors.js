@@ -1,5 +1,6 @@
 const mongoCon = require('../dbs')
 const { getNextId } = require('../lib/getNextId')
+const msg = require('../lib/messages')
 const authorsCollection = 'authors'
 
 module.exports = {
@@ -32,14 +33,9 @@ module.exports = {
         { '$project': fields },
         { '$limit': 29 }
       ]).toArray()
-      return cursor ? { 'data': cursor } : {
-        error: {
-          type: 'RESOURCE_NOT_FOUND',
-          description: 'Authors collection findes ikke',
-        }
-      }
+      return cursor ? { 'data': cursor } : msg.collection_not_found('Authors')
     } catch (err) {
-      return action_failed(err.message)
+      return msg.action_failed(err.message)
     }
   },
 
@@ -47,9 +43,9 @@ module.exports = {
     try {
       let db = await mongoCon.getConnection()
       const author = await db.collection(authorsCollection).findOne({ id: author_id })
-      return author ? { data: author } : author_not_found(author_id)
+      return author ? { data: author } : msg.record_not_found(author_id, 'Author')
     } catch (err) {
-      return action_failed(err.message)
+      return msg.action_failed(err.message)
     }
   },
 
@@ -57,19 +53,19 @@ module.exports = {
     try {
       let db = await mongoCon.getConnection()
       const result = await db.collection(authorsCollection).findOneAndDelete({ id: author_id })
-      return (result.ok === 1 && result.value) ? author_slettet(author_id) : author_not_found(author_id)
+      return (result.ok === 1 && result.value) ? msg.record_deleted(author_id,'Author') : msg.record_not_found(author_id, 'Author')
 
     } catch (err) {
-      return action_failed(err.message)
+      return msg.action_failed(err.message)
     }
   },
   async updateById (author) {
     try {
       let db = await mongoCon.getConnection()
       const result = await db.collection(authorsCollection).findOneAndReplace({ id: author.id }, author, { returnDocument: 'after' })
-      return (result.ok === 1 && result.value) ? author_opdateret(author.id) : author_not_found(author.id)
+      return (result.ok === 1 && result.value) ? msg.record_updated(author.id, 'author') : msg.record_not_found(author.id, 'Author')
     } catch (err) {
-      return action_failed(err.message)
+      return msg.action_failed(err.message)
     }
   },
 
@@ -79,59 +75,10 @@ module.exports = {
       let db = await mongoCon.getConnection()
       author.id = author_id.value.next_value
       const result = await db.collection(authorsCollection).insertOne(author)
-      return (result.acknowledged) ? author_oprettet(author.id) : action_failed('Author save')
+      return (result.acknowledged) ? msg.record_created(author.id, 'author') : msg.action_failed('Author save')
 
     } catch (err) {
-      return action_failed(err.message)
+      return msg.action_failed(err.message)
     }
   },
-}
-
-/**
- * Functions to return messages
- */
-function author_not_found (author_id) {
-  return {
-    error: {
-      type: 'RESOURCE_NOT_FOUND',
-      description: `Author ${author_id} findes ikke`,
-    }
-  }
-}
-
-function author_slettet (author_id) {
-  return {
-    data: {
-      message: `Author ${author_id} er slettet`,
-      author_id: author_id
-    }
-  }
-}
-
-function author_opdateret (author_id) {
-  return {
-    data: {
-      message: `Opdateret author ${author_id}`,
-      author_id: author_id
-    }
-  }
-}
-
-function author_oprettet (author_id) {
-  return {
-    data:
-      {
-        message: `Oprettet author ${author_id}`,
-        author_id: author_id
-      }
-  }
-}
-
-function action_failed (action) {
-  return {
-    error: {
-      type: 'RESOURCE_NOT_FOUND',
-      description: `Transaktionen ${action} fejlede`,
-    }
-  }
 }
