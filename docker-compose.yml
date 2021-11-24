@@ -29,7 +29,7 @@ services:
     image: mongo-express:bbr
     container_name: browser
     ports:
-      - 8081:8081
+      - "8081:8081"
     depends_on:
       - mongodb
     environment:
