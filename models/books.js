@@ -84,7 +84,7 @@ module.exports = {
       const db = await mongoCon.getConnection()
       book.id = book_id.value.next_value
       const result = await db.collection(booksCollection).insertOne(book)
-      return (result.acknowledged) ? msg.record_created(book_id, 'Book') : msg.action_failed('Book save')
+      return (result.acknowledged) ? msg.record_created(book.id, 'book') : msg.action_failed('Book save')
 
     } catch (err) {
       return msg.action_failed(err.message)

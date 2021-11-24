@@ -7,7 +7,6 @@ module.exports = {
   post: async (req, res, next) => {
     try {
       const schema = booksSchema
-        .with('title', ['author_id','bookprice','onhand'])
       Joi.assert(req.body, schema, {stripUnknown: true, abortEarly: false})
       next()
     } catch (err) {
@@ -18,7 +17,6 @@ module.exports = {
 
     try {
       const schema = booksSchema
-      //  .with('_id',['author_id','bookprice','onhand'])
       Joi.assert(req.body,schema, {stripUnknown: true, abortEarly: false} )
       next()
     } catch (err) {
