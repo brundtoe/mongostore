@@ -30,7 +30,7 @@ describe('Validering af users schema', () => {
     validate.show(req,res,next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBeInstanceOf(Joi.ValidationError)
-    expect(next.mock.calls[0][0]).toMatchObject({ message: '"value" must be a number' })
+    expect(next.mock.calls[0][0]).toMatchObject({ message: 'Customer Id skal være numerisk' })
     expect(next.mock.calls[0][0]).toMatchObject({ status: 400 })
   })
 
@@ -54,7 +54,7 @@ describe('Validering af users schema', () => {
     validate.delete(req,res,next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBeInstanceOf(Joi.ValidationError)
-    expect(next.mock.calls[0][0]).toMatchObject({ message: '"value" must be a number' })
+    expect(next.mock.calls[0][0]).toMatchObject({ message: 'Customer Id skal være numerisk' })
     expect(next.mock.calls[0][0]).toMatchObject({ status: 400 })
   })
 
