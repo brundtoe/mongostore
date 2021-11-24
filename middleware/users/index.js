@@ -36,7 +36,8 @@ module.exports = {
 
   try {
     const data = await users.save(user)
-    res.status(201).json(data)
+    const status = data['data'] ? 201 : 404
+    res.status(status).json(data)
     } catch (err) {
       next(err)
     }
