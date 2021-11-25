@@ -19,9 +19,10 @@ module.exports = {
       }
 
       const fields = {
-        _id: 0,
+        _id: 1,
         id: 1,
-        name: { $concat: ['$firstname', ' ', '$lastname'] },
+        firstname: 1,
+        lastname: 1,
         mail: 1,
         'bookswritten.title': 1,
         'bookswritten.published': 1
