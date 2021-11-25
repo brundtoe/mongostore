@@ -18,7 +18,7 @@ const booksSchema = Joi.object({
 
   title: Joi.string()
     .min(2)
-    .max(35)
+    .max(50)
     .required()
     .messages({
       'any.required': 'Feltet title mangler i input',
