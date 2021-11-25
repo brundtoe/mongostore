@@ -6,8 +6,7 @@ const { buildErrorMessages } = require('../../lib/buildMessages')
 module.exports = {
   post: async (req, res, next) => {
     try {
-      const schema = booksSchema
-      Joi.assert(req.body, schema, {stripUnknown: true, abortEarly: false})
+      Joi.assert(req.body, booksSchema, {stripUnknown: true, abortEarly: false})
       next()
     } catch (err) {
       next(createError(400, buildErrorMessages(err,'VALIDATION_ERROR')))
@@ -16,8 +15,7 @@ module.exports = {
   put: async (req, res, next) => {
 
     try {
-      const schema = booksSchema
-      Joi.assert(req.body,schema, {stripUnknown: true, abortEarly: false} )
+      Joi.assert(req.body,booksSchema, {stripUnknown: true, abortEarly: false} )
       next()
     } catch (err) {
       next(createError(400, buildErrorMessages(err,'VALIDATION_ERROR')))
