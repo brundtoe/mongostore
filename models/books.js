@@ -11,12 +11,15 @@ module.exports = {
       let db = await mongoCon.getConnection()
       const query = {}
       const fields = {
-        _id: 0,
+        _id: 1,
         id: 1,
         title: 1,
         published: 1,
+        bookprice: 1,
+        isbn: 1,
         onhand: 1,
-        name: { $concat: ['$author.firstname', ' ', '$author.lastname'] }
+        firstname: '$author.firstname',
+        lastname: '$author.lastname'
       }
 
       const join = {
@@ -44,13 +47,14 @@ module.exports = {
       let db = await mongoCon.getConnection()
       const query = {id: book_id}
       const fields = {
-        _id: 0,
+        _id: 1,
         id: 1,
         author_id: 1,
         firstname: '$author.firstname',
         lastname: '$author.lastname',
         title: 1,
         published: 1,
+        bookprice: 1,
         onhand: 1,
         isbn: 1
       }
