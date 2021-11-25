@@ -15,12 +15,12 @@ module.exports = {
         name: 1,
         city: 1,
         state: 1,
+        country: 1,
         mail: 1,
-        _id: 0
+        _id: 1
       }
       const options = {
-        sort: { id: -1 },
-        limit: 29
+        sort: { id: -1 }
       }
       let col = db.collection(usersCollection)
       let cursor = await col.find(query, options).project(fields).toArray()

@@ -32,8 +32,7 @@ module.exports = {
       let cursor = await col.aggregate([
         { '$match': query },
         { '$lookup': join },
-        { '$project': fields },
-        { '$limit': 29 }
+        { '$project': fields }
       ]).toArray()
       return cursor ? { 'data': cursor } : msg.collection_not_found('Authors')
     } catch (err) {
