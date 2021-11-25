@@ -18,6 +18,7 @@ module.exports = {
         bookprice: 1,
         isbn: 1,
         onhand: 1,
+        author_id: 1,
         firstname: '$author.firstname',
         lastname: '$author.lastname'
       }

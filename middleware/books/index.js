@@ -27,12 +27,12 @@ module.exports = {
   async save (req, res, next) {
     const book = {
       id: null,
-      author_id: req.body.author_id,
+      author_id: parseInt(req.body.author_id),
       title: req.body.title,
       published: req.body.published,
-      bookprice: req.body.bookprice,
+      bookprice: parseFloat(req.body.bookprice),
       isbn: req.body.isbn,
-      onhand: req.body.onhand
+      onhand: parseInt(req.body.onhand)
     }
     try {
       const data = await books.save(book)
@@ -48,12 +48,12 @@ module.exports = {
     const book_id = parseInt(req.body.id)
     const book = {
       id: book_id,
-      author_id: req.body.author_id,
+      author_id: parseInt(req.body.author_id),
       title: req.body.title,
       published: req.body.published,
-      bookprice: req.body.bookprice,
+      bookprice: parseFloat(req.body.bookprice),
       isbn: req.body.isbn,
-      onhand: req.body.onhand
+      onhand: parseInt(req.body.onhand)
     }
     try {
       const data = await books.updateById(book)
