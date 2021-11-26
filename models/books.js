@@ -3,6 +3,7 @@ const { getNextId } = require('../lib/getNextId')
 const { authorExists } = require('../lib/authorExists')
 const { hasOrderlines } = require('../lib/bookExists')
 const msg = require('../lib/messages')
+const toDatoString = require('../lib/dato')
 const booksCollection = 'books'
 
 module.exports = {
@@ -37,6 +38,7 @@ module.exports = {
         { '$unwind': '$author' },
         { '$project': fields }
       ]).toArray()
+
       return cursor ? { 'data': cursor } : msg.collection_not_found('Books')
     } catch (err) {
       return msg.action_failed(err.message)
@@ -75,7 +77,7 @@ module.exports = {
         { '$project': fields }
       ]).toArray()
 
-
+      if (book.length) book[0].published = toDatoString(book[0].published)
 
       return book[0] ? { data: book[0] } : msg.record_not_found(book_id, 'Book')
     } catch (err) {
@@ -97,6 +99,7 @@ module.exports = {
   },
   async updateById (book) {
     const book_id = parseInt(book.id)
+    book.published = new Date(book.published)
     try {
       const author = await authorExists(parseInt(book.author_id))
       if (!author) return msg.record_not_found(book.author_id, 'Author')
@@ -110,6 +113,9 @@ module.exports = {
     }
   },
   async save (book) {
+
+    book.published = new Date(book.published)
+
     try {
       const author = await authorExists(parseInt(book.author_id))
       if (!author) return msg.record_not_found(book.author_id, 'Author')
@@ -125,4 +131,3 @@ module.exports = {
     }
   }
 }
-
