@@ -89,7 +89,13 @@ for controller
 
 - orders
 
+## Test med Supertest
 
+Mappen routes/__tests__ indeholder enketle tests af routes med supertest
+
+**important**, disse tests kan ikke køres med tests der mocker routes.
+
+Der er pt ingen tests som mocker routes.
 
 
   
