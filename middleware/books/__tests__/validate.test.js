@@ -64,7 +64,7 @@ describe('Validering af book schema', () => {
         author_id: 3,
         title: 'Professional MongoDB',
         bookprice: 18.49,
-        published: new Date('12-07-2020'),
+        published: '2020-07-12',
         onhand: 43
       }
     }
@@ -81,7 +81,7 @@ describe('Validering af book schema', () => {
         author_id: 3,
         title: 'Professional MongoDB',
         bookprice: 18.49,
-        published: new Date('12-07-2020'),
+        published: '2020-07-12',
         onhand: 43
       }
     }
