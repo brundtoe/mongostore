@@ -1,7 +1,7 @@
 const mongoCon = require('../dbs')
 const { getNextId } = require('../lib/getNextId')
-const { authorExists } = require('../lib/authorExists')
-const { hasOrderlines } = require('../lib/bookExists')
+const findesAuthor = require('../lib/authorExists')
+const findesBook = require('../lib/bookExists')
 const msg = require('../lib/messages')
 const toDatoString = require('../lib/dato')
 const booksCollection = 'books'
@@ -87,7 +87,7 @@ module.exports = {
   async deleteById (book_id) {
 
     try {
-      const orderline = await hasOrderlines(book_id)
+      const orderline = await findesBook.hasOrderlines(book_id)
       if (orderline) return msg.book_has_orderlines(book_id)
 
       const db = await mongoCon.getConnection()
@@ -101,7 +101,7 @@ module.exports = {
     const book_id = parseInt(book.id)
     book.published = new Date(book.published)
     try {
-      const author = await authorExists(parseInt(book.author_id))
+      const author = await findesAuthor.authorExists(parseInt(book.author_id))
       if (!author) return msg.record_not_found(book.author_id, 'Author')
 
       const db = await mongoCon.getConnection()
@@ -117,7 +117,7 @@ module.exports = {
     book.published = new Date(book.published)
 
     try {
-      const author = await authorExists(parseInt(book.author_id))
+      const author = await findesAuthor.authorExists(parseInt(book.author_id))
       if (!author) return msg.record_not_found(book.author_id, 'Author')
 
       const book_id = await getNextId('book_id')

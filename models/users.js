@@ -1,7 +1,7 @@
 const mongoCon = require('../dbs')
 const { getNextId } = require('../lib/getNextId')
 const usersCollection = 'users'
-const { userHasOrders } = require('../lib/userExists')
+const findesUser = require('../lib/userExists')
 const msg = require('../lib/messages')
 
 module.exports = {
@@ -44,7 +44,7 @@ module.exports = {
 
   async deleteById (user_id) {
     try {
-      const orders = await userHasOrders(user_id)
+      const orders = await findesUser.userHasOrders(user_id)
       if (orders) return msg.user_has_orders(user_id)
 
       const db = await mongoCon.getConnection()

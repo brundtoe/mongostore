@@ -1,6 +1,6 @@
 const mongoCon = require('../dbs')
 const { getNextId } = require('../lib/getNextId')
-const { hasBoksWritten } = require('../lib/authorExists')
+const findes = require('../lib/authorExists')
 const msg = require('../lib/messages')
 const authorsCollection = 'authors'
 
@@ -52,7 +52,7 @@ module.exports = {
 
   async deleteById (author_id) {
     try {
-      const booksWritten = await hasBoksWritten(author_id)
+      const booksWritten = await findes.hasBoksWritten(author_id)
       if (booksWritten) return msg.author_has_books(author_id)
 
       let db = await mongoCon.getConnection()
