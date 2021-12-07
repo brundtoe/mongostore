@@ -52,7 +52,7 @@ module.exports = {
 
   async deleteById (author_id) {
     try {
-      const booksWritten = await findes.hasBoksWritten(author_id)
+      const booksWritten = await findes.hasBooksWritten(author_id)
       if (booksWritten) return msg.author_has_books(author_id)
 
       let db = await mongoCon.getConnection()
