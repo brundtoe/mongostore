@@ -40,10 +40,10 @@ describe('Order controller', () => {
     const req = {}
 
     await orderController.index(req, res, next)
-    expect(next.mock.calls.length).toBe(0)
-    expect(res.status.mock.calls.length).toBe(1)
-    expect(res.status.mock.calls[0][0]).toBe(200)
-    expect(res.json.mock.calls.length).toBe(1)
+    expect(next).not.toHaveBeenCalled()
+    expect(res.status).toHaveBeenCalledTimes(1)
+    expect(res.status).toHaveBeenCalledWith(200)
+    expect(res.json).toHaveBeenCalledTimes(1)
     expect(res.json.mock.calls[0][0].data.length).toBe(11)
   })
 
