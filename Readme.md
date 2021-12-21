@@ -58,13 +58,13 @@ PÅ hosten udføres::
 
     npm start
 
-browser: http://localhost:3000
+browser: http://localhost:3300
 
 docker::
 
     docker-compose up
 
-browser: http://localhost:3000
+browser: http://localhost:3300
 
 vagrant instanser (archer.test)
 

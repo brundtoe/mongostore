@@ -1,4 +1,4 @@
-GET http://localhost:3000/api/books
+GET http://localhost:3300/api/books
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
@@ -7,7 +7,7 @@ GET http://localhost:3000/api/books
   %}
 
 ###
-PUT http://localhost:3000/api/books
+PUT http://localhost:3300/api/books
 Content-Type: application/json
 
 {
@@ -30,7 +30,7 @@ Content-Type: application/json
   %}
 
 ###
-GET http://localhost:3000/api/books/15
+GET http://localhost:3300/api/books/15
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
@@ -40,7 +40,7 @@ GET http://localhost:3000/api/books/15
   %}
 
 ###
-POST http://localhost:3000/api/books
+POST http://localhost:3300/api/books
 Content-Type: application/json
 
 {
@@ -59,7 +59,7 @@ Content-Type: application/json
   %}
 
 ###
-DELETE http://localhost:3000/api/books/{{title_id}}
+DELETE http://localhost:3300/api/books/{{title_id}}
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
@@ -69,7 +69,7 @@ DELETE http://localhost:3000/api/books/{{title_id}}
   %}
 
 ### restore original values
-PUT http://localhost:3000/api/books
+PUT http://localhost:3300/api/books
 Content-Type: application/json
 
 {

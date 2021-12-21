@@ -6,8 +6,8 @@ router.get('/about', async function(req, res, next) {
   res.json({
     status: 'Success',
     mesage: 'Demo af anvendelse af mongodb',
-    link: 'http://localhost:3000',
-    users: 'http://localhost:3000/users'
+    link: 'http://localhost:3300',
+    users: 'http://localhost:3300/users'
   })
 
 });

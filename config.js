@@ -16,11 +16,11 @@ module.exports = {
     // eslint-disable-next-line no-undef
     let servername = os.hostname()
     if (servername == 'komplett') {
-      return 'http://localhost:3000'
+      return 'http://localhost:3300'
     }
     if (process.env.PLATFORM == 'VAGRANT') {
       return `http://${servername}.test`
     }
-    return 'http://localhost:3000'
+    return 'http://localhost:3300'
   }
 }

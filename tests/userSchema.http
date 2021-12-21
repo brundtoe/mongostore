@@ -1,4 +1,4 @@
-GET http://localhost:3000/api/customers
+GET http://localhost:3300/api/customers
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
@@ -7,7 +7,7 @@ GET http://localhost:3000/api/customers
   %}
 
 ###
-GET http://localhost:3000/api/customers/21
+GET http://localhost:3300/api/customers/21
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
@@ -16,7 +16,7 @@ GET http://localhost:3000/api/customers/21
   %}
 
 ###
-POST http://localhost:3000/api/customers
+POST http://localhost:3300/api/customers
 Content-Type: application/json
 
 {
@@ -34,7 +34,7 @@ Content-Type: application/json
   %}
 
 ### delete again
-DELETE http://localhost:3000/api/customers/{{kristian_id}}
+DELETE http://localhost:3300/api/customers/{{kristian_id}}
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
@@ -44,7 +44,7 @@ DELETE http://localhost:3000/api/customers/{{kristian_id}}
   %}
 
 ###
-POST http://localhost:3000/api/customers
+POST http://localhost:3300/api/customers
 Content-Type: application/json
 
 {
@@ -62,7 +62,7 @@ Content-Type: application/json
   %}
 
 ###
-DELETE http://localhost:3000/api/customers/{{maria_id}}
+DELETE http://localhost:3300/api/customers/{{maria_id}}
 
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200")
@@ -72,7 +72,7 @@ DELETE http://localhost:3000/api/customers/{{maria_id}}
   %}
 
 ###
-PUT http://localhost:3000/api/customers
+PUT http://localhost:3300/api/customers
 Content-Type: application/json
 
 {
@@ -93,7 +93,7 @@ Content-Type: application/json
   %}
 
 ###
-PUT http://localhost:3000/api/customers
+PUT http://localhost:3300/api/customers
 Content-Type: application/json
 
 {
