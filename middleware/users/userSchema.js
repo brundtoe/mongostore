@@ -14,6 +14,7 @@ const userSchema = Joi.object({
     .regex(/^[a-zA-Zæøå ÆØÅ]{3,30}$/)
     .required()
     .messages({
+      'string.empty': 'Customer name må kun indeholde bogstaver',
       'any.required': 'Feltet name mangler i input',
       'string.pattern.base': 'Name skal være  på 2 - 30 tegn'
     }),
@@ -22,6 +23,7 @@ const userSchema = Joi.object({
     .regex(/^[a-zA-Zæøå ÆØÅ]{3,30}$/)
     .required()
     .messages({
+      'string.empty': 'Customer city må kun indeholde bogstaver',
       'any.required': 'Feltet city mangler i input',
       'string.pattern.base': 'City skal være  på 2 - 30 tegn'
     }),
@@ -30,6 +32,7 @@ const userSchema = Joi.object({
     .regex(/^[a-zA-Zæøå ÆØÅ]{3,30}$/)
     .required()
     .messages({
+      'string.empty': 'Customer state må kun indeholde bogstaver',
       'any.required': 'Feltet state mangler i input',
       'string.pattern.base': 'State skal være  på 2 - 30 tegn'
     }),
@@ -38,6 +41,7 @@ const userSchema = Joi.object({
     .regex(/^[a-zA-Zæøå ÆØÅ]{2,30}$/)
     .required()
     .messages({
+      'string.empty': 'Customer country må kun indeholde bogstaver',
       'any.required': 'Feltet country mangler i input',
       'string.pattern.base': 'Country må kun indeholde bogstaver',
     }),
@@ -46,6 +50,7 @@ const userSchema = Joi.object({
     .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net','nu'] } })
     .required()
     .messages({
+      'string.empty': 'Customer mail må kun indeholde bogstaver',
       'any.required': 'Feltet mail mangler i input',
       'string.email': 'Email address er ikke rigtig'
     })

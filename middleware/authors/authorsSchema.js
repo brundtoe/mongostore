@@ -15,6 +15,7 @@ const authorsSchema = Joi.object({
     .regex(/^[a-zA-Z\sæøåÆØÅ]{2,30}$/)
     .required()
     .messages({
+      'string.empty':  'Firstname må kun indeholde bogstaver',
       'any.required': 'Feltet firstname mangler i input',
       'string.pattern.base': 'Firstname skal være  på 2 - 30 tegn'
     }),
@@ -23,6 +24,7 @@ const authorsSchema = Joi.object({
     .regex(/^[a-zA-Z\sæøåÆØÅ]{3,30}$/)
     .required()
     .messages({
+      'string.empty':  'Lastname må kun indeholde bogstaver',
       'any.required': 'Feltet lastname mangler i input',
       'string.pattern.base': 'Lastname skal være  på 3 - 30 tegn'
     }),

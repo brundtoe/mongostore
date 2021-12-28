@@ -21,6 +21,7 @@ const booksSchema = Joi.object({
     .max(50)
     .required()
     .messages({
+      'string.empty': 'Title må ikke være tomt',
       'any.required': 'Feltet title mangler i input',
       'string.pattern.base': 'Title skal være  på 2 - 35 tegn'
     }),
