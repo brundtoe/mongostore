@@ -104,5 +104,9 @@ I denne instans anvendes appen som backend på port 3300 til jstraining-jasmine.
 
 Se readmefilen i projekt projects/laravel/Homebox/javascript
 
+## Laravel/homestead - jstraining-jasmine
 
+I denne instans anvendes appen som backend på port 3300 til jstraining-jasmine.
+
+Se readmefilen i projekt javascript/jstraining-jasmine/vagrant/README.md
   
