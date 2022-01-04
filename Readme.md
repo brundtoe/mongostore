@@ -75,6 +75,7 @@ vagrant instanser (archer.test)
     sudo python3 jsd-menu.py
 
 browser: http://archer.test
+
 ## test med WebStorm http Requests
 
 valideringer og controllere for
@@ -96,6 +97,12 @@ Mappen routes/__tests__ indeholder enketle tests af routes med supertest
 **important**, disse tests kan ikke køres med tests der mocker routes.
 
 Der er pt ingen tests som mocker routes.
+
+## Homebox/javascript
+
+I denne instans anvendes appen som backend på port 3300 til jstraining-jasmine.
+
+Se readmefilen i projekt projects/laravel/Homebox/javascript
 
 
   
