@@ -5,13 +5,13 @@ services:
   node:
     image: node:bbr
     command: ["npm","start"]
-    container_name: node
+    container_name: backend
     environment:
       DOCKER: "true"
     volumes:
       - .:/usr/src/app
     ports:
-      - "3000:3000"
+      - "3300:3300"
     networks:
       - default
     depends_on:
