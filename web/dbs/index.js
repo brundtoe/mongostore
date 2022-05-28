@@ -1,5 +1,5 @@
 const MongoClient = require('mongodb').MongoClient
-const config = require('../config')
+const config = require('../../config')
 const url = config.dbUrl()
 //const url = 'mongodb://localhost:27017'
 const dbName =  config.dbName

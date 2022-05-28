@@ -8,7 +8,7 @@ let upload = multer()
 //require('dotenv').config()
 
 const errorHandler = require('./middleware/handlers')
-const indexRouter = require('./routes/index');
+const indexRouter = require('./routes');
 const usersRouter = require('./routes/users');
 const authorsRouter = require('./routes/authors');
 const booksRouter = require('./routes/books');
