@@ -38,8 +38,8 @@ services:
 
 networks:
   default:
-    external:
-      name: humle_net
+    external: true
+    name: humle_net
 
 volumes:
   mongodata:

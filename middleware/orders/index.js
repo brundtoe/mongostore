@@ -2,7 +2,6 @@ const mongoCon = require('../../dbs')
 const createError = require('http-errors')
 const { getNextId } = require('../../lib/getNextId')
 const { isOlineValid, buildOline } = require('../../lib/orderlines')
-const hostname = require('../../config').host()
 
 const ordersCollection = 'bookorders'
 
@@ -16,7 +15,6 @@ module.exports = {
           id: order.id,
           orderdate: order.orderdate,
           //shipdate: order.shipdate,
-          link: `${hostname}/orders/${order.id}`
         }
       })
       res.status(200)
