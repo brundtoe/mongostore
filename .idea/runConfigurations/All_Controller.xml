@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="All Controller" type="JavaScriptTestRunnerJest">
+    <config-file value="$PROJECT_DIR$/web/jest.controller.config.js" />
+    <node-interpreter value="project" />
+    <node-options value="" />
+    <jest-package value="$PROJECT_DIR$/web/node_modules/jest" />
+    <working-dir value="$PROJECT_DIR$/web" />
+    <jest-options value=" --runInBand --forceExit" />
+    <envs />
+    <scope-kind value="ALL" />
+    <method v="2" />
+  </configuration>
+</component>
