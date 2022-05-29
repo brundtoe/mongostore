@@ -1,6 +1,7 @@
 module.exports = {
   apps: [{
-      name: 'mongostore',
+      name: 'mo:q:q' +
+        'ngostore',
       cwd: '/var/www/html/mongostore/web',
       script: '/var/www/html/mongostore/web/bin/www',
       instances: 1,

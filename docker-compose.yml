@@ -9,7 +9,7 @@ services:
     environment:
       DOCKER: "true"
     volumes:
-      - .:/usr/src/app
+      - ./web:/usr/src/app
     ports:
       - "3300:3300"
     networks:
