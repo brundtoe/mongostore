@@ -100,7 +100,7 @@ Content-Type: application/json
   "_id": "5eef84a264ee594e266c8e2c",
   "id": 29,
   "name": "christina masterson",
-  "city": "petersburgh",
+  "city": "petersburg",
   "country": "USA",
   "state": "pensylvania",
   "mail": "christina@masterson.nu"

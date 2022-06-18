@@ -27,7 +27,7 @@ describe('Supertest af customer routes med supertest', () => {
         expect(res.body.data).toEqual(expect.objectContaining({
           'id': 29,
           'name': 'christina masterson',
-          'city': 'petersburgh',
+          'city': 'petersburg',
           'state': 'pensylvania',
           'country': 'USA',
           'mail': 'christina@masterson.nu'

@@ -1,4 +1,4 @@
-version: '3.6'
+version: '3.8'
 
 services:
 
@@ -22,24 +22,20 @@ services:
     container_name: mongodb
     volumes:
       - mongodata:/data/db
-    networks:
-      - default
-
-  browser:
-    image: mongo-express:bbr
-    container_name: browser
     ports:
-      - "8081:8081"
-    depends_on:
-      - mongodb
-    environment:
-      ME_CONFIG_MONGODB_SERVER: mongodb
-
+      - "27017:27017"
+    networks:
+      default:
+        ipv4_address: 172.18.0.23
 
 networks:
   default:
     external: true
     name: humle_net
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.18.0.0/16"
 
 volumes:
   mongodata:
