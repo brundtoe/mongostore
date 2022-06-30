@@ -9,7 +9,7 @@ module.exports = {
     if (process.env.DOCKER) {
       return 'mongodb://mongodb:27017'
     }
-    return "mongodb://localhost:27017"
+    return `mongodb://${process.env.VGSERVER}:27017`
   },
   dbName: "bookstore-mysql",
 }

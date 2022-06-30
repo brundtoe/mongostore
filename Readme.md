@@ -34,6 +34,8 @@ Der er implementeret et REST API til databasen **bookstore-mysql**
 
 ## databasen 
 
+Ved anvendelse på non-vagrant instanser skal **.env** opdateres til at pege på instansen med databasen
+
 databasen kan restores med NoSQLBooster import mongorestore
 
     /home/projects/devops/data/mongodb/bookstore-mysql-archive/archive

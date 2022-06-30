@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const cors = require('cors')
 const path = require('path');
@@ -5,7 +6,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 let multer = require('multer')
 let upload = multer()
-//require('dotenv').config()
 
 const errorHandler = require('./middleware/handlers')
 const indexRouter = require('./routes');
