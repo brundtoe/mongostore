@@ -36,17 +36,17 @@ Der er implementeret et REST API til databasen **bookstore-mysql**
 
 Ved anvendelse på non-vagrant instanser skal **.env** opdateres til at pege på instansen med databasen
 
-databasen kan restores med NoSQLBooster import mongorestore
+databasen kan restores med NoSQLBooster import mongorestore::
 
     /home/projects/devops/data/mongodb/bookstore-mysql-archive/archive
     
-Restore med på hosten
+Restore med på hosten::
 
   mongorestore --archive=/home/projects/devops/data/mongodb/bookstore-mysql-archive --drop --dryRun
 
-Restore i virtual machine
+Restore i virtual machine::
 
-    mongorestore --archive=/devops/data/mongodb/bookstore-mysql-archive/ --drop --dryRun
+    mongorestore --archive=/nfs/data/mongodb/bookstore-mysql-archive/ --drop --dryRun
 
 Fjern --dryRun for at eksekvere 
 
@@ -54,6 +54,11 @@ collection counters indeholder en counter for next_value for næste id til en ny
 
 start værdien er sat til next value 50 for authors, books, bookorder, user men ikke for orderlines
 
+Restore i docker container::
+
+  docker exec -it --user jackie mongodb /bin/bash
+  cd /docker-entrypoint-initdb.d
+  01-load-bookstore.sh
 
 ## run appen
 PÅ hosten udføres::
@@ -80,7 +85,7 @@ browser: http://archer.test
 
 ## test med WebStorm http Requests
 
-valideringer og controllere for
+Valideringer og controllere for
 
 - users
 - authors

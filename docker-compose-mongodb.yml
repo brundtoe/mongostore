@@ -2,21 +2,6 @@ version: '3.8'
 
 services:
 
-  node:
-    image: node:bbr
-    command: ["npm","start"]
-    container_name: backend
-    environment:
-      DOCKER: "true"
-    volumes:
-      - ./web:/usr/src/app
-    ports:
-      - "3300:3300"
-    networks:
-      - default
-    depends_on:
-      - mongodb
-
   mongodb:
     image: mongo:bbr
     container_name: mongodb
