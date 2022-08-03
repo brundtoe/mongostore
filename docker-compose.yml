@@ -7,7 +7,7 @@ services:
     command: ["npm","start"]
     container_name: backend
     environment:
-      DOCKER: "true"
+      PLATFORM: docker
     volumes:
       - ./web:/usr/src/app
     ports:
