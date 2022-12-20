@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="All Tests Valdemar" type="JavaScriptTestRunnerJest">
-    <node-interpreter value="vagrant://$PROJECT_DIR$/../../../devops/bash-demo@valdemar/usr/bin/node" />
+  <configuration default="false" name="Docker All Tests" type="JavaScriptTestRunnerJest">
+    <node-interpreter value="docker-compose://[$PROJECT_DIR$/docker-compose.yml]:node/node" />
     <node-options value="" />
     <jest-package value="$PROJECT_DIR$/web/node_modules/jest" />
     <working-dir value="$PROJECT_DIR$/web" />

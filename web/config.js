@@ -1,7 +1,7 @@
 /**
  * konfiguration af applikationen
  */
-
+require('dotenv').config()
 // eslint-disable-next-line no-undef
 os = require('os')
 module.exports = {

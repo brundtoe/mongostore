@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="All Tests" type="JavaScriptTestRunnerJest">
-    <node-interpreter value="docker-compose://[$PROJECT_DIR$/docker-compose.yml]:node/node" />
+  <configuration default="false" name="All Tests Archer" type="JavaScriptTestRunnerJest">
+    <node-interpreter value="sshConfig://jackie@archer:22 agent/usr/bin/node" />
     <node-options value="" />
     <jest-package value="$PROJECT_DIR$/web/node_modules/jest" />
     <working-dir value="$PROJECT_DIR$/web" />

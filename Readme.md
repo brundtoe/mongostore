@@ -1,5 +1,15 @@
 # MongoStore a MongoDB REST API
 
+
+## Opdateret december 2022
+Require dotenv er indsat som den første linie i app.js. Jest mock har en sideeefkt som medfører at værdien i .env bliver undefined
+
+Løsnignen er at indsætte følgende web/config.js, hvor variable fra .env anvendes.
+
+```js
+  require('dotenv').config()
+```
+
 ## status november 2021
 
 Route users er ændret til customers, for at kunne anvende den som backend til slim4-frontend og vite-demo
@@ -9,7 +19,7 @@ Appen anvender i øvrigt begrebet users uændret, da denne ændring kræve omfat
 
 ## status oktober 2021
 
-npm packages er opdateret.
+Npm packages er opdateret.
 
 - Den vigtigste er opdatering af mongodb native nodejs driver til version 4.1.3
 - Der er som følge af denne opdatering foretaget justering af kald af insertOne, som har fået ny return value
@@ -50,9 +60,9 @@ Restore i virtual machine::
 
 Fjern --dryRun for at eksekvere 
 
-collection counters indeholder en counter for next_value for næste id til en ny post i databasen
+Collection counters indeholder en counter for next_value for næste id til en ny post i databasen
 
-start værdien er sat til next value 50 for authors, books, bookorder, user men ikke for orderlines
+Start værdien er sat til next value 50 for authors, books, bookorder, user men ikke for orderlines
 
 Restore i docker container::
 
@@ -73,15 +83,17 @@ docker::
 
 browser: http://localhost:3300
 
-vagrant instanser (archer.test)
+virtuelle instanser (archer.test)
 
 - instansen bringes op
 - appen startes med
-    
-    cd /nfs/jinja-demo
-    sudo python3 jsd-menu.py
 
-browser: http://archer.test
+```shell
+  py-js
+```
+Vlag af optionen jstraining + mongostore
+
+browser: https://archer.test
 
 ## test med WebStorm http Requests
 
@@ -93,27 +105,16 @@ Valideringer og controllere for
 
 ## test med Jest
 
-for controller
+For controller
 
 - orders
 
 ## Test med Supertest
 
-Mappen routes/__tests__ indeholder enketle tests af routes med supertest
+Mappen routes/__tests__ indeholder enkelte tests af routes med supertest
 
-**important**, disse tests kan ikke køres med tests der mocker routes.
+**Important**, disse tests kan ikke køres med tests der mocker routes.
 
 Der er pt ingen tests som mocker routes.
 
-## Homebox/javascript
-
-I denne instans anvendes appen som backend på port 3300 til jstraining-jasmine.
-
-Se readmefilen i projekt projects/laravel/Homebox/javascript
-
-## Laravel/homestead - jstraining-jasmine
-
-I denne instans anvendes appen som backend på port 3300 til jstraining-jasmine.
-
-Se readmefilen i projekt javascript/jstraining-jasmine/vagrant/README.md
   
