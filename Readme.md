@@ -2,9 +2,10 @@
 
 
 ## Opdateret december 2022
-Require dotenv er indsat som den første linie i app.js. Jest mock har en sideeefkt som medfører at værdien i .env bliver undefined
-
+Require dotenv er indsat som den første linie i app.js. 
 Løsnignen er at indsætte følgende web/config.js, hvor variable fra .env anvendes.
+
+Node packages er opdateret
 
 ```js
   require('dotenv').config()
