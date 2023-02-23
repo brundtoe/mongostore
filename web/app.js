@@ -1,5 +1,5 @@
-require('dotenv').config()
 const express = require('express');
+require('dotenv').config()
 const cors = require('cors')
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -16,7 +16,7 @@ const ordersRouter = require('./routes/orders');
 const orderlinesRouter = require('./routes/orderlines')
 
 const app = express();
-
+app.set('hostaddress', process.env.HOST_ADDRESS)
 app.use(cors())
 app.use(logger('dev'));
 app.use(express.json());
