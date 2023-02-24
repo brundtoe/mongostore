@@ -13,7 +13,8 @@ services:
     ports:
       - "3300:3300"
     networks:
-      - default
+      default:
+        ipv4_address: 172.18.0.31
     depends_on:
       - mongodb
 
