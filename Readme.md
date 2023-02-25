@@ -4,6 +4,8 @@
 
 NodeJs version 17 introducerede ipv6 som default netværkstprotokol. Derfor er der for docker config for backend anvendt fast ip adresse 172.18.0.31
 
+Docker .env indeholder definitioner på ip adressen for node og mongodb instanserne
+
 ## Opdateret december 2022
 Require dotenv er indsat som den første linie i app.js. 
 Løsnignen er at indsætte følgende web/config.js, hvor variable fra .env anvendes.

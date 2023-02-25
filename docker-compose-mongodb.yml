@@ -12,7 +12,7 @@ services:
       - "27017:27017"
     networks:
       default:
-        ipv4_address: 172.18.0.23
+        ipv4_address: ${VGSERVER}
 
 networks:
   default:

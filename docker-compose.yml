@@ -8,13 +8,14 @@ services:
     container_name: backend
     environment:
       PLATFORM: docker
+      HOST_ADDRESS:  ${HOST_ADDRESS}
     volumes:
       - ./web:/usr/src/app
     ports:
       - "3300:3300"
     networks:
       default:
-        ipv4_address: 172.18.0.31
+        ipv4_address: ${HOST_ADDRESS}
     depends_on:
       - mongodb
 
@@ -28,7 +29,7 @@ services:
       - "27017:27017"
     networks:
       default:
-        ipv4_address: 172.18.0.23
+        ipv4_address: ${VGSERVER}
 
 networks:
   default:
