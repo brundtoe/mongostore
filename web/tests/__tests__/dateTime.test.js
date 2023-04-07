@@ -1,10 +1,10 @@
-const ObjectID = require('mongodb').ObjectID
+const ObjectId = require('mongodb').ObjectId
 
 describe('demo tests', () => {
 
   test('get timestamp', () => {
     //date when the test is run
-    const nutid = new ObjectID()
+    const nutid = new ObjectId()
     const userEpoc = Date.parse(nutid.getTimestamp())
 
     //historical _id fra 2006

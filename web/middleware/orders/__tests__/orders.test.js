@@ -2,7 +2,7 @@ const mongoCon = require('../../../dbs')
 const orderController = require('../index')
 const orderData = require('./order.json')
 const newOrder = require('./newOrder.json')
-const ObjectID = require('mongodb').ObjectID
+const ObjectId = require('mongodb').ObjectId
 const ordersCollection = 'bookorders'
 
 describe('Order controller', () => {
@@ -23,7 +23,7 @@ describe('Order controller', () => {
   beforeAll(async () => {
     await resetOrderFive()
     orderData.orderdate = new Date(orderData.orderdate)
-    orderData._id = ObjectID(orderData._id)
+    orderData._id = new ObjectId(orderData._id)
   })
 
   beforeEach( () => {
