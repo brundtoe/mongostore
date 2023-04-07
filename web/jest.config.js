@@ -3,3 +3,4 @@ module.exports = {
   testPathIgnorePatterns: ['/node_modules/', '/tests/integration'],
   setupFilesAfterEnv: ["jest-extended/all"]
 }
+require('dotenv').config()
