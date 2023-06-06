@@ -29,7 +29,7 @@ services:
       - "27017:27017"
     networks:
       default:
-        ipv4_address: ${VGSERVER}
+        ipv4_address: ${DB_SERVER}
 
 networks:
   default:

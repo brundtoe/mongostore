@@ -7,11 +7,11 @@
 os = require('os')
 module.exports = {
   dbUrl: () => {
-    if (process.env.PLATFORM == 'docker') {
+    if (process.env.PLATFORM === 'docker') {
       return 'mongodb://mongodb:27017'
     }
     //return `mongodb://127.0.0.1:27017`
-    return `mongodb://${process.env.VGSERVER}:27017`
+    return `mongodb://${process.env.DB_SERVER}:27017`
   },
   dbName: "bookstore-mysql",
 }
