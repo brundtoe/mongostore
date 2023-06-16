@@ -85,9 +85,10 @@ browser: http://localhost:3300
 
 docker::
 
-    docker-compose up
+    docker-compose up -d
 
-browser: http://localhost:3300
+browser: http://localhost for adgang via slim4-frontend
+browser: http://localhost:3300 for direkte adgang til mongostore
 
 virtuelle instanser (archer.test)
 
