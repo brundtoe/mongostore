@@ -72,9 +72,9 @@ Start værdien er sat til next value 50 for authors, books, bookorder, user men 
 
 Restore i docker container::
 
-  docker exec -it --user jackie mongodb /bin/bash
-  cd /docker-entrypoint-initdb.d
-  01-load-bookstore.sh
+  bash mongodb-restore.sh
+
+Restore alle MongoDB databaserne
 
 ## run appen
 PÅ hosten udføres::
