@@ -4,7 +4,7 @@ services:
 
   mongodb:
     image: mongo:bbr
-    container_name: mongodb
+    container_name: bookstore
     volumes:
       - mongodata:/data/db
       - ${DEVOPS_MONGODB}:/docker-entrypoint-initdb.d
