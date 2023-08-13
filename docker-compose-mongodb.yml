@@ -7,7 +7,7 @@ services:
     container_name: mongodb
     volumes:
       - mongodata:/data/db
-      - ${DEVOPS_DATA}:/docker-entrypoint-initdb.d
+      - ${DEVOPS_MONGODB}:/docker-entrypoint-initdb.d
     ports:
       - "27017:27017"
     networks:

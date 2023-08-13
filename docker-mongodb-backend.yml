@@ -1,23 +1,5 @@
-version: '3.8'
-
 services:
-
-  frontend:
-    image: nginx:bbr
-    container_name: frontend
-    working_dir: /var/www/html
-    environment:
-      PLATFORM: "docker"
-    ports:
-      - "80:80"
-    volumes:
-      - ${FRONTEND}:/var/www/html/slim4-frontend
-      - ./site.conf:/etc/nginx/conf.d/default.conf
-    networks:
-      - default
-
-
-  node:
+  backend:
     image: node:bbr
     command: ["npm","start"]
     container_name: backend
@@ -45,15 +27,6 @@ services:
     networks:
       default:
         ipv4_address: ${DB_SERVER}
-
-networks:
-  default:
-    external: true
-    name: humle_net
-    ipam:
-      driver: default
-      config:
-        - subnet: "172.18.0.0/16"
 
 volumes:
   mongodata:
