@@ -11,7 +11,7 @@ module.exports = {
       return 'mongodb://mongodb:27017'
     }
     //return `mongodb://127.0.0.1:27017`
-    return `mongodb://${process.env.DB_SERVER}:27017`
+    return `mongodb://${process.env.DB_ADDRESS}:27017`
   },
   dbName: "bookstore-mysql",
 }

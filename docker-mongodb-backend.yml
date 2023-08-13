@@ -26,7 +26,7 @@ services:
       - "27017:27017"
     networks:
       default:
-        ipv4_address: ${DB_SERVER}
+        ipv4_address: ${DB_ADDRESS}
 
 volumes:
   mongodata:
