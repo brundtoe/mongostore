@@ -92,7 +92,7 @@ module.exports = {
 
       const db = await mongoCon.getConnection()
       const result = await db.collection(booksCollection).findOneAndDelete({ id: book_id })
-      return (result.ok === 1 && result.value) ? msg.record_deleted(book_id, 'Book') : msg.record_not_found(book_id, 'Book')
+      return result ? msg.record_deleted(book_id, 'Book') : msg.record_not_found(book_id, 'Book')
     } catch (err) {
       return msg.action_failed(err.message)
     }
@@ -106,7 +106,7 @@ module.exports = {
 
       const db = await mongoCon.getConnection()
       const result = await db.collection(booksCollection).findOneAndReplace({ id: book_id }, book, { returnDocument: 'after' })
-      return (result.ok === 1 && result.value) ? msg.record_updated(book.id, 'book') : msg.record_not_found(book.id, 'Book')
+      return result ? msg.record_updated(book.id, 'book') : msg.record_not_found(book.id, 'Book')
 
     } catch (err) {
       return msg.action_failed(err.message)
@@ -122,7 +122,7 @@ module.exports = {
 
       const book_id = await getNextId('book_id')
       const db = await mongoCon.getConnection()
-      book.id = book_id.value.next_value
+      book.id = book_id.next_value
       const result = await db.collection(booksCollection).insertOne(book)
       return (result.acknowledged) ? msg.record_created(book.id, 'book') : msg.action_failed('Book save')
 

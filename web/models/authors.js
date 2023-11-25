@@ -57,7 +57,7 @@ module.exports = {
 
       let db = await mongoCon.getConnection()
       const result = await db.collection(authorsCollection).findOneAndDelete({ id: author_id })
-      return (result.ok === 1 && result.value) ? msg.record_deleted(author_id,'Author') : msg.record_not_found(author_id, 'Author')
+      return result ? msg.record_deleted(author_id,'Author') : msg.record_not_found(author_id, 'Author')
 
     } catch (err) {
       return msg.action_failed(err.message)
@@ -67,7 +67,7 @@ module.exports = {
     try {
       let db = await mongoCon.getConnection()
       const result = await db.collection(authorsCollection).findOneAndReplace({ id: author.id }, author, { returnDocument: 'after' })
-      return (result.ok === 1 && result.value) ? msg.record_updated(author.id, 'author') : msg.record_not_found(author.id, 'Author')
+      return result ? msg.record_updated(author.id, 'author') : msg.record_not_found(author.id, 'Author')
     } catch (err) {
       return msg.action_failed(err.message)
     }
@@ -77,7 +77,7 @@ module.exports = {
     try {
       const author_id = await getNextId('author_id')
       let db = await mongoCon.getConnection()
-      author.id = author_id.value.next_value
+      author.id = author_id.next_value
       const result = await db.collection(authorsCollection).insertOne(author)
       return (result.acknowledged) ? msg.record_created(author.id, 'author') : msg.action_failed('Author save')
 

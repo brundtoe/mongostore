@@ -80,10 +80,10 @@ describe('Order controller', () => {
     expect(res.status.mock.calls.length).toBe(1)
     expect(res.status.mock.calls[0][0]).toBe(200)
     const actual = res.json.mock.calls[0][0].data
-    expect(actual.value.id).toBe(5)
-    expect(actual.value.invoice).toBe(3)
-    expect(actual.value.paymethod).toBe('Visa')
-    expect(actual.value.shipby).toBe('DHL')
+    expect(actual.id).toBe(5)
+    expect(actual.invoice).toBe(3)
+    expect(actual.paymethod).toBe('Visa')
+    expect(actual.shipby).toBe('DHL')
     await resetOrderFive()
   })
 
@@ -108,7 +108,7 @@ describe('Order controller', () => {
     }
   })
 
-  test('should delete a order', async () => {
+  test('should delete an order', async () => {
 
     const req = {
       body: newOrder
@@ -128,7 +128,7 @@ describe('Order controller', () => {
     expect(res.status.mock.calls[0][0]).toBe(200)
     expect(res.json.mock.calls.length).toBe(1)
     const actual = res.json.mock.calls[0][0]
-    expect(actual.data.value).toMatchObject(actualNew.order)
+    expect(actual.data).toMatchObject(actualNew.order)
   })
 })
 

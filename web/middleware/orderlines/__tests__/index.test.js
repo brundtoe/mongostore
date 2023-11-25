@@ -48,8 +48,8 @@ describe('Updating orderlines on orders', () => {
     expect(res.status.mock.calls[0][0]).toBe(201)
     expect(res.json.mock.calls.length).toBe(1)
     const actual = res.json.mock.calls[0][0].data
-    expect(actual.value.id).toBe(req.body.order_id)
-    const lines = actual.value.lines
+    expect(actual.id).toBe(req.body.order_id)
+    const lines = actual.lines
     const found = lines.filter(line => cb(line, orderline))
     expect(found.length).toBeGreaterThanOrEqual(1)
   })
@@ -88,8 +88,8 @@ describe('Updating orderlines on orders', () => {
     expect(res.status.mock.calls[0][0]).toBe(200)
     expect(res.json.mock.calls.length).toBe(1)
     const actual = res.json.mock.calls[0][0].data
-    expect(actual.value.id).toBe(req.params.order_id)
-    const lines = actual.value.lines
+    expect(actual.id).toBe(req.params.order_id)
+    const lines = actual.lines
     const found = lines.filter(line => line.book_id === req.params.book_id)
     expect(found.length).toBe(0)
 

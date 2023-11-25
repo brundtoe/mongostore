@@ -49,7 +49,7 @@ module.exports = {
 
       const db = await mongoCon.getConnection()
       const result = await db.collection(usersCollection).findOneAndDelete({ id: user_id })
-      return (result.ok === 1  && result.value) ? msg.record_deleted(user_id,'Customer') : msg.record_not_found(user_id, 'Customer')
+      return result ? msg.record_deleted(user_id,'Customer') : msg.record_not_found(user_id, 'Customer')
     } catch (err) {
       return msg.action_failed(err.message)
     }
@@ -60,7 +60,7 @@ module.exports = {
       const db = await mongoCon.getConnection()
       const result = await db.collection(usersCollection).findOneAndReplace({ id: user.id }, user
         , { returnDocument: 'after' })
-      return (result.ok === 1 && result.value) ? msg.record_updated(user.id, 'customer') : msg.record_not_found(user.id, 'Customer')
+      return result ? msg.record_updated(user.id, 'customer') : msg.record_not_found(user.id, 'Customer')
     } catch (err) {
       return msg.action_failed(err.message)
     }
@@ -70,7 +70,7 @@ module.exports = {
       try {
         const user_id = await getNextId('user_id')
         const db = await mongoCon.getConnection()
-        user.id = user_id.value.next_value
+        user.id = user_id.next_value
         const result = await db.collection(usersCollection).insertOne(user)
         return (result.acknowledged) ? msg.record_created(user.id, 'customer') : msg.action_failed('Customer save')
 
