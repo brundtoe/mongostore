@@ -1,3 +1,7 @@
+#
+# Kan kun anvendes som backend til js-training, som inkluderer denne fil
+#
+
 services:
   backend:
     image: node:bbr
@@ -31,3 +35,5 @@ services:
 volumes:
   mongodata:
     external: true
+
+# netværksdefinitionen fremgår af jstaining

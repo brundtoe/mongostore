@@ -1,5 +1,9 @@
 # MongoStore a MongoDB REST API
 
+## Opdateret april 2024
+
+Filen ``docker-mongodb-backend.yaml`` kan kun anvendes som backend til js-training, som inkluderer denne fil. Netværksdefinitionen findes i projekt jstraining.
+
 ## Opdateret februar 2023
 
 NodeJs version 17 introducerede ipv6 som default netværkstprotokol. Derfor er der for docker config for backend anvendt fast ip adresse 172.18.0.31
@@ -90,6 +94,9 @@ docker::
 browser: http://localhost for adgang via slim4-frontend
 browser: http://localhost:3300 for direkte adgang til mongostore
 
+Filen ``docker-mongodb-backend.yaml`` kan kun anvendes som backend til js-training, som inkluderer denne fil. Netværksdefinitionen findes i projekt jstraining.
+
+
 virtuelle instanser (archer.test)
 
 - instansen bringes op
@@ -98,7 +105,7 @@ virtuelle instanser (archer.test)
 ```shell
   py-js
 ```
-Vlag af optionen jstraining + mongostore
+Valg af optionen jstraining + mongostore
 
 browser: https://archer.test
 
