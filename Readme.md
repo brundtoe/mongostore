@@ -1,12 +1,17 @@
 # MongoStore a MongoDB REST API
 
-## Opdateret april 2024
+
+
+
+## Opdateret februar 2025
+
+docker-compose anvender nu envvars til definition af ip adreserne
 
 Filen ``docker-mongodb-backend.yaml`` kan kun anvendes som backend til js-training, som inkluderer denne fil. Netværksdefinitionen findes i projekt jstraining.
 
 ## Opdateret februar 2023
 
-NodeJs version 17 introducerede ipv6 som default netværkstprotokol. Derfor er der for docker config for backend anvendt fast ip adresse 172.18.0.31
+NodeJs version 17 introducerede ipv6 som default netværkstprotokol. Derfor er der for docker config for backend anvendt fast ip adresse 172.18.0.43
 
 Docker .env indeholder definitioner på ip adressen for node og mongodb instanserne
 
