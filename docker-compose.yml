@@ -17,7 +17,7 @@ services:
         ipv4_address: ${NGINX_ADDRESS}
 
 
-  node:
+  backend:
     image: node:bbr
     command: ["npm","start"]
     container_name: backend
