@@ -5,6 +5,8 @@ services:
     image: nginx:bbr
     container_name: frontend
     working_dir: /var/www/html
+    depends_on:
+      - backend
     environment:
       PLATFORM: "docker"
     ports:
