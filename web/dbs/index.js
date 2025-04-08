@@ -1,8 +1,8 @@
 const MongoClient = require('mongodb').MongoClient
-const config = require('../config')
-const url = config.dbUrl()
+const dbConfig = require('../db.config.js')
+const url = dbConfig.dbUrl()
 //const url = 'mongodb://localhost:27017'
-const dbName =  config.dbName
+const dbName =  dbConfig.dbName
 //const dbName = 'mystore'
 
 const options = {}

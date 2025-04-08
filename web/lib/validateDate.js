@@ -41,7 +41,7 @@ module.exports = function isDateValid (inputText) {
         return false
       }
       if ((lyear === true) && (dd > 29)) {
-        //console.log('Its a leap year - but Invalid number of days!')
+        //console.log('It's a leap year - but Invalid number of days!')
         return false
       }
     }

@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Docker All Tests" type="JavaScriptTestRunnerJest">
-    <node-interpreter value="docker-compose://[$PROJECT_DIR$/docker-compose.yml]:node/node" />
+    <node-interpreter value="docker-compose://[$PROJECT_DIR$/docker-compose.yml]:backend/node" />
     <jest-package value="$PROJECT_DIR$/web/node_modules/jest" />
     <working-dir value="$PROJECT_DIR$/web" />
     <jest-options value=" --runInBand --forceExit" />

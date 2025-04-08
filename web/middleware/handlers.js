@@ -10,7 +10,7 @@ module.exports = {
 
     res.locals.error = req.app.get('env') === 'development' ? err : {}
 
-    if (err.code == 'EBADCSRFTOKEN') {
+    if (err.code === 'EBADCSRFTOKEN') {
       res.locals.message = 'The form has been tamperede with'
       err.status = 403
     } else {
