@@ -48,6 +48,5 @@ async function getConnection () {
 }
 
 module.exports = {
-  establishConnection: establishConnection,
   getConnection: getConnection
 }
