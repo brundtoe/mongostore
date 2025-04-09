@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "manuel": "node bin/www",
-    "start": "nodemon bin/www"
+    "start": "nodemon bin/www",
+    "test": "jest  --runInBand --forceExit"
   },
   "dependencies": {
     "bson": "~6.10.0",
