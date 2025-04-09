@@ -87,7 +87,7 @@ describe('Test authors model spy callThrough', () => {
 
     // Restore Alex
     const resp = await authorsRepository.updateById(alex)
-    expect(response).toEqual(expected)
+    expect(resp).toEqual(expected)
   })
 
   it('Should fail to update unknown author', () => {
