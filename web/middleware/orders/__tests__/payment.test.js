@@ -37,6 +37,7 @@ describe('Payment og shipping', () => {
           order.paymethod = value
           Joi.assert(order, schema)
         } catch (err) {
+          console.log(err)
           valid = false
         }
       })
@@ -66,6 +67,7 @@ describe('Payment og shipping', () => {
           order.shipby = value
           Joi.assert(order, schema)
         } catch (err) {
+          console.log(err)
           valid = false
         }
       })

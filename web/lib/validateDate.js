@@ -4,7 +4,7 @@
  */
 
 module.exports = function isDateValid (inputText) {
-  const dateformat = /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/
+  const dateformat = /^\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$/
   // Match the date format through regular expression
   if (inputText.match(dateformat)) {
     //Test which seperator is used '/' or '-'

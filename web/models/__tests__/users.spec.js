@@ -28,7 +28,7 @@ describe('Test customers model spy callThrough', () => {
     expect(actual.data).toMatchObject(customer)
   })
 
-  it('Should find a known customer', async () => {
+  it('Should spyOn connection finding a customer', async () => {
     const customer = Object.assign({}, alfredCoppel)
     jest.spyOn(mongoCon,'getConnection')
     const actual = await customersRepository.findById(customer.id)
@@ -94,7 +94,7 @@ describe('Test customers model spy callThrough', () => {
     // Restore alfredCoppel
     const resp = await customersRepository.updateById(alfredCoppel)
     const alfred = msg.record_updated(alfredCoppel.id, 'customer')
-    expect(response).toEqual(alfred)
+    expect(resp).toEqual(alfred)
 
     expect(mongoCon.getConnection).toHaveBeenCalled()
   })

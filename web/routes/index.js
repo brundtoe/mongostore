@@ -7,6 +7,7 @@ router.get('/about', async function(req, res, next) {
     status: 'Success',
     mesage: 'Demo af anvendelse af mongodb',
   })
+  next()
 
 });
 

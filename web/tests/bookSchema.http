@@ -24,6 +24,7 @@ Content-Type: application/json
 > {% client.test("Request executed successfully", function() {
   client.assert(response.status == 200, "Response status is not 200")
   const title = "Beginning MEAN apps"
+  client.assert(response.body.data.title === title,"Response should have returned correct title")
   client.assert(response.body.data.book_id == 18, "Response should have updatet book 18")
 
      })

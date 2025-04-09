@@ -25,7 +25,7 @@ export default defineConfig([
       'jest/no-disabled-tests': 'warn',
       'jest/no-focused-tests': 'error',
       'jest/no-identical-title': 'error',
-      'jest/prefer-to-have-length': 'warn',
+      'jest/prefer-to-have-length': 'off',
       'jest/valid-expect': 'error',
     },
   }

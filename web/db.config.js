@@ -1,10 +1,6 @@
 /**
  * konfiguration af applikationen
  */
-//require('dotenv').config()
-// eslint-disable-next-line no-undef
-//console.log(process.env)
-const os = require('os')
 module.exports = {
   dbUrl: () => {
     if (process.env.PLATFORM === 'docker') {

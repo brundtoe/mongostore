@@ -1,5 +1,4 @@
 const mongoCon = require('../dbs')
-const createError = require('http-errors')
 const booksCollecion = 'books'
 
 /**

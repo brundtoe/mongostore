@@ -22,6 +22,7 @@ describe('Order controller', () => {
 
   beforeAll(async () => {
     await resetOrderFive()
+    // dette bevares selvom det er uvist hvofor det skal anvendes
     orderData.orderdate = new Date(orderData.orderdate)
     orderData._id = new ObjectId(orderData._id)
   })
@@ -104,7 +105,7 @@ describe('Order controller', () => {
       let db = await mongoCon.getConnection()
       await db.collection(ordersCollection).findOneAndDelete({ id: actual.order.id })
     } catch (err) {
-      console.log('delete af new record failed')
+      console.log('delete af new record failed', err)
     }
   })
 

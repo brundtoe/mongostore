@@ -1,5 +1,6 @@
 const createError = require('http-errors')
 
+// noinspection JSUnusedLocalSymbols
 module.exports = {
   notFound (req, res, next) {
     const httpError = createError(404, 'Resource not found')
