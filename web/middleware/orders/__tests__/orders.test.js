@@ -22,7 +22,9 @@ describe('Order controller', () => {
 
   beforeAll(async () => {
     await resetOrderFive()
-    // dette bevares selvom det er uvist hvofor det skal anvendes
+    // ordreData.orderdate og orderData._id fra json filen er strings
+    // test mod indlæste data kræver et Dato objekt og en Object._id
+    // øvrige datofelter har ingen værdi derfor omformes de ikke til dato objekter
     orderData.orderdate = new Date(orderData.orderdate)
     orderData._id = new ObjectId(orderData._id)
   })
