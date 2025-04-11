@@ -16,7 +16,7 @@ Databasen kan være en lokal instans eller en MongoDB Atlas cloud instans.
 
 Der er implementeret et REST API til databasen **bookstore-mysql**
 
-## databasen 
+## Databasen 
 
 Ved anvendelse på kvm instanser skal **.env** opdateres til at pege på instansen med databasen
 
@@ -44,7 +44,7 @@ Restore i docker container::
 
 Restore alle MongoDB databaserne
 
-## run appen på hosen victoria
+## Run appen på hosten victoria
 På hosten Victoria udføres (kan debugges)::
 
     npm start   
@@ -79,10 +79,14 @@ Valg af optionen jstraining + mongostore
 
 browser: https://archer.test
 
-Archer er konfigureret med firewall som ikke tillader adgang via port 3300.
+Debug:
+- Stands pm2 processen mongostore
+- Start run config *Archer Run og Debug*
+- Der kan debugge som normalt
 
-Webstorm
-- Det er derfor ikke muligt at debugge og runne tests fra hosten
+Bemærk,
+- Der er kun adgang via adressen https://archer.test
+- Firewall blokerer for direkte adgnag til port 3000 og 3300
 
 ## Debug på victoria
 Start mongodb containeren
@@ -102,6 +106,7 @@ Start test (kan debugges)
 
     npm test
 
+
 ## Test docker med nginx frontend
 Start appen
 
@@ -111,17 +116,19 @@ Udfør test (kan ikke debugges)
 
     Run config dokcer All tests 
 
-## test på archer (kan ikke debugges)
+## Test på archer
 start applikationen
 ```shell
 py-js
 ```
-Når applikationen er startet gå til shell
+- Stands pm2 processen
+- Start run config *Archer test*
+
+Alternativt i Archer terminalvindue
 ```shell
     cd /nfs/code-js/mongodstore/web
     npm test
 ```
-
 
 ## test med WebStorm http Requests
 
