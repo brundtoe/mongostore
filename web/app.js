@@ -17,7 +17,6 @@ const ordersRouter = require('./routes/orders');
 const orderlinesRouter = require('./routes/orderlines')
 
 const app = express();
-app.set('host_address', process.env.HOST_ADDRESS)
 app.use(cors())
 app.use(logger('dev'));
 app.use(express.json());
