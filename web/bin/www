@@ -5,7 +5,6 @@
  */
 
 let app = require('../app');
-let debug = require('debug')('mongostore:server');
 let http = require('http');
 
 app.set('host_address', process.env.HOST_ADDRESS || "127.0.0.1")
