@@ -58,3 +58,20 @@ function onListening () {
   const addr = server.address()
   console.log(`Listening on ${addr.address}:${addr.port}`)
 }
+
+/**
+ * Process Unhandled Rejections
+ */
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection', reason)
+  process.exit(1)
+})
+
+/**
+ * Process unhandled Exceptions
+ */
+
+process.on('uncaughtException', error => {
+  console.error('Unhandled Exception', error)
+})

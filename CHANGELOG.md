@@ -1,10 +1,16 @@
 # Changelog
 
+## Maj 2025
 
+Optimering af error handling
+- bin/www tilføjede process handling af unresolved promises og unhandled expectations
+- app.js forenklede error handling
+- errorhandler revideret er nu en enkelt funktion som error middleware
+- errorhandler returner altid et error objekt.
 
 ## Opdateret februar 2025
 
-docker-compose anvender nu envvars til definition af ip adreserne
+Docker-compose anvender nu envvars til definition af ip adreserne
 
 Filen ``docker-mongodb-backend.yaml`` kan kun anvendes som backend til js-training, som inkluderer denne fil. Netværksdefinitionen findes i projekt jstraining.
 

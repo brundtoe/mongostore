@@ -7,14 +7,15 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 let multer = require('multer')
 let upload = multer()
+const createError = require('http-errors');
 
-const errorHandler = require('./middleware/handlers')
 const indexRouter = require('./routes');
 const usersRouter = require('./routes/users');
 const authorsRouter = require('./routes/authors');
 const booksRouter = require('./routes/books');
 const ordersRouter = require('./routes/orders');
 const orderlinesRouter = require('./routes/orderlines')
+const errorHandler = require('./middleware/errorHandler')
 
 const app = express();
 app.use(cors())
@@ -32,10 +33,13 @@ app.use('/api/books', booksRouter);
 app.use('/api/orders',ordersRouter);
 app.use('/api/orderlines',orderlinesRouter)
 
-// the route is not found
-app.use(errorHandler.notFound)
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  next(createError(404, 'Route not found', {type: 'ROUTE_ERROR'}))
+})
+
 
 // error handler
-app.use(errorHandler.errorResponse)
+app.use(errorHandler)
 
 module.exports = app;
