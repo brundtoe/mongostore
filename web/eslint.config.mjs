@@ -5,18 +5,22 @@ import jestPlugin from 'eslint-plugin-jest'
 
 export default defineConfig([
   {
-    files: ['**/*.{js,mjs,cjs}'], plugins: { js }, extends: ['js/recommended'], languageOptions: {
+    files: ['**/*.{js,mjs,cjs}'],
+    plugins: { js },
+    extends: ['js/recommended'],
+    languageOptions: {
       globals: {
         ...globals.browser,
         ...globals.node,
         console: 'readonly',
       },
-    }
+    },
+    rules: {
+      'no-unused-vars': 'warn'
+    },
   },
-  { files: ['**/*.js'], languageOptions: { sourceType: 'commonjs' } },
-  { files: ['**/*.{js,mjs,cjs}'], languageOptions: { globals: globals.browser } },
   {
-    files: ['**/*.test.js','**/*.spec.js'],
+    files: ['**/*.test.js', '**/*.spec.js'],
     plugins: { jest: jestPlugin },
     languageOptions: {
       globals: jestPlugin.environments.globals.globals,
