@@ -59,7 +59,7 @@ describe('Supertest af customer routes med supertest', () => {
       .then(res => {
         expect(res.body.error).toBeObject()
         expect(res.body.error).toEqual(expect.objectContaining(validation_error))
-      })
+      });
   })
 
 describe('Supertest Updates', function () {

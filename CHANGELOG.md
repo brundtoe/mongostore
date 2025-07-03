@@ -1,5 +1,14 @@
 # Changelog
 
+## 3. juli 2025
+
+Opgraderet til Express 5.1.0
+- udførte opgraderingskontrol ``npx @expressjs/codemod upgrade .``
+- der var ikke behov for manuelle ændringer
+- alle tests med jasmine Ok
+- alle tests fra jstraining med js-mysqldemo som backend Ok
+
+
 ## Maj 2025
 
 Optimering af error handling
