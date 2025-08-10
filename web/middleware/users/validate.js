@@ -26,7 +26,7 @@ module.exports = {
 
     try {
       Joi.assert(req.params.id, Joi.number().integer().required().min(1)
-        .messages({ 'number.base': 'Customer Id skal være numerisk' }))
+        .messages({ 'number.base': 'Customer_id skal være numerisk' }))
       next()
     } catch (err) {
       next(createError(400, buildErrorMessages(err, 'VALIDATION_ERROR')))
@@ -35,7 +35,7 @@ module.exports = {
   delete: (req, res, next) => {
     try {
       Joi.assert(req.params.id, Joi.number().integer().required().min(1)
-        .messages({ 'number.base': 'Customer Id skal være numerisk' }))
+        .messages({ 'number.base': 'Customer_id skal være numerisk' }))
       next()
     } catch (err) {
       next(createError(400, buildErrorMessages(err, 'VALIDATION_ERROR')))

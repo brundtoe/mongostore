@@ -7,7 +7,7 @@ const userSchema = Joi.object({
   id: Joi.number()
     .integer()
     .min(1).messages({
-      'number.base': 'Customer Id skal være numerisk'
+      'number.base': 'Customer_id skal være numerisk'
     }),
 
   name: Joi.string()

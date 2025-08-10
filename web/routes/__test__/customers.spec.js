@@ -6,7 +6,7 @@ describe('Supertest af customer routes med supertest', () => {
 
   const validation_error = {
     type: 'VALIDATION_ERROR',
-    description: ['Customer Id skal være numerisk'],
+    description: ['Customer_id skal være numerisk'],
   }
 
   it('should succeed getting bookstore customers', async () => {

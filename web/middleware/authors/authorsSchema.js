@@ -8,7 +8,7 @@ const authorsSchema = Joi.object({
     .integer()
     .min(1)
     .messages({
-      'number.base': 'Author Id skal være numerisk'
+      'number.base': 'Author_id skal være numerisk'
     }),
 
   firstname: Joi.string()

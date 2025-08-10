@@ -30,7 +30,7 @@ describe('Validering af author schema', () => {
     validate.show(req,res,next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBeInstanceOf(Joi.ValidationError)
-    expect(next.mock.calls[0][0]).toMatchObject({ message: 'Author Id skal være numerisk' })
+    expect(next.mock.calls[0][0]).toMatchObject({ message: 'Author_id skal være numerisk' })
     expect(next.mock.calls[0][0]).toMatchObject({ status: 400 })
   })
 
@@ -54,7 +54,7 @@ describe('Validering af author schema', () => {
     validate.delete(req,res,next)
     expect(next.mock.calls.length).toBe(1)
     expect(next.mock.calls[0][0]).toBeInstanceOf(Joi.ValidationError)
-    expect(next.mock.calls[0][0]).toMatchObject({ message: 'Author Id skal være numerisk' })
+    expect(next.mock.calls[0][0]).toMatchObject({ message: 'Author_id skal være numerisk' })
     expect(next.mock.calls[0][0]).toMatchObject({ status: 400 })
   })
 

@@ -6,14 +6,14 @@ const booksSchema = Joi.object({
   id: Joi.number()
     .integer()
     .min(1).messages({
-      'number.base': 'Book Id skal være numerisk'
+      'number.base': 'Book_id skal være numerisk'
     }),
 
   author_id: Joi.number()
     .integer()
     .min(1)
     .required().messages({
-      'number.base': 'Author Id skal være numerisk'
+      'number.base': 'Author_id skal være numerisk'
     }),
 
   title: Joi.string()
@@ -44,7 +44,7 @@ const booksSchema = Joi.object({
     .min(0)
     .max(99)
     .messages(
-      {'number.base': 'On hand skal være numerisk'}
+      {'number.base': 'Onhand skal være numerisk'}
     )
 })
 
