@@ -3,9 +3,16 @@
     <deployment type="docker-compose.yml">
       <settings>
         <option name="envFilePath" value="" />
+        <option name="envFilePaths">
+          <list>
+            <option value="" />
+          </list>
+        </option>
         <option name="sourceFilePath" value="docker-compose.yml" />
       </settings>
     </deployment>
-    <method v="2" />
+    <method v="2">
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="Fjern containere" run_configuration_type="ShConfigurationType" />
+    </method>
   </configuration>
 </component>

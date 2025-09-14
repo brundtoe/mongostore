@@ -2,7 +2,7 @@
 services:
 
   mongodb:
-    image: mongo:bbr
+    image: mongo:jb
     container_name: bookstore
     volumes:
       - mongodata:/data/db

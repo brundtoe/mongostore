@@ -4,7 +4,7 @@
 
 services:
   backend:
-    image: node:bbr
+    image: node:jb-alpine
     command: ["npm","start"]
     container_name: backend
     environment:
@@ -21,7 +21,7 @@ services:
       - mongodb
 
   mongodb:
-    image: mongo:bbr
+    image: mongo:jb
     container_name: bookstore
     volumes:
       - mongodata:/data/db
