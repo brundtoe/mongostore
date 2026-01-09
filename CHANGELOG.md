@@ -1,5 +1,9 @@
 # Changelog
 
+## 9. januar 2026
+
+Mongodb opdateret til v 7.0.0 test ok
+
 ## 3. juli 2025
 
 Opgraderet til Express 5.1.0
