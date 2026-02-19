@@ -1,0 +1,24 @@
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: unset;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
+img,
+picture, svg, canvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}

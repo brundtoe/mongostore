@@ -1,18 +1,34 @@
+<!DOCTYPE html>
 <html lang="da">
-
 <head>
-  <title>Express</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
-</head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="title">Mongostore</title>
+  <link rel="stylesheet" href="styles/layout.css">
 
+</head>
 <body>
-<h1>Express</h1>
-<p>Welcome to MongoStore a MongoDB REST API</p>
-<p><a href="/api/authors">List a number og authors</a></p>
-<p><a href="/api/books">List a number og books</a></p>
-<p><a href="/api/orders">List a number og orders</a></p>
-<p><a href="/api/customers">List a number of customers</a></p>
-<p><a href="/about">About</a></p>
+<div id="container">
+  <header class="header">
+    <h1>JavaScript js-bookstore</h1>
+  </header>
+
+  <nav class="nav-menu">
+    <a href="/api/authors" class="menu-item">Authors</a>
+    <a href="/api/authors/4" class="menu-item">Author 4</a>
+    <a href="/api/books" class="menu-item">Books</a>
+    <a href="/api/books/7" class="menu-item">Book 7</a>
+    <a href="/api/customers" class="menu-item">Customers</a>
+    <a href="/api/customers/7" class="menu-item"> Customers 7</a>
+    <a href="/api/orders" class="menu-item">Orders</a>
+    <a href="/about" class="menu-item">About</a>
+  </nav>
+
+  <main class="main rounded shadow">
+    <h1>Express</h1>
+    <p>Welcome to MongoStore a MongoDB REST API</p>
+  </main>
+</div>
 </body>
 
 </html>

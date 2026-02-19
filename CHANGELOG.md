@@ -6,6 +6,14 @@ Mongodb opdateret til v 7.0.0 test ok
 
 ## 3. juli 2025
 
+## 19. februar 2026
+
+Ændring:
+- implementeret moderne menu system
+
+Kendte problemer:
+- Route orderlines, midleware orderlines er delvis implementeret og bør fjernes.
+
 Opgraderet til Express 5.1.0
 - udførte opgraderingskontrol ``npx @expressjs/codemod upgrade .``
 - der var ikke behov for manuelle ændringer

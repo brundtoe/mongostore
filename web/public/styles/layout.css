@@ -1,0 +1,126 @@
+@import url(https://fonts.googleapis.com/css?family=Nunito);
+@import "basis.css" layer(reset);
+
+@layer reset, global, menu;
+
+@layer global {
+
+    :root {
+        --jb-cyan: #00b7ff;
+        --jb-light: #e7e8e9;
+        --jb-dark: #343a40;
+        --jb-blue: #0d6efd;
+        --jb-nav: #f0f0f0;
+        --jb-disabled: #9c9b9b;
+        --jb-medium: #d4d7db;
+        --jb-main: white;
+        --jb-page: #D2E1E6;
+        --font-family-sans-serif: Nunito, sans-serif;
+        --font-family-monospace: "Liberation Mono", "Courier New", monospace;
+        font-size: 16px;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: var(--font-family-sans-serif), sans-serif;
+        font-size: clamp(0.875em, 0.5svw + 0.7em, 1.5em);
+        color: var(--jb-dark);
+        background-color: var(--jb-page, #D2E1E6);
+    }
+
+    .container {
+        width: 90vw;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    header {
+        background-image: url(../images/HeaderKronborg.jpg);
+        background-repeat: no-repeat;
+        height: 200px;
+        border-radius: 0.8rem;
+    }
+
+    .main {
+        margin: 1rem;
+        background-color: #FFF;
+        padding: 1rem 0;
+    }
+
+    p, div, ol {
+        margin: 1rem 2rem;
+    }
+
+    header {
+        text-align: left;
+        margin-top: 0;
+        margin-left: 1rem;
+        padding-top: 1rem;
+    }
+
+    h1, h2, h3 {
+        margin-left: 1rem;
+        margin-right: 1rem;
+        margin-bottom: 0.25em;
+    }
+
+    .figure img {
+        max-width: 100%;
+    }
+
+    .rounded {
+        border-radius: 15px;
+    }
+
+    .shadow {
+        /* -webkit-box-shadow: 3px 3px 3px rgba(51,51,51,0.3); */
+        box-shadow: 3px 3px 3px rgba(51, 51, 51, 0.3);
+    }
+
+
+    .error {
+        color: red;
+    }
+
+    td {
+        vertical-align: text-top;
+    }
+
+}
+
+
+@layer menu {
+
+    .nav-menu {
+        display: flex;
+        gap: 1rem;
+        font-size: 1.1rem;
+        align-items: center;
+        padding: 0 1rem;
+        background-color: var(--jb-page);
+
+    }
+
+    .menu-item {
+        display: block;
+        color: var(--jb-dark);
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+    }
+
+    .menu-item-disabled {
+        font-weight: lighter;
+    }
+
+    .menu-item:visited {
+        color: var(--jb-dark);
+    }
+
+    .menu-item:hover {
+        background-color: var(--jb-nav);
+        color: var(--jb-cyan);
+        border-radius: 0.5rem;
+    }
+
+}
