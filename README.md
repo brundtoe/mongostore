@@ -130,6 +130,13 @@ Alternativt i Archer terminalvindue
     npm test
 ```
 
+## Cypress test
+run konfigurationen `Cypress slim4-frontend` findes i projekter slim4-frontend
+
+Anvendelse
+- start konfigurationen `docker run`
+- start `Cypress slim4-frontend`
+
 ## test med WebStorm http Requests
 
 Valideringer og controllere for

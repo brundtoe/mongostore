@@ -1,5 +1,8 @@
 # Changelog
 
+## 7. marts 2026
+- Tilføjet slim4-frontend cypress test med. Runnes med docker compose
+
 ## 9. januar 2026
 
 Mongodb opdateret til v 7.0.0 test ok
