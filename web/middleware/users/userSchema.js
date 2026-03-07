@@ -14,7 +14,7 @@ const userSchema = Joi.object({
     .regex(/^[a-zA-Zæøå ÆØÅ]{3,30}$/)
     .required()
     .messages({
-      'string.empty': 'Customer name må kun indeholde bogstaver',
+      'string.empty': 'Customer_name må kun indeholde bogstaver',
       'any.required': 'Feltet name mangler i input',
       'string.pattern.base': 'Name skal være  på 2 - 30 tegn'
     }),
