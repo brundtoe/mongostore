@@ -4,11 +4,11 @@
   "orderdate": "2012-06-13T22:00:00.000Z",
   "shipdate": null,
   "invoice": 27,
-  "shipby": "FedEx",
+  "shipby": "DHL",
   "paydate": null,
-  "paymethod": "PayPal",
+  "paymethod": "AMEX",
   "invoicedate": null,
-  "user_id": 18,
+  "user_id": 2,
   "lines": [
     {
       "book_id": 18,

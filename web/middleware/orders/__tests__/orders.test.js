@@ -61,6 +61,10 @@ describe('Order controller', () => {
     expect(res.status.mock.calls.length).toBe(1)
     expect(res.status.mock.calls[0][0]).toBe(200)
     const actual = res.json.mock.calls[0][0].data
+    // mongodb ObjectId er variable og fjernes inden resultatet testes
+    if (actual._id) delete actual['_id']
+    if (actual.user) delete actual.user
+    if (orderData._id) delete orderData['_id']
     expect(actual.id).toBe(5)
     expect(actual).toMatchObject(orderData)
   })
