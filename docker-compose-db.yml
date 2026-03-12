@@ -7,6 +7,9 @@ services:
     volumes:
       - mongodata:/data/db
       - ${DEVOPS_MONGODB}:/docker-entrypoint-initdb.d
+      - ${MONGODB_DOWNLOADS}:${DOWNLOAD_PATH}
+    environment:
+      DOWNLOAD_PATH: ${DOWNLOAD_PATH}
     ports:
       - "27017:27017"
     networks:

@@ -4,6 +4,7 @@
 
 Ændringer
 - Fjernet kommentar ``//const dbName = 'mystore'``.
+- Tilføjet script mongopdb-backup.sh af bookstore-mysql og tilpasset docker compose konfigurationerne
 
 ## 7. marts 2026
 - Tilføjet slim4-frontend cypress test med. Runnes med docker compose
