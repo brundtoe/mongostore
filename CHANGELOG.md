@@ -1,5 +1,10 @@
 # Changelog
 
+## 12. marts 2026
+
+Ændringer
+- Fjernet kommentar ``//const dbName = 'mystore'``.
+
 ## 7. marts 2026
 - Tilføjet slim4-frontend cypress test med. Runnes med docker compose
 
