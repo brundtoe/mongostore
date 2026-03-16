@@ -1,34 +1,15 @@
 const MongoClient = require('mongodb').MongoClient
 const dbConfig = require('../db.config.js')
-const url = dbConfig.dbUrl()
-//const url = 'mongodb://localhost:27017'
-const dbName =  dbConfig.dbName
-
 const options = {}
 let db
 //let dbClient
 
-/**
-function establishConnection () {
-  const client = new MongoClient(url, options)
 
-  client.connect()
-    .then(client => {
-      db = client.db(dbName)
-      dbClient = client
-      process.on('SIGINT', () => {
-        dbClient.close();
-        process.exit();
-      })
-    })
-    .catch(error => console.error(error))
-}
-*/
 async function establishConnection() {
-  const client = new MongoClient(url, options)
+  const client = new MongoClient(dbConfig.dbUrl(), options)
   try {
     await client.connect()
-    db = client.db(dbName)
+    db = client.db(dbConfig.dbName)
   } catch (err) {
     console.log(err)
   }

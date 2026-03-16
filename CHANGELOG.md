@@ -1,5 +1,10 @@
 # Changelog
 
+## 16. marts 2026
+
+Ændringer
+- mongodb uri tvinger nu til at anvende en mongodb containers ip adresse 
+
 ## 12. marts 2026
 
 Ændringer
