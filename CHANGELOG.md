@@ -4,6 +4,7 @@
 
 Ændringer
 - mongodb uri tvinger nu til at anvende en mongodb containers ip adresse 
+- fjernet portmapning "27017:27017". Dermed er der kun adgang via containerens ip adresse.
 
 ## 12. marts 2026
 

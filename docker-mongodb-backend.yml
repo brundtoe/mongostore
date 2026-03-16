@@ -29,8 +29,6 @@ services:
       - ${MONGODB_DOWNLOADS}:${DOWNLOAD_PATH}
     environment:
       DOWNLOAD_PATH: ${DOWNLOAD_PATH}
-    ports:
-      - "27017:27017"
     networks:
       default:
         ipv4_address: ${DB_ADDRESS}
