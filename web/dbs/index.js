@@ -2,8 +2,6 @@ const MongoClient = require('mongodb').MongoClient
 const dbConfig = require('../db.config.js')
 const options = {}
 let db
-//let dbClient
-
 
 async function establishConnection() {
   const client = new MongoClient(dbConfig.dbUrl(), options)
@@ -14,7 +12,6 @@ async function establishConnection() {
     console.log(err)
   }
 }
-
 
 async function getConnection () {
   if (!db) {
