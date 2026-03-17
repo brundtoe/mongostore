@@ -1,4 +1,5 @@
 const authors = require('../../models/authors')
+const getDatatime = require('../../lib/getDateTime')
 
 module.exports = {
   async index (req, res, next) {
@@ -30,7 +31,9 @@ module.exports = {
       id: null,
       firstname: req.body.firstname,
       lastname: req.body.lastname,
-      mail: req.body.mail
+      mail: req.body.mail,
+      created_at: getDatatime(),
+      updated_at: null
     }
     try {
       const data = await authors.save(author)
@@ -48,7 +51,10 @@ module.exports = {
       id: author_id,
       firstname: req.body.firstname,
       lastname: req.body.lastname,
-      mail: req.body.mail
+      mail: req.body.mail,
+      created_at: req.body.created_at,
+      updated_at: getDatatime()
+
     }
 
     try {

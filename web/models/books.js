@@ -59,7 +59,9 @@ module.exports = {
         published: 1,
         bookprice: 1,
         onhand: 1,
-        isbn: 1
+        isbn: 1,
+        created_at: 1,
+        updated_at: 1
       }
 
       const join = {

@@ -2,6 +2,7 @@ const mongoCon = require('../../dbs')
 const createError = require('http-errors')
 const { getNextId } = require('../../lib/getNextId')
 const { isOlineValid, buildOline } = require('../../lib/orderlines')
+const getDatatime = require('../../lib/getDateTime')
 
 const ordersCollection = 'bookorders'
 
@@ -43,6 +44,8 @@ module.exports = {
       const order_id = await getNextId('bookorder_id')
       const db = await mongoCon.getConnection()
       req.body.id = order_id.next_value
+      req.body.created_at = getDatatime()
+      req.body.updated_at = null
       const result = await db.collection(ordersCollection).insertOne(req.body)
       const order = await db.collection(ordersCollection).findOne({id : req.body.id})
       res.status(201).json({
@@ -69,7 +72,10 @@ module.exports = {
             invoicedate: req.body.invoicedate || null,
             invoice: req.body.invoice || null,
             paymethod: req.body.paymethod || null,
-            shipby: req.body.shipby || null
+            shipby: req.body.shipby || null,
+            created_at: req.body.created_at || null,
+            updated_at: getDatatime() || null
+
           }
         },
         {returnDocument: 'after'})

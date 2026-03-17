@@ -1,4 +1,5 @@
 const users = require('../../models/users')
+const getDatatime = require('../../lib/getDateTime')
 
 module.exports = {
 
@@ -31,7 +32,9 @@ module.exports = {
       city: req.body.city,
       state: req.body.state,
       country: req.body.country,
-      mail: req.body.mail
+      mail: req.body.mail,
+      created_at: getDatatime(),
+      updated_at: null
     }
 
   try {
@@ -53,7 +56,9 @@ module.exports = {
       city: req.body.city,
       state: req.body.state,
       country: req.body.country,
-      mail: req.body.mail
+      mail: req.body.mail,
+      created_at: req.body.created_at,
+      updated_at: getDatatime()
     }
 
   try {

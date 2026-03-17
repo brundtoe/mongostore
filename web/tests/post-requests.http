@@ -1,0 +1,54 @@
+### create new author
+POST http://localhost:3300/api/authors
+Content-Type: application/json
+
+{
+      "firstname": "Alexandra",
+      "lastname": "Frederiksen",
+      "mail": "Alexandra@mail.com"
+}
+
+
+### create new book
+POST http://localhost:3300/api/books
+Content-Type: application/json
+
+{
+  "author_id": 5,
+  "title": "Professional Rust",
+  "published": "2026-03-01",
+  "bookprice": 55.58,
+  "isbn": "1861001266",
+  "onhand": 15
+}
+
+
+### Send POST request with json body
+POST http://localhost:3300/api/customers
+Content-Type: application/json
+
+{
+  "name": "Marianne Thomsen",
+  "city": "Vestbirk",
+  "state": "Østjylland",
+  "country": "DK",
+  "mail": "lars@example.com"
+}
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 201, "Response status is not 201")
+     })
+  %}
+
+### Send POST request with body as parameters
+POST  http://localhost:3300/api/customers
+Content-Type: application/x-www-form-urlencoded
+
+name=Andreas%20Jensen&city=Slagelse&state=Sj%C3%A6lland&country=DK&mail=andreas%40example.com&street=johnson%20Road
+
+> {% client.test("Request executed successfully", function() {
+  client.assert(response.status === 201, "Response status is not 201")
+     })
+  %}
+
+

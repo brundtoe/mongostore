@@ -1,0 +1,45 @@
+### Update customer 7
+PUT http://localhost:3300/api/customers
+Content-Type: application/json
+
+{
+  "id": 7,
+  "name": "Frederich Forsyth",
+  "city": "Hollywood",
+  "state": "California",
+  "country": "USA",
+  "mail": "forsyth@anymail.com",
+  "created_at": "2025-07-29 16:00:00",
+  "updated_at": "2025-09-30 18:09:15"
+}
+
+### Update author 4
+PUT http://localhost:3300/api/authors
+Content-Type: application/json
+
+{
+  "id": 4,
+  "firstname": "Alex",
+  "lastname": "Stockton",
+  "mail": "Stockton@mail.com",
+  "created_at": "2025-07-29 16:00:00",
+  "updated_at": ""
+}
+
+### Update book 7
+PUT http://localhost:3300/api/books
+Content-Type: application/json
+
+{
+  "id": 7,
+  "author_id": 3,
+  "title": "Instant IE4 Dynamic Html Programmers Reference",
+  "published": "1997-09-01",
+  "bookprice": 22.99,
+  "isbn": "1861000685",
+  "onhand": 58,
+  "created_at": "2025-07-29 16:00:00",
+  "updated_at": "",
+  "firstname": "Alexandra",
+  "lastname": "Homer"
+}

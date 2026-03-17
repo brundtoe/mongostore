@@ -1,5 +1,10 @@
 # Changelog
 
+## 17. marts 2026
+
+Ændringer
+- tilføjet opdateringer af created_at og updated_at
+
 ## 16. marts 2026
 
 Ændringer
