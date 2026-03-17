@@ -4,6 +4,7 @@
 
 Ændringer
 - tilføjet opdateringer af created_at og updated_at
+- test cases ændret som følge af anvendelsen af created_at og updated_at
 
 ## 16. marts 2026
 
