@@ -1,10 +1,11 @@
 const MongoClient = require('mongodb').MongoClient
 const dbConfig = require('../db.config.js')
 const options = {}
+const uri = dbConfig.dbUrl()
 let db
 
 async function establishConnection() {
-  const client = new MongoClient(dbConfig.dbUrl(), options)
+  const client = new MongoClient(uri, options)
   try {
     await client.connect()
     db = client.db(dbConfig.dbName)

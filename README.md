@@ -106,6 +106,14 @@ Start test (kan debugges)
 
     npm test
 
+I Jest Run configuration Victoria test skal environment defineres
+```shell
+VICTORIA_DB_URI=mongodb://172.18.0.23:27017
+```
+alterantiv skal run config working directory defineres til
+```shell
+/home/projects/sourcecode/javascript/mongostore/web
+```
 
 ## Test docker med nginx frontend
 Start appen
@@ -114,7 +122,7 @@ Start appen
 
 Udfør test (kan ikke debugges)
 
-    Run config dokcer All tests 
+    Run config docker All tests 
 
 ## Test på archer
 start applikationen
