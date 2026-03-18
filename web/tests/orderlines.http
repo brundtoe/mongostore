@@ -1,4 +1,4 @@
-### denne post anvendes til testen
+### Opret en ny ordrelinie
 POST http://localhost:3300/api/orders
 Content-Type: application/json
 
@@ -23,7 +23,7 @@ Content-Type: application/json
   %}
 
 
-###
+### Add an orderline book 46
 POST http://localhost:3300/api/orderlines
 Content-Type: application/json
 
@@ -38,7 +38,7 @@ Content-Type: application/json
      })
   %}
 
-###
+### fail to add orderline again book 46
 POST http://localhost:3300/api/orderlines
 Content-Type: application/json
 
@@ -49,13 +49,14 @@ Content-Type: application/json
 }
 
 > {% client.test("Request executed successfully", function() {
-  const message = "Der findes allerede en ordrelinje for bog nummer 46"
+  const description = "Der findes allerede en ordrelinje for bog nummer 46"
      client.assert(response.status === 400, "Response status is not 400")
-     client.assert(response.body.message === message, 'Respponse er ikke at bogen allerede findes')
+     console.log(response.body)
+     client.assert(response.body.error.description[0] === description, 'Response er ikke at bogen allerede findes')
      })
   %}
 
-###
+### add orderline book 45
 PUT http://localhost:3300/api/orderlines
 Content-Type: application/json
 
@@ -71,7 +72,7 @@ Content-Type: application/json
   %}
 
 
-###
+### delete orderline book 46
 DELETE http://localhost:3300/api/orderlines/{{ order }}/book/46
 
 > {% client.test("Request executed successfully", function() {
