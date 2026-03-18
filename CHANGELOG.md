@@ -5,7 +5,7 @@
 
 Ænderinger
 - tilføjet devcontianer konfiguration og skiftet fra node-jb:alpine til node-jb:debian
-- 
+- Opdateret vejledning om devcontainer samt debug node continaer og test fra hosten victoria
 
 ## 17. marts 2026
 

@@ -56,7 +56,6 @@ docker::
     docker compose -f docker-compose-db.yml up -d
 
 ## run med docker nginx frontend
-Med slim4-frontend (kan **ikke** debugges)::
 
     docker compose up -d
 
@@ -65,7 +64,29 @@ browser: http://localhost:3300 for direkte adgang til mongostore
 
 Filen ``docker-mongodb-backend.yaml`` kan kun anvendes som backend til js-training, som inkluderer denne fil. Netværksdefinitionen findes i projekt jstraining.
 
+Debugging udføres med runconfigurationen
 
+    docker debug
+
+Bemærk at, 
+    - der i docker-compose.yml er en port mapning af port ``9229:9229`` som er nodes debug port.
+    - docker debug genstarter backend containeren med debug konfigurationen
+    - hvis/når debug konfigurationen er standste så skal backend containeren genstartes
+
+En alternativ model er i docker-compose.yml at aktivere ``command: sleep infinity``. Dermed skal backend containeren aktivers med run config Docker debug når applikationen skal startes.
+
+## devcontainer
+JetBrains devcontainer fungerer ikke med alpine image, derfor anvendes node-jb:debian
+
+Mappen .devcontainer indeholder devcontainer konfigurationen.
+
+Følgende run konfigurationer kan anvendes:
+- Victoria run
+- devcontainer test, som afviger fra Victoria all tests idet mongodb-restore.sh ikke kan anvendes som pre run.
+
+Når devcontainer startes er node på backend serveren ikke aktiv. 
+
+ 
 ## Virtuelle instanser (archer.test)
 
 - instansen bringes op
@@ -107,6 +128,7 @@ Start test (kan debugges)
     npm test
 
 I Jest Run configuration Victoria test skal environment defineres
+
 ```shell
 VICTORIA_DB_URI=mongodb://172.18.0.23:27017
 ```
@@ -123,6 +145,10 @@ Start appen
 Udfør test (kan ikke debugges)
 
     Run config docker All tests 
+
+Bemærk:
+    - det er muligt at debugge testen med run configurationen *Docker All tests*
+    - når testen er slut skal run configurationen genstartes
 
 ## Test på archer
 start applikationen
