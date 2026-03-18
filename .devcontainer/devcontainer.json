@@ -1,0 +1,24 @@
+{
+	"name": "Existing Docker Compose (Extend)",
+
+
+	"dockerComposeFile": [
+		"../docker-compose.yml",
+		"./docker-compose.yml"
+	],
+
+	"service": "backend",
+
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+
+	"forwardPorts": [3300],
+
+	"customizations": {
+		"jetbrains": {
+			"settings": {
+				"com.intellij:app:EditorSettings.is_ensure_newline_at_eof": true,
+				"com.intellij:app:Vcs-Log-App-Settings.show_tag_names": true
+			}
+		}
+	}
+}

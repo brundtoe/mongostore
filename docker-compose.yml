@@ -20,7 +20,8 @@ services:
 
 
   backend:
-    image: node:jb-alpine
+    image: node:jb-debian
+    #command: sleep infinity
     command: ["npm","start"]
     container_name: backend
     environment:
@@ -30,6 +31,7 @@ services:
       - ./web:/usr/src/app
     ports:
       - "3300:3300"
+      - "9229:9229"
     networks:
       default:
         ipv4_address: ${HOST_ADDRESS}

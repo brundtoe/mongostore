@@ -1,5 +1,12 @@
 # Changelog
 
+
+## 18. marts 2026
+
+Ænderinger
+- tilføjet devcontianer konfiguration og skiftet fra node-jb:alpine til node-jb:debian
+- 
+
 ## 17. marts 2026
 
 Ændringer
