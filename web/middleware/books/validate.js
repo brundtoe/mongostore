@@ -1,7 +1,7 @@
 const createError = require('http-errors')
 const booksSchema = require('./booksSchema')
 const Joi = require('joi')
-const isDateValid = require('../../lib/validateDate')
+const isDateValid = require('../../lib/validateDate').isDateValid
 const { buildErrorMessages, invalidDateMessage } = require('../../lib/buildMessages')
 
 module.exports = {
