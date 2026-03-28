@@ -24,6 +24,8 @@ module.exports = {
         firstname: 1,
         lastname: 1,
         mail: 1,
+        created_at: 1,
+        updated_at: 1,
         'bookswritten.title': 1,
         'bookswritten.published': 1
       }

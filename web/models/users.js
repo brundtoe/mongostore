@@ -17,7 +17,9 @@ module.exports = {
         state: 1,
         country: 1,
         mail: 1,
-        _id: 1
+        _id: 1,
+        created_at: 1,
+        updated_at: 1
       }
       const options = {
         sort: { id: -1 }
@@ -25,7 +27,7 @@ module.exports = {
       let col = db.collection(usersCollection)
       let cursor = await col.find(query, options).project(fields).toArray()
       return cursor ? { 'data': cursor } : msg.collection_not_found('Authors')
-    } catch(err) {
+    } catch (err) {
       return msg.action_failed(err.message)
     }
   },
@@ -35,7 +37,7 @@ module.exports = {
     try {
       let db = await mongoCon.getConnection()
       const user = await db.collection(usersCollection).findOne({ id: user_id })
-      return user ? {data: user} : msg.record_not_found(user_id, 'Customer')
+      return user ? { data: user } : msg.record_not_found(user_id, 'Customer')
 
     } catch (err) {
       return msg.action_failed(err.message)
@@ -49,7 +51,7 @@ module.exports = {
 
       const db = await mongoCon.getConnection()
       const result = await db.collection(usersCollection).findOneAndDelete({ id: user_id })
-      return result ? msg.record_deleted(user_id,'Customer') : msg.record_not_found(user_id, 'Customer')
+      return result ? msg.record_deleted(user_id, 'Customer') : msg.record_not_found(user_id, 'Customer')
     } catch (err) {
       return msg.action_failed(err.message)
     }
@@ -67,15 +69,14 @@ module.exports = {
   },
 
   async save (user) {
-      try {
-        const user_id = await getNextId('user_id')
-        const db = await mongoCon.getConnection()
-        user.id = user_id.next_value
-        const result = await db.collection(usersCollection).insertOne(user)
-        return (result.acknowledged) ? msg.record_created(user.id, 'customer') : msg.action_failed('Customer save')
+    try {
+      const user_id = await getNextId('user_id')
+      const db = await mongoCon.getConnection()
+      user.id = user_id.next_value
+      const result = await db.collection(usersCollection).insertOne(user)
+      return (result.acknowledged) ? msg.record_created(user.id, 'customer') : msg.action_failed('Customer save')
 
-    }
-    catch (err) {
+    } catch (err) {
       return msg.action_failed(err.message)
     }
   }

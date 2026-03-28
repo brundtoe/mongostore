@@ -21,7 +21,9 @@ module.exports = {
         onhand: 1,
         author_id: 1,
         firstname: '$author.firstname',
-        lastname: '$author.lastname'
+        lastname: '$author.lastname',
+        created_at: 1,
+        updated_at: 1
       }
 
       const join = {
