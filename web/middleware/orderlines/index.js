@@ -3,6 +3,7 @@ const createError = require('http-errors')
 const ordersCollection = 'bookorders'
 const booksCollection = 'books'
 const {bookExists} = require('../../lib/bookExists')
+const { DateTime } = require('luxon')
 
 module.exports = {
   save: async (req,res,next) => {
@@ -17,8 +18,11 @@ module.exports = {
         book_id: parseInt(book.id),
         title: book.title,
         salesprice: book.bookprice,
-        numbooks: parseInt(numbooks)
-      }
+        numbooks: parseInt(numbooks),
+        created_at: DateTime.now().setZone('Europe/Copenhagen')
+      },
+        updated_at = ''
+
       const order = await db.collection(ordersCollection).findOneAndUpdate({id: parseInt(order_id)},{
        $push: { lines: orderline }}, {returnDocument: 'after'}
       )
@@ -29,12 +33,18 @@ module.exports = {
   },
   update: async (req,res,next) => {
     const {order_id, book_id, numbooks} = req.body
+    const dt = DateTime.fromFormat(req.body.created_at,'yyyy-MM-dd HH:mm:ss').toJSDate()
+
     try {
       const db = await mongoCon.getConnection()
       const book = await bookExists(parseInt(book_id))
       if (!book) throw new  Error(`Bogen med nummer ${book_id} findes ikke`)
       const order = await db.collection(ordersCollection).findOneAndUpdate({id: parseInt(order_id), "lines.book_id": parseInt(book_id)},
-        { $set: {"lines.$.numbooks": parseInt(numbooks)}},
+        { $set: {
+          "lines.$.numbooks": parseInt(numbooks)},
+          "lines.$.created_at": dt,
+          "lines.$.updated_at": DateTime.now().setZone('Europe/Copenhagen')
+        },
         { returnDocument: false} )
       res.status(201).json({ data: order })
     } catch (err) {

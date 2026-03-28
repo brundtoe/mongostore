@@ -3,6 +3,7 @@ const { getNextId } = require('../lib/getNextId')
 const findes = require('../lib/authorExists')
 const msg = require('../lib/messages')
 const authorsCollection = 'authors'
+const { DateTime } = require('luxon')
 
 module.exports = {
   async findAll () {
@@ -46,6 +47,18 @@ module.exports = {
     try {
       let db = await mongoCon.getConnection()
       const author = await db.collection(authorsCollection).findOne({ id: author_id })
+      if (author) {
+        author.created_at = DateTime.fromJSDate(author.created_at)
+          .setZone('Europe/Copenhagen')
+          .toFormat('yyyy-MM-dd HH:mm:ss')
+        if (author.updated_at) {
+          author.updated_at = DateTime.fromJSDate(author.updated_at)
+            .setZone('Europe/Copenhagen')
+            .toFormat('yyyy-MM-dd HH:mm:ss')
+        } else {
+          author.updated_at = ''
+        }
+      }
       return author ? { data: author } : msg.record_not_found(author_id, 'Author')
     } catch (err) {
       return msg.action_failed(err.message)
@@ -59,13 +72,15 @@ module.exports = {
 
       let db = await mongoCon.getConnection()
       const result = await db.collection(authorsCollection).findOneAndDelete({ id: author_id })
-      return result ? msg.record_deleted(author_id,'Author') : msg.record_not_found(author_id, 'Author')
+      return result ? msg.record_deleted(author_id, 'Author') : msg.record_not_found(author_id, 'Author')
 
     } catch (err) {
       return msg.action_failed(err.message)
     }
   },
   async updateById (author) {
+    author.created_at = DateTime.fromFormat(author.created_at,'yyyy-MM-dd HH:mm:ss').toJSDate()
+    author.updated_at = DateTime.now().setZone('Europe/Copenhagen')
     try {
       let db = await mongoCon.getConnection()
       const result = await db.collection(authorsCollection).findOneAndReplace({ id: author.id }, author, { returnDocument: 'after' })
@@ -76,6 +91,8 @@ module.exports = {
   },
 
   async save (author) {
+    author.created_at = DateTime.now().setZone('Europe/Copenhagen')
+    author.updated_at = ''
     try {
       const author_id = await getNextId('author_id')
       let db = await mongoCon.getConnection()

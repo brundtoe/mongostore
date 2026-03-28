@@ -2,7 +2,7 @@ const mongoCon = require('../../dbs')
 const createError = require('http-errors')
 const { getNextId } = require('../../lib/getNextId')
 const { isOlineValid, buildOline } = require('../../lib/orderlines')
-const getDatatime = require('../../lib/getDateTime')
+const { DateTime } = require('luxon')
 
 const ordersCollection = 'bookorders'
 
@@ -44,8 +44,8 @@ module.exports = {
       const order_id = await getNextId('bookorder_id')
       const db = await mongoCon.getConnection()
       req.body.id = order_id.next_value
-      req.body.created_at = getDatatime()
-      req.body.updated_at = null
+      req.body.created_at = DateTime.now().setZone('Europe/Copenhagen')
+      req.body.updated_at = ''
       const result = await db.collection(ordersCollection).insertOne(req.body)
       const order = await db.collection(ordersCollection).findOne({id : req.body.id})
       res.status(201).json({
@@ -62,6 +62,7 @@ module.exports = {
 
   async update (req, res, next) {
     const order_id = parseInt(req.body.id)
+
     try {
       let db = await mongoCon.getConnection()
       const order = await db.collection(ordersCollection).findOneAndUpdate({ id: order_id },
@@ -73,9 +74,8 @@ module.exports = {
             invoice: req.body.invoice || null,
             paymethod: req.body.paymethod || null,
             shipby: req.body.shipby || null,
-            created_at: req.body.created_at || null,
-            updated_at: getDatatime() || null
-
+            created_at: DateTime.fromFormat(req.body.created_at,'yyyy-MM-dd HH:mm:ss').toJSDate(),
+            updated_at: DateTime.now().setZone('Europe/Copenhagen')
           }
         },
         {returnDocument: 'after'})

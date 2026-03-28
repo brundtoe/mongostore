@@ -13,7 +13,8 @@ describe('Test books model spy callThrough', () => {
     'published': '2009-07-01',
     'bookprice': 39.95,
     'isbn': '1874416869',
-    'onhand': 23
+    'onhand': 23,
+    'created_at': process.env.CREATED_AT,
   }
 
   const rust = {
@@ -96,7 +97,7 @@ describe('Test books model spy callThrough', () => {
   })
 
   it('Should update a known book', async () => {
-    const book = Object.assign({}, rust, { id: wordBasic.id })
+    const book = Object.assign({}, rust, { id: wordBasic.id, created_at: process.env.CREATED_AT })
     jest.spyOn(mongoCon,'getConnection')
     jest.spyOn(findesAuthor,'authorExists')
     const expected = msg.record_updated(wordBasic.id, 'book')
@@ -110,11 +111,11 @@ describe('Test books model spy callThrough', () => {
     expect(mongoCon.getConnection).toHaveBeenCalled()
     expect(findesAuthor.authorExists).toHaveBeenCalledWith(book.author_id)
   })
-
+//jackiebrundtoe@gmail.com
   it('Should fail to update an unknown book', async () => {
     const unknown = 9999
 
-    const book = Object.assign({}, wordBasic, { id: unknown })
+    const book = Object.assign({}, wordBasic, { id: unknown, created_at: process.env.CREATED_AT })
     jest.spyOn(mongoCon,'getConnection')
     const expected = msg.record_not_found(unknown, 'Book')
 
@@ -125,7 +126,7 @@ describe('Test books model spy callThrough', () => {
 
   it('Should fail to update a book with unknown author', async () => {
     const unknown = 9999
-    const book = Object.assign({}, wordBasic, { author_id: unknown })
+    const book = Object.assign({}, wordBasic, { author_id: unknown, created_at: process.env.CREATED_AT })
     const expected = msg.record_not_found(unknown, 'Author')
     jest.spyOn(mongoCon,'getConnection')
     jest.spyOn(findesAuthor,'authorExists')

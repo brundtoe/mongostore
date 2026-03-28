@@ -9,7 +9,8 @@ describe('Test authors model spy callThrough', () => {
     'id': 4,
     'firstname': 'Alex',
     'lastname': 'Stockton',
-    'mail': 'Stockton@mail.com'
+    'mail': 'Stockton@mail.com',
+    'created_at': process.env.CREATED_AT,
   }
 
   const katrine = {
@@ -78,7 +79,7 @@ describe('Test authors model spy callThrough', () => {
   })
 
   it('Should update known author', async () => {
-    const author = Object.assign({}, katrine, { id: alex.id })
+    const author = Object.assign({}, katrine, { id: alex.id, created_at: alex.created_at})
     jest.spyOn(mongoCon, 'getConnection')
     const expected = msg.record_updated(alex.id, 'author')
 
@@ -92,7 +93,8 @@ describe('Test authors model spy callThrough', () => {
 
   it('Should fail to update unknown author', () => {
     const unknown = 9999
-    const author = Object.assign({}, alex, { id: unknown })
+    const author = Object.assign({}, alex, { id: unknown },
+      { created_at: process.env.CREATED_AT })
     jest.spyOn(mongoCon, 'getConnection')
     const expected = msg.record_not_found(unknown, 'Author')
 

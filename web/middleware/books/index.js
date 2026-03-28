@@ -1,5 +1,5 @@
 const books = require('../../models/books')
-const getDatatime = require('../../lib/getDateTime')
+
 
 module.exports = {
   async index (req, res, next) {
@@ -34,8 +34,6 @@ module.exports = {
       bookprice: parseFloat(req.body.bookprice),
       isbn: req.body.isbn,
       onhand: parseInt(req.body.onhand),
-      created_at: getDatatime(),
-      updated_at: null
 
     }
     try {
@@ -50,6 +48,7 @@ module.exports = {
 
   async update (req, res, next) {
     const book_id = parseInt(req.body.id)
+
     const book = {
       id: book_id,
       author_id: parseInt(req.body.author_id),
@@ -59,7 +58,6 @@ module.exports = {
       isbn: req.body.isbn,
       onhand: parseInt(req.body.onhand),
       created_at: req.body.created_at,
-      updated_at: getDatatime()
 
     }
     try {

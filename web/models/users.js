@@ -3,6 +3,7 @@ const { getNextId } = require('../lib/getNextId')
 const usersCollection = 'users'
 const findesUser = require('../lib/userExists')
 const msg = require('../lib/messages')
+const { DateTime } = require('luxon')
 
 module.exports = {
   async findAll () {
@@ -37,6 +38,20 @@ module.exports = {
     try {
       let db = await mongoCon.getConnection()
       const user = await db.collection(usersCollection).findOne({ id: user_id })
+
+      if (user) {
+        user.created_at = DateTime.fromJSDate(user.created_at)
+          .setZone('Europe/Copenhagen')
+          .toFormat('yyyy-MM-dd HH:mm:ss')
+        if (user.updated_at) {
+          user.updated_at = DateTime.fromJSDate(user.updated_at)
+            .setZone('Europe/Copenhagen')
+            .toFormat('yyyy-MM-dd HH:mm:ss')
+        } else {
+          user.updated_at = ''
+        }
+      }
+
       return user ? { data: user } : msg.record_not_found(user_id, 'Customer')
 
     } catch (err) {
@@ -57,6 +72,8 @@ module.exports = {
     }
   },
   async updateById (user) {
+    user.created_at = DateTime.fromFormat(user.created_at,'yyyy-MM-dd HH:mm:ss').toJSDate()
+    user.updated_at = DateTime.now().setZone('Europe/Copenhagen')
 
     try {
       const db = await mongoCon.getConnection()
@@ -69,6 +86,7 @@ module.exports = {
   },
 
   async save (user) {
+    user.created_at = DateTime.now().setZone('Europe/Copenhagen')
     try {
       const user_id = await getNextId('user_id')
       const db = await mongoCon.getConnection()

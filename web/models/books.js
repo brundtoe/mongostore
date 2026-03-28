@@ -5,6 +5,7 @@ const findesBook = require('../lib/bookExists')
 const msg = require('../lib/messages')
 const toDatoString = require('../lib/dato')
 const booksCollection = 'books'
+const { DateTime } = require('luxon')
 
 module.exports = {
   async findAll () {
@@ -81,6 +82,19 @@ module.exports = {
         { '$project': fields }
       ]).toArray()
 
+      if (book) {
+        book[0].created_at = DateTime.fromJSDate(book[0].created_at)
+          .setZone('Europe/Copenhagen')
+          .toFormat('yyyy-MM-dd HH:mm:ss')
+        if (book[0].updated_at) {
+          book[0].updated_at = DateTime.fromJSDate(book[0].updated_at)
+            .setZone('Europe/Copenhagen')
+            .toFormat('yyyy-MM-dd HH:mm:ss')
+        } else {
+          book[0].updated_at = ''
+        }
+      }
+
       if (book.length) book[0].published = toDatoString(book[0].published)
 
       return book[0] ? { data: book[0] } : msg.record_not_found(book_id, 'Book')
@@ -104,6 +118,10 @@ module.exports = {
   async updateById (book) {
     const book_id = parseInt(book.id)
     book.published = new Date(book.published)
+
+    book.created_at = DateTime.fromFormat(book.created_at,'yyyy-MM-dd HH:mm:ss').toJSDate()
+    book.updated_at = DateTime.now().setZone('Europe/Copenhagen')
+
     try {
       const author = await findesAuthor.authorExists(parseInt(book.author_id))
       if (!author) return msg.record_not_found(book.author_id, 'Author')
@@ -119,7 +137,7 @@ module.exports = {
   async save (book) {
 
     book.published = new Date(book.published)
-
+    book.created_at = DateTime.now().setZone('Europe/Copenhagen')
     try {
       const author = await findesAuthor.authorExists(parseInt(book.author_id))
       if (!author) return msg.record_not_found(book.author_id, 'Author')

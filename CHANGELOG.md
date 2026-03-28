@@ -1,5 +1,11 @@
 # Changelog
 
+## 17. april 2026
+
+Ændringer
+- tilføjet luxon til håndtering af datoer
+- tilføjet opdateringer af created_at og updated_at i models og test cases
+
 ## 22. marts 2026
 
 Ændringer
