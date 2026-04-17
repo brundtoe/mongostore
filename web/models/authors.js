@@ -80,7 +80,7 @@ module.exports = {
   },
   async updateById (author) {
     author.created_at = DateTime.fromFormat(author.created_at,'yyyy-MM-dd HH:mm:ss').toJSDate()
-    author.updated_at = DateTime.now().setZone('Europe/Copenhagen').toJSDate()
+    author.updated_at = DateTime.now().setZone('Europe/Copenhagen')
     try {
       let db = await mongoCon.getConnection()
       const result = await db.collection(authorsCollection).findOneAndReplace({ id: author.id }, author, { returnDocument: 'after' })
@@ -91,7 +91,7 @@ module.exports = {
   },
 
   async save (author) {
-    author.created_at = DateTime.now().setZone('Europe/Copenhagen').toJSDate()
+    author.created_at = DateTime.now().setZone('Europe/Copenhagen')
     author.updated_at = ''
     try {
       const author_id = await getNextId('author_id')

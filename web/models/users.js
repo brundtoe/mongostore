@@ -73,7 +73,7 @@ module.exports = {
   },
   async updateById (user) {
     user.created_at = DateTime.fromFormat(user.created_at,'yyyy-MM-dd HH:mm:ss').toJSDate()
-    user.updated_at = DateTime.now().setZone('Europe/Copenhagen').toJSDate()
+    user.updated_at = DateTime.now().setZone('Europe/Copenhagen')
 
     try {
       const db = await mongoCon.getConnection()
@@ -86,7 +86,7 @@ module.exports = {
   },
 
   async save (user) {
-    user.created_at = DateTime.now().setZone('Europe/Copenhagen').toJSDate()
+    user.created_at = DateTime.now().setZone('Europe/Copenhagen')
     try {
       const user_id = await getNextId('user_id')
       const db = await mongoCon.getConnection()
