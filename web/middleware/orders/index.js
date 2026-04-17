@@ -44,7 +44,7 @@ module.exports = {
       const order_id = await getNextId('bookorder_id')
       const db = await mongoCon.getConnection()
       req.body.id = order_id.next_value
-      req.body.created_at = DateTime.now().setZone('Europe/Copenhagen').toJSDate()
+      req.body.created_at = DateTime.now().setZone('Europe/Copenhagen')
       req.body.updated_at = ''
       const result = await db.collection(ordersCollection).insertOne(req.body)
       const order = await db.collection(ordersCollection).findOne({id : req.body.id})
@@ -75,7 +75,7 @@ module.exports = {
             paymethod: req.body.paymethod || null,
             shipby: req.body.shipby || null,
             created_at: DateTime.fromFormat(req.body.created_at,'yyyy-MM-dd HH:mm:ss').toJSDate(),
-            updated_at: DateTime.now().setZone('Europe/Copenhagen').toJSDate()
+            updated_at: DateTime.now().setZone('Europe/Copenhagen')
           }
         },
         {returnDocument: 'after'})
