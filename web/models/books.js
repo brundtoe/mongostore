@@ -120,7 +120,7 @@ module.exports = {
     book.published = new Date(book.published)
 
     book.created_at = DateTime.fromFormat(book.created_at,'yyyy-MM-dd HH:mm:ss').toJSDate()
-    book.updated_at = DateTime.now().setZone('Europe/Copenhagen')
+    book.updated_at = DateTime.now().setZone('Europe/Copenhagen').toJSDate()
 
     try {
       const author = await findesAuthor.authorExists(parseInt(book.author_id))
@@ -137,7 +137,7 @@ module.exports = {
   async save (book) {
 
     book.published = new Date(book.published)
-    book.created_at = DateTime.now().setZone('Europe/Copenhagen')
+    book.created_at = DateTime.now().setZone('Europe/Copenhagen').toJSDate()
     try {
       const author = await findesAuthor.authorExists(parseInt(book.author_id))
       if (!author) return msg.record_not_found(book.author_id, 'Author')

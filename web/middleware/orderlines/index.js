@@ -19,7 +19,7 @@ module.exports = {
         title: book.title,
         salesprice: book.bookprice,
         numbooks: parseInt(numbooks),
-        created_at: DateTime.now().setZone('Europe/Copenhagen')
+        created_at: DateTime.now().setZone('Europe/Copenhagen').toJSDate(),
       },
         updated_at = ''
 
@@ -43,7 +43,7 @@ module.exports = {
         { $set: {
           "lines.$.numbooks": parseInt(numbooks)},
           "lines.$.created_at": dt,
-          "lines.$.updated_at": DateTime.now().setZone('Europe/Copenhagen')
+          "lines.$.updated_at": DateTime.now().setZone('Europe/Copenhagen').toJSDate()
         },
         { returnDocument: false} )
       res.status(201).json({ data: order })
