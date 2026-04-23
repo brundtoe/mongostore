@@ -4,6 +4,7 @@ const orderData = require('./order.json')
 const newOrder = require('./newOrder.json')
 const ObjectId = require('mongodb').ObjectId
 const ordersCollection = 'bookorders'
+const { DateTime } = require('luxon')
 
 describe('Order controller', () => {
 
@@ -100,7 +101,6 @@ describe('Order controller', () => {
     const req = {
       body: newOrder
     }
-    //bemærk at orderController.save() opdateret req.body.created_at
 
     await orderController.save(req, res, next)
     expect(next.mock.calls.length).toBe(0)
@@ -108,8 +108,7 @@ describe('Order controller', () => {
     expect(res.status.mock.calls[0][0]).toBe(201)
     const actual = res.json.mock.calls[0][0].data
     expect(actual.acknowledged).toBeTrue()
-    // dette er fusk men det virker
-    newOrder.created_at = newOrder.created_at.toJSDate()
+    newOrder.created_at = DateTime.fromFormat(process.env.CREATED_AT,'yyyy-MM-dd HH:mm:ss').toJSDate()
     expect(actual.order).toMatchObject(newOrder)
     try {
       let db = await mongoCon.getConnection()
@@ -128,7 +127,7 @@ describe('Order controller', () => {
     await orderController.save(req, res, next)
     const actualNew = res.json.mock.calls[0][0].data
     expect(actualNew.acknowledged).toBeTrue()
-    newOrder.created_at = newOrder.created_at.toJSDate()
+    newOrder.created_at = DateTime.fromFormat(process.env.CREATED_AT,'yyyy-MM-dd HH:mm:ss').toJSDate()
     expect(actualNew.order).toMatchObject(newOrder)
     jest.clearAllMocks()
     const reqDelete = {
