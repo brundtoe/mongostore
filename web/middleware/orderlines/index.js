@@ -18,8 +18,8 @@ module.exports = {
         book_id: parseInt(book.id),
         title: book.title,
         salesprice: book.bookprice,
-        numbooks: parseInt(numbooks),
-        created_at: DateTime.now().setZone('Europe/Copenhagen')
+        numbooks: parseInt(numbooks)
+
       },
         updated_at = ''
 
@@ -33,7 +33,6 @@ module.exports = {
   },
   update: async (req,res,next) => {
     const {order_id, book_id, numbooks} = req.body
-    const dt = DateTime.fromFormat(req.body.created_at,'yyyy-MM-dd HH:mm:ss').toJSDate()
 
     try {
       const db = await mongoCon.getConnection()
@@ -42,10 +41,8 @@ module.exports = {
       const order = await db.collection(ordersCollection).findOneAndUpdate({id: parseInt(order_id), "lines.book_id": parseInt(book_id)},
         { $set: {
           "lines.$.numbooks": parseInt(numbooks)},
-          "lines.$.created_at": dt,
-          "lines.$.updated_at": DateTime.now().setZone('Europe/Copenhagen')
         },
-        { returnDocument: false} )
+        { returnDocument: 'after'} )
       res.status(201).json({ data: order })
     } catch (err) {
       next(createError(400,err.message))

@@ -113,7 +113,7 @@ describe('Updating orderlines on orders', () => {
     expect(actual.message).toBe(`Bogen med nummer ${req.params.book_id} findes ikke`)
   })
 
-  test.skip('Opdater antal bøger på en ordrelinje', async () => {
+  test('Opdater antal bøger på en ordrelinje', async () => {
     const req = {
       body: {
         order_id: 11,
@@ -134,7 +134,7 @@ describe('Updating orderlines on orders', () => {
     expect(res.status.mock.calls.length).toBe(1)
     expect(res.status.mock.calls[0][0]).toBe(201)
     expect(res.json.mock.calls.length).toBe(1)
-    const lines = res.json.mock.calls[0][0].data.value.lines
+    const lines = res.json.mock.calls[0][0].data.lines
     const found = lines.filter(line => cb(line, orderline))
     expect(found.length).toBe(1)
 
@@ -145,7 +145,7 @@ describe('Updating orderlines on orders', () => {
         numbooks: 4
       }
     }
-    await orderlinesController.update(reset, res, next)
+   await orderlinesController.update(reset, res, next)
 
   })
 })
