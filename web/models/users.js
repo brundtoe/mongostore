@@ -89,7 +89,8 @@ module.exports = {
   },
 
   async save (user) {
-    user.created_at = DateTime.now().setZone('Europe/Copenhagen')
+    const createdAt = DateTime.fromFormat(process.env.CREATED_AT,'yyyy-MM-dd HH:mm:ss') || DateTime.now().setZone('Europe/Copenhagen')
+    user.created_at = createdAt
     try {
       const user_id = await getNextId('user_id')
       const db = await mongoCon.getConnection()

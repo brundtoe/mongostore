@@ -93,8 +93,8 @@ module.exports = {
   },
 
   async save (author) {
-    author.created_at = DateTime.now().setZone('Europe/Copenhagen')
-    author.updated_at = ''
+    const createdAt = DateTime.fromFormat(process.env.CREATED_AT,'yyyy-MM-dd HH:mm:ss') || DateTime.now().setZone('Europe/Copenhagen')
+    author.updated_at = createdAt
     try {
       const author_id = await getNextId('author_id')
       let db = await mongoCon.getConnection()

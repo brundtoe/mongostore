@@ -7,7 +7,8 @@
 - exists queries returnerer nu den forspurgte db record eller null
 - Rettet fejl i test af orderlines, der manglede optionen returnDocument 'after'
 - Rettet fejl, manglende opdatering af updatede at når orderlines opdaters io bookorder collection.
-- 
+- process.env.CREATED_AT anvendes til at definere datoen for created_at.
+
 ## 17. april 2026
 
 Ændringer
