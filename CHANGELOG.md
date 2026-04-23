@@ -1,5 +1,10 @@
 # Changelog
 
+## 23. april 2026
+
+Ændringer
+- update actions for models, henter datoen for created_at fra databasen, så den ikke ændres 
+
 ## 17. april 2026
 
 Ændringer

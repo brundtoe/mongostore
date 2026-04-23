@@ -72,11 +72,13 @@ module.exports = {
     }
   },
   async updateById (user) {
-    user.created_at = DateTime.fromFormat(user.created_at,'yyyy-MM-dd HH:mm:ss').toJSDate()
     user.updated_at = DateTime.now().setZone('Europe/Copenhagen')
 
     try {
       const db = await mongoCon.getConnection()
+      const userOld = await db.collection(usersCollection).findOne({ id: user.id })
+      if (!userOld) return msg.record_not_found(user.id, 'Customer')
+      user.created_at = userOld.created_at
       const result = await db.collection(usersCollection).findOneAndReplace({ id: user.id }, user
         , { returnDocument: 'after' })
       return result ? msg.record_updated(user.id, 'customer') : msg.record_not_found(user.id, 'Customer')

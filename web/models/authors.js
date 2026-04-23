@@ -79,10 +79,12 @@ module.exports = {
     }
   },
   async updateById (author) {
-    author.created_at = DateTime.fromFormat(author.created_at,'yyyy-MM-dd HH:mm:ss').toJSDate()
-    author.updated_at = DateTime.now().setZone('Europe/Copenhagen')
+    let db = await mongoCon.getConnection()
     try {
-      let db = await mongoCon.getConnection()
+      const authorOld = await db.collection(authorsCollection).findOne({ id: author.id })
+      if (!authorOld) return msg.record_not_found(author.id, 'Author')
+      author.created_at = authorOld.created_at
+      author.updated_at = DateTime.now().setZone('Europe/Copenhagen')
       const result = await db.collection(authorsCollection).findOneAndReplace({ id: author.id }, author, { returnDocument: 'after' })
       return result ? msg.record_updated(author.id, 'author') : msg.record_not_found(author.id, 'Author')
     } catch (err) {
