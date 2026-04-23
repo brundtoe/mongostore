@@ -6,7 +6,7 @@ async function orderExists(order_id){
   try {
     const db = await mongoCon.getConnection()
     const order = await db.collection(orderCollection).findOne({id:order_id})
-    return order !== null;
+    return order;
   } catch (err) {
     throw createdError(400,err)
   }

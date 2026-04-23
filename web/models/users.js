@@ -75,10 +75,11 @@ module.exports = {
     user.updated_at = DateTime.now().setZone('Europe/Copenhagen')
 
     try {
-      const db = await mongoCon.getConnection()
-      const userOld = await db.collection(usersCollection).findOne({ id: user.id })
+      const userOld = await findesUser.userExists(user.id)
       if (!userOld) return msg.record_not_found(user.id, 'Customer')
       user.created_at = userOld.created_at
+
+      const db = await mongoCon.getConnection()
       const result = await db.collection(usersCollection).findOneAndReplace({ id: user.id }, user
         , { returnDocument: 'after' })
       return result ? msg.record_updated(user.id, 'customer') : msg.record_not_found(user.id, 'Customer')

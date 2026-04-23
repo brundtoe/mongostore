@@ -4,12 +4,12 @@ describe("Does book exists", () => {
   test('book number 3 exists', async () => {
     const book_id = 3
     const book = await findes.bookExists(book_id)
-    expect(book).toBeTrue()
+    expect(book).not.toBeNull()
   })
   test('book number 999 does not exists', async () => {
     const book_id = 999
     const book = await findes.bookExists(book_id)
-    expect(book).toBeFalse()
+    expect(book).toBeNull()
   })
 
 })

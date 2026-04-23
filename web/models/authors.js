@@ -81,7 +81,7 @@ module.exports = {
   async updateById (author) {
     let db = await mongoCon.getConnection()
     try {
-      const authorOld = await db.collection(authorsCollection).findOne({ id: author.id })
+      const authorOld = await findes.authorExists(author.id)
       if (!authorOld) return msg.record_not_found(author.id, 'Author')
       author.created_at = authorOld.created_at
       author.updated_at = DateTime.now().setZone('Europe/Copenhagen')

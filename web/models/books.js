@@ -121,17 +121,14 @@ module.exports = {
     book.updated_at = DateTime.now().setZone('Europe/Copenhagen')
 
     try {
-      const db = await mongoCon.getConnection()
-      const bookOld = await db.collection(booksCollection).findOne({ id: book_id })
-      if (!bookOld) return msg.record_not_found(book_id, 'Book')
+      const bookOld = await findesBook.bookExists(book_id)
+      if(!bookOld) return msg.record_not_found(book_id, 'Book')
       book.created_at = bookOld.created_at
 
       const author = await findesAuthor.authorExists(parseInt(book.author_id))
       if (!author) return msg.record_not_found(book.author_id, 'Author')
 
-      const bookExists = await findesBook.bookExists(book_id)
-      if(!bookExists) return msg.record_not_found(book_id, 'Book')
-
+      const db = await mongoCon.getConnection()
       const result = await db.collection(booksCollection).findOneAndReplace({ id: book_id }, book, { returnDocument: 'after' })
       return result ? msg.record_updated(book.id, 'book') : msg.record_not_found(book.id, 'Book')
 

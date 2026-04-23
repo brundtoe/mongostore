@@ -4,12 +4,12 @@ describe("Does user exists", () => {
   test('user number 3 exists', async () => {
     const user_id = 3
     const user = await findes.userExists(user_id)
-    expect(user).toBeTrue()
+    expect(user).not.toBeNull()
   })
   test('user number 999 does not exists', async () => {
     const user_id = 999
     const user = await findes.userExists(user_id)
-    expect(user).toBeFalse()
+    expect(user).toBeNull()
   })
 
 })

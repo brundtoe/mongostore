@@ -3,7 +3,8 @@
 ## 23. april 2026
 
 Ændringer
-- update actions for models, henter datoen for created_at fra databasen, så den ikke ændres 
+- update actions for models, henter datoen for created_at fra databasen, så den ikke ændres
+  exists queries returnerer nu den forspurgte db record eller null
 
 ## 17. april 2026
 
