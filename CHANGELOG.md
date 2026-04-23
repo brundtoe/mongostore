@@ -4,8 +4,10 @@
 
 Ændringer
 - update actions for models, henter datoen for created_at fra databasen, så den ikke ændres
-  exists queries returnerer nu den forspurgte db record eller null
-
+- exists queries returnerer nu den forspurgte db record eller null
+- Rettet fejl i test af orderlines, der manglede optionen returnDocument 'after'
+- Rettet fejl, manglende opdatering af updatede at når orderlines opdaters io bookorder collection.
+- 
 ## 17. april 2026
 
 Ændringer

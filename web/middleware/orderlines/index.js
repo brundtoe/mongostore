@@ -19,12 +19,11 @@ module.exports = {
         title: book.title,
         salesprice: book.bookprice,
         numbooks: parseInt(numbooks)
-
-      },
-        updated_at = ''
+      }
 
       const order = await db.collection(ordersCollection).findOneAndUpdate({id: parseInt(order_id)},{
-       $push: { lines: orderline }}, {returnDocument: 'after'}
+       $push: { lines: orderline },
+        $set: {updated_at: DateTime.now().setZone('Europe/Copenhagen')}}, {returnDocument: 'after'}
       )
       res.status(201).json({ data: order })
     } catch (err) {
@@ -40,7 +39,9 @@ module.exports = {
       if (!book) throw new  Error(`Bogen med nummer ${book_id} findes ikke`)
       const order = await db.collection(ordersCollection).findOneAndUpdate({id: parseInt(order_id), "lines.book_id": parseInt(book_id)},
         { $set: {
-          "lines.$.numbooks": parseInt(numbooks)},
+          "lines.$.numbooks": parseInt(numbooks),
+          updated_at: DateTime.now().setZone('Europe/Copenhagen')
+        }
         },
         { returnDocument: 'after'} )
       res.status(201).json({ data: order })
@@ -57,7 +58,8 @@ module.exports = {
       if (!book) throw new Error(`Bogen med nummer ${book_id} findes ikke`)
       const result = await db.collection(ordersCollection).findOneAndUpdate({id: order_id},
       {
-        $pull: {"lines": {"book_id": book_id}}
+        $pull: {"lines": {"book_id": book_id}},
+        $set: {updated_at: DateTime.now().setZone('Europe/Copenhagen')}
       }, { returnDocument: 'after'})
       res.status(200).json({ data: result })
     } catch (err) {
