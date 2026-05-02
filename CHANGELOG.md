@@ -1,5 +1,11 @@
 # Changelog
 
+## 2. maj 2026
+
+Ændringer
+- nginx site.conf opdateret med mime type .mjs
+
+
 ## 23. april 2026
 
 Ændringer
