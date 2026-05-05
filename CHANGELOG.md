@@ -1,5 +1,10 @@
 # Changelog
 
+## 5. maj 2026
+
+Ændringer
+- eslint opgraderet fra 9.x til 10.0
+
 ## 2. maj 2026
 
 Ændringer
