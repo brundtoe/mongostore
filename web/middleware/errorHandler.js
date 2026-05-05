@@ -1,4 +1,4 @@
-module.exports = function (err, req, res, next) {
+module.exports = function (err, req, res, _next) {
   let actual = {}
 
   if (err.error) {

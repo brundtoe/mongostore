@@ -20,7 +20,7 @@ function isValidDateTime(str) {
 
   const dateNormalized = str.replaceAll('/','-')
   if (!dateTimeRegex.test(dateNormalized)) return false;
-  const [datePart, timePart] = dateNormalized.split(' ')
+  const [datePart] = dateNormalized.split(' ')
   const [y, m, d] = datePart.split('-').map(Number)
   const dato = new Date(y, m - 1, d);
   return dato.getFullYear() === y && dato.getMonth() === m - 1 && dato.getDate() === d;
