@@ -20,7 +20,7 @@ Der er implementeret et REST API til databasen **bookstore-mysql**
 
 Ved anvendelse på kvm instanser skal **.env** opdateres til at pege på instansen med databasen
 
-databasen kan restores med NoSQLBooster import mongorestore::
+Databasen kan restores med NoSQLBooster import mongorestore::
 
     /home/projects/devops/data/mongodb/bookstore-mysql-archive/archive
     
@@ -55,11 +55,11 @@ docker::
 
     docker compose -f docker-compose-db.yml up -d
 
-## run med docker nginx frontend
+## run med docker vitedemo frontend
 
     docker compose up -d
 
-browser: http://localhost for adgang via slim4-frontend
+browser: http://localhost for adgang via vitedemo
 browser: http://localhost:3300 for direkte adgang til mongostore
 
 Filen ``docker-mongodb-backend.yaml`` kan kun anvendes som backend til js-training, som inkluderer denne fil. Netværksdefinitionen findes i projekt jstraining.
@@ -78,7 +78,7 @@ En alternativ model er i docker-compose.yml at aktivere ``command: sleep infinit
 ## devcontainer
 JetBrains devcontainer fungerer ikke med alpine image, derfor anvendes node-jb:debian
 
-Mappen .devcontainer indeholder devcontainer konfigurationen.
+Mappen ``.devcontainer`` indeholder devcontainer konfigurationen.
 
 Følgende run konfigurationer kan anvendes:
 - Victoria run
@@ -137,7 +137,7 @@ alterantiv skal run config working directory defineres til
 /home/projects/sourcecode/javascript/mongostore/web
 ```
 
-## Test docker med nginx frontend
+## Test docker med vitedemo frontend
 Start appen
 
     docker compose
@@ -165,11 +165,11 @@ Alternativt i Archer terminalvindue
 ```
 
 ## Cypress test
-run konfigurationen `Cypress slim4-frontend` findes i projekter slim4-frontend
+run konfigurationen `Cypress vitedemo frontend` findes i projektet vitedemo 
 
 Anvendelse
 - start konfigurationen `docker run`
-- start `Cypress slim4-frontend`
+- start `Cypress vitedemo frontend`
 
 ## test med WebStorm http Requests
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## 31. maj 2026
+
+- Udskiftet slim4-frontend med vitedemo som frontend.
+
 ## 5. maj 2026
 
 Ændringer

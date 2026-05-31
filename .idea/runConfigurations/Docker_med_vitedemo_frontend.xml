@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Docker run slim4 frontend" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
+  <configuration default="false" name="Docker med vitedemo frontend" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
     <deployment type="docker-compose.yml">
       <settings>
         <option name="envFilePath" value="" />
@@ -13,6 +13,15 @@
     </deployment>
     <method v="2">
       <option name="RunConfigurationTask" enabled="true" run_configuration_name="Fjern containere" run_configuration_type="ShConfigurationType" />
+      <option name="NpmBeforeRunTask" enabled="true">
+        <package-json value="$PROJECT_DIR$/../vitedemo/web/package.json" />
+        <command value="run" />
+        <scripts>
+          <script value="build" />
+        </scripts>
+        <node-interpreter value="project" />
+        <envs />
+      </option>
     </method>
   </configuration>
 </component>
