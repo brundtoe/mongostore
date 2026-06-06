@@ -13,7 +13,8 @@ const booksSchema = Joi.object({
     .integer()
     .min(1)
     .required().messages({
-      'number.base': 'Author_id skal være numerisk'
+      'number.base': 'Author_id skal være numerisk',
+      'any.required': 'Feltet author_id mangler i input'
     }),
 
   title: Joi.string()
@@ -33,7 +34,8 @@ const booksSchema = Joi.object({
   bookprice: Joi.number()
     .precision(2)
     .min(1.00)
-    .max(99.99),
+    .max(99.99)
+    .messages({ 'number.base': 'Bookprice skal være et decimaltal' }),
 
   isbn: Joi.string()
     .min(1)
