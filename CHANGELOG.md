@@ -3,6 +3,7 @@
 ## 13. juni 2026
 
 Ændret validering af required fields. Validering skal altid validerere alle felter i stedet for at standse efter første fejl
+- Refaktoreret JOI validering af datoer med en custom JOI extension.
 
 ## 31. maj 2026
 

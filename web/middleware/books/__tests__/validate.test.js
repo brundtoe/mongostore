@@ -65,6 +65,7 @@ describe('Validering af book schema', () => {
         title: 'Professional MongoDB',
         bookprice: 18.49,
         published: '2020-07-12',
+        isbn: '978-1-4493',
         onhand: 43
       }
     }
@@ -82,6 +83,7 @@ describe('Validering af book schema', () => {
         title: 'Professional MongoDB',
         bookprice: 18.49,
         published: '2020-07-12',
+        isbn: '978-1-4493',
         onhand: 43
       }
     }

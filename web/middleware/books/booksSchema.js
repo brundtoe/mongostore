@@ -1,24 +1,36 @@
 const Joi = require('joi')
+const { isDateValid } = require('../../lib/validateDate')
 
-const booksSchema = Joi.object({
-  _id: Joi.string().regex(/^[0-9a-fA-F]{24}$/, 'Invalid ObjectId'),
+const customJoi = Joi.extend((joi) => ({
+  type: 'customDate',
+  base: joi.string(),
+  messages: {
+    'customDate.invalid': 'Date {{#label}}: {{#value}} er ikke en gyldig dato'
+  },
+  validate (value, helpers) {
+    if (!isDateValid(value)) {
+      return { value, errors: helpers.error('customDate.invalid', { value }) }
+    }
+  }
+}))
 
-  id: Joi.number()
+const booksSchema = customJoi.object({
+
+  id: customJoi.number()
     .integer()
     .min(1).messages({
       'number.base': 'Book_id skal være numerisk'
     }),
 
-  author_id: Joi.number()
+  author_id: customJoi.number()
     .integer()
     .min(1)
-    .required()
-    .messages({
+    .required().messages({
       'number.base': 'Author_id skal være numerisk',
       'any.required': 'Feltet author_id mangler i input'
     }),
 
-  title: Joi.string()
+  title: customJoi.string()
     .min(2)
     .max(50)
     .required()
@@ -28,17 +40,14 @@ const booksSchema = Joi.object({
       'string.pattern.base': 'Title skal være  på 2 - 35 tegn'
     }),
 
-  //Dato firmatet valideres i funktionen lib/validateDate
-  published: Joi.date()
-    .greater('01-01-1994')
+  // Dato valideres nu direkte via customDate
+  published: customJoi.customDate()
     .required()
     .messages({
-      'date.base': 'Published skal være et datoformat',
-      'date.greater': 'Published skal være efter 01-01-1994',
       'any.required': 'Feltet published mangler i input'
     }),
 
-  bookprice: Joi.number()
+  bookprice: customJoi.number()
     .precision(2)
     .min(1.00)
     .max(99.99)
@@ -48,18 +57,16 @@ const booksSchema = Joi.object({
       'any.required': 'Feltet bookprice mangler i input'
     }),
 
-  isbn: Joi.string()
+  isbn: customJoi.string()
     .min(1)
     .max(10)
     .required()
     .messages({
       'string.base': 'ISBN skal være en streng',
-      'string.min': 'ISBN skal være mindst 1 tegn',
-      'string.max': 'ISBN skal være højst 10 tegn',
       'any.required': 'Feltet isbn mangler i input'
     }),
 
-  onhand: Joi.number()
+  onhand: customJoi.number()
     .integer()
     .min(0)
     .max(99)
@@ -68,7 +75,8 @@ const booksSchema = Joi.object({
       {
         'number.base': 'Onhand skal være numerisk',
         'any.required': 'Feltet onhand mangler i input'
-      })
+      }
+    )
 })
 
 module.exports = booksSchema
