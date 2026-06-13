@@ -7,7 +7,7 @@ module.exports = {
   post: (req, res, next) => {
 
     try {
-      Joi.assert(req.body, authorsSchema, { stripUnknown: true })
+      Joi.assert(req.body, authorsSchema, { stripUnknown: true, abortEarly: false })
       next()
     } catch (err) {
       next(createError(400, buildErrorMessages(err, 'VALIDATION_ERROR')))
@@ -16,7 +16,7 @@ module.exports = {
   put: (req, res, next) => {
 
     try {
-      Joi.assert(req.body, authorsSchema, { stripUnknown: true })
+      Joi.assert(req.body, authorsSchema, { stripUnknown: true, abortEarly: false })
       next()
     } catch (err) {
       next(createError(400, buildErrorMessages(err, 'VALIDATION_ERROR')))
