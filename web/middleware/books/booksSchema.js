@@ -28,8 +28,8 @@ const booksSchema = Joi.object({
       'string.pattern.base': 'Title skal være  på 2 - 35 tegn'
     }),
 
+  //Dato firmatet valideres i funktionen lib/validateDate
   published: Joi.date()
-    .iso()
     .greater('01-01-1994')
     .required()
     .messages({
